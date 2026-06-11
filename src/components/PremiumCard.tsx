@@ -20,10 +20,10 @@ export function PremiumCard({ access, onTrial, onNavigate }: PremiumCardProps) {
         <h3>{premiumCopy.title}</h3>
         <p>{isActive ? premiumCopy.activeText : premiumCopy.guestText}</p>
         <div className="u-wrap">
-          <button className="button button--primary" type="button" onClick={isActive ? () => onNavigate("cabinet") : onTrial}>
+          <button className="button button--primary" type="button" onClick={isActive ? () => onNavigate("profile") : onTrial}>
             {isActive ? premiumCopy.activeCta : premiumCopy.guestCta}
           </button>
-          <button className="button button--secondary" type="button" onClick={() => onNavigate("club")}>
+          <button className="button button--secondary" type="button" onClick={() => onNavigate("materials")}>
             {premiumCopy.tariffsCta}
           </button>
         </div>

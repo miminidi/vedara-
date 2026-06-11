@@ -1,463 +1,414 @@
-import type { EcosystemDirection, Lesson, NavItem, Program } from "./types";
+import type {
+  CheckMetric,
+  DayPlanItem,
+  Habit,
+  LeadType,
+  Material,
+  NavItem,
+  ProductCta,
+  Program,
+  Protocol,
+  UserProfile,
+} from "./types";
 
-export const navItems: NavItem[] = [
-  { id: "home", label: "Главная", icon: "⌂" },
-  { id: "club", label: "Клуб", icon: "◇" },
-  { id: "clinic", label: "Клиника", icon: "✦" },
-  { id: "university", label: "Университет", icon: "△" },
-  { id: "cabinet", label: "Кабинет", icon: "○" },
-];
+export const brandContent = {
+  tagline: "мобильный ритм здоровья",
+  profileAria: "Открыть профиль",
+  navAria: "Основная навигация Vedara",
+};
 
 export const uiCopy = {
   open: "Открыть",
+  back: "Назад",
   apply: "Оставить заявку",
-  back: "‹ Назад",
-  protocol: "протокол",
-  clinicBadge: "clinic",
-} as const;
+  protocol: "Протокол",
+  clinicBadge: "Clinic",
+};
 
-export const homePageContent = {
-  hero: {
-    title: "Твой путь к гармонии",
-    text: "Единая экосистема для тела, психики, питания, восстановления и профессионального роста.",
-    cta: "Начать путь",
-  },
-  photoAlts: {
-    bodyPeople: "Пространство тренировок Vedara",
-    nutritionBowl: "Пространство питания Vedara",
-    wellnessClub: "Клуб Vedara Longevita",
-  },
-  directions: {
-    kicker: "Экосистема",
-    title: "Четыре направления. Один путь.",
-  },
-  programs: {
-    kicker: "Программы",
-    title: "Шесть путей к восстановлению",
-    action: "Все программы ›",
-    itemAction: "Записаться",
-  },
-  safety: {
-    kicker: "Безопасность",
-    title: "Важная граница MVP",
-  },
-} as const;
-
-export const premiumCopy = {
-  title: "Vedara Premium",
-  activeText: "Доступ активен. Откройте клуб, протоколы и личный кабинет.",
-  guestText: "Единый вход в клуб, практики, материалы и персональные программы.",
-  activeCta: "Перейти в кабинет",
-  guestCta: "7 дней бесплатно",
-  tariffsCta: "Смотреть тарифы",
-} as const;
-
-export const clubPageContent = {
-  header: {
-    kicker: "Vedara · Longevita",
-    title: "Клуб Vedara",
-    subtitle: "Трансформация изнутри: энергия, молодость, осознанное долголетие и поддержка сообщества.",
-  },
-  accessPanel: {
-    activeTitle: "Ваш доступ активен",
-    trialTitle: "7 дней бесплатно",
-    activeText: "Открыты материалы клуба, практики, протоколы и личный кабинет.",
-    trialText: "Пробный доступ без привязки карты в рамках MVP. Реальные платежи пока не подключены.",
-    activeCta: "Сбросить демо-доступ",
-    trialCta: "Начать 7 дней бесплатно",
-  },
-  methodology: {
-    kicker: "Методология",
-    title: "5 столпов Longevita",
-  },
-  inside: {
-    kicker: "Что внутри",
-    title: "Программа клуба",
-  },
-  avatar: {
-    kicker: "Для кого",
-    title: "Аватар участницы",
-    heading: "Женщина 35–55 лет",
-    text: "Чувствует усталость не по возрасту, хочет вернуть энергию и понимает, что точечные советы не заменяют систему. Ценит качество, поддержку и готова инвестировать внимание в себя.",
-  },
-  investment: {
-    kicker: "Инвестиция",
-    title: "Выберите свой путь",
-  },
-  notice: "При хронических заболеваниях клуб рассматривается как поддерживающее пространство, а не замена лечащему врачу.",
-} as const;
-
-export const clubPlans = [
-  {
-    id: "monthly",
-    title: "Месячная подписка",
-    price: "2 900 ₽",
-    suffix: "в месяц",
-    cta: "Активировать демо",
-    access: "clubMonthly" as const,
-    featuresPrefix: ["7 дней бесплатного доступа"],
-  },
-  {
-    id: "annual",
-    title: "Годовая подписка",
-    price: "19 900 ₽",
-    suffix: "в год",
-    badge: "Выгоднее",
-    cta: "Выбрать годовой",
-    access: "clubAnnual" as const,
-    featuresPrefix: ["Всё из месячной подписки", "Приоритетная поддержка куратора", "VIP-материалы", "Стратегическая сессия 1 раз в год"],
-  },
+export const navItems: NavItem[] = [
+  { id: "today", label: "Сегодня", icon: "today" },
+  { id: "tracker", label: "Трекер", icon: "tracker" },
+  { id: "protocols", label: "Протоколы", icon: "protocols" },
+  { id: "materials", label: "Материалы", icon: "materials" },
+  { id: "profile", label: "Профиль", icon: "profile" },
 ];
 
-export const clinicPageContent = {
-  header: {
-    kicker: "Vedara · Clinic",
-    title: "Клиника системного восстановления",
-    subtitle: "Интегративный подход к здоровью женщины: тело, психика, питание, образ жизни и персональная программа.",
-  },
-  highlights: [
-    {
-      title: "Индивидуальный протокол",
-      text: "Программа создаётся под историю, состояние, ритм и цели человека.",
-    },
-    {
-      title: "Системность",
-      text: "Работа идёт с несколькими слоями одновременно: телом, психикой, питанием и образом жизни.",
-    },
-  ],
-  programs: {
-    kicker: "Программы клиники",
-    title: "Семь путей к здоровью",
-  },
-  philosophy: {
-    kicker: "Философия",
-    title: "Три принципа работы",
-  },
-  notice: "MVP не содержит медицинских назначений. Перед внедрением клинических сценариев нужен юридический и медицинский контур ответственности.",
+export const userProfile: UserProfile = {
+  id: "demo-user",
+  name: "Мария",
+  subtitle: "demo-профиль Vedara",
+  focus: "Спокойный режим, сон и регулярность базовых привычек",
+  goals: ["больше энергии", "мягкий режим дня", "устойчивые практики", "осознанное питание"],
+};
+
+export const accessLabels = {
+  guest: "Гость",
+  trial: "Demo доступ",
+  clubMonthly: "Premium месяц",
+  clubAnnual: "Premium год",
+  clinicLead: "Заявка в клинику",
+  universityLead: "Заявка в университет",
 } as const;
 
-export const clinicPrinciples = [
-  {
-    title: "Научность + духовность",
-    text: "Опора на современное знание с учётом психики, смысла и внутреннего состояния.",
-  },
-  {
-    title: "Индивидуальность",
-    text: "Нет универсального протокола: каждый маршрут собирается под человека.",
-  },
-  {
-    title: "Системность",
-    text: "Фокус не на симптоме, а на связях между телом, образом жизни и состоянием.",
-  },
-];
+export const todayContent = {
+  greeting: "Доброе утро",
+  dateLabel: "Сегодня",
+  scoreLabel: "Индекс дня",
+  checkInTitle: "Быстрый check-in",
+  checkInText: "Отметьте состояние. Vedara сохранит день локально на этом устройстве.",
+  planTitle: "План дня",
+  planAction: "Открыть трекер",
+  focusTitle: "Фокус недели",
+  focusText: "Соберите минимум: вода, движение, короткая практика и один материал без перегруза.",
+  protocolTitle: "Текущий протокол",
+  primaryCta: "Отметить состояние",
+  practiceCta: "Начать практику",
+  protocolCta: "Открыть протокол",
+};
 
-export const universityPageContent = {
+export const trackerContent = {
   header: {
-    kicker: "Vedara · University",
-    title: "Университет новой цивилизации здоровья",
-    subtitle: "Три этапа обучения для специалистов, которые хотят работать системно: от базы до собственной практики и методологии.",
+    kicker: "ежедневный ритм",
+    title: "Трекер",
+    subtitle: "Привычки, состояние и прогресс дня. Данные остаются в localStorage.",
   },
-  program: {
-    kicker: "Программа обучения",
-    title: "Executive Clinical Education",
-  },
-  principles: {
-    kicker: "Почему Vedara University",
-    title: "Принципы обучения",
-  },
-  formats: {
-    kicker: "Форматы",
-    title: "Как проходит обучение",
-    text: "Формат включён в образовательную траекторию и доступен через кабинет участника.",
-  },
-  cta: "Подать заявку",
-  notice: "В MVP финансовые цели и сертификация показываются как маркетинговые блоки для согласования, без обещаний гарантированного дохода.",
-} as const;
+  weekTitle: "Неделя",
+  habitsTitle: "Привычки дня",
+  conditionTitle: "Состояние",
+  saveDay: "Сохранить день",
+  saved: "День сохранен",
+};
 
-export const universityFormats = ["Видеоуроки", "Живые сессии", "Клиническая практика", "Ретриты"];
-
-export const cabinetContent = {
+export const protocolsContent = {
   header: {
-    kicker: "Личный кабинет",
-    title: "Здравствуйте, Мария",
-    subtitle: (activeDays: number, accessLabel: string) => `Сегодня ${activeDays} день подряд. Статус: ${accessLabel}.`,
+    kicker: "мягкие протоколы",
+    title: "Протоколы",
+    subtitle: "Пошаговые wellness-задачи без медицинских рекомендаций и без обещаний результата.",
   },
-  accessLabels: {
-    trial: "Пробный доступ",
-    clubMonthly: "Клуб · месяц",
-    clubAnnual: "Клуб · год",
-    clinicLead: "Заявка в клинику",
-    universityLead: "Заявка в университет",
-    guest: "Гость",
+  currentTitle: "Активный протокол",
+  tasksTitle: "Задачи дня",
+  catalogTitle: "Доступные протоколы",
+  premiumCta: "Открыть с Premium",
+  clinicCta: "Нужна индивидуальная программа",
+  leadSaved: "Заявка сохранена",
+};
+
+export const materialsContent = {
+  header: {
+    kicker: "библиотека Vedara",
+    title: "Материалы",
+    subtitle: "Уроки, практики, медитации и вводные материалы клуба и университета.",
+  },
+  progressTitle: "Прогресс обучения",
+  listTitle: "Сегодня можно изучить",
+  completed: "Изучено",
+  open: "Отметить изученным",
+};
+
+export const profileContent = {
+  header: {
+    kicker: "личный кабинет",
+    title: "Профиль",
+    subtitle: "Demo-доступ, цели, заявки и локальная история MVP.",
   },
   stats: {
-    streak: "дней серии",
-    completion: "выполнено",
-    sessions: "сессий",
-    lessons: "уроков",
+    habits: "привычек сегодня",
+    materials: "материалов",
+    protocolTasks: "задач протокола",
+    leads: "заявок",
   },
-  week: {
-    kicker: "Практика",
-    title: "Эта неделя",
-    action: "+ Новая практика",
-    days: ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"],
-    summary: (completion: number, activeDays: number) => `${completion}% выполнено · ${activeDays} из 7 дней активны`,
-  },
-  lessons: {
-    kicker: "Обучение",
-    title: "Следующие уроки",
-    done: "готово",
-    open: "открыть",
-  },
-  protocols: {
-    kicker: "Протоколы",
-    title: "Ваши протоколы",
-  },
-  sessions: {
-    kicker: "Мои сессии",
-    title: "Программа восстановления",
-  },
-} as const;
+  goalsTitle: "Цели",
+  accessTitle: "Доступ",
+  leadsTitle: "Заявки",
+  productsTitle: "Следующие шаги",
+  enableTrial: "Включить demo",
+  enablePremium: "Premium demo",
+  reset: "Сбросить demo",
+  noLeads: "Заявок пока нет",
+};
 
-export const ecosystemDirections: EcosystemDirection[] = [
-  {
-    id: "medicine",
-    index: "I",
-    title: "Medicine",
-    subtitle: "Медицина нового тысячелетия",
-    description:
-      "Системный подход к восстановлению организма и психики: тело, питание, состояние и образ жизни в единой карте.",
-    screen: "clinic",
-  },
-  {
-    id: "longevita",
-    index: "II",
-    title: "Longevita",
-    subtitle: "Клуб женщин нового времени",
-    description:
-      "Энергия, молодость, осознанное долголетие, практики, знания и поддержка сообщества.",
-    screen: "club",
-  },
-  {
-    id: "university",
-    index: "III",
-    title: "University",
-    subtitle: "Университет новой цивилизации здоровья",
-    description:
-      "Обучение специалистов: от основ интегративного подхода до практики, супервизии и собственной системы услуг.",
-    screen: "university",
-  },
-  {
-    id: "clinic",
-    index: "IV",
-    title: "Clinic",
-    subtitle: "Клиника системного восстановления",
-    description:
-      "Индивидуальные программы и сопровождение для очного и онлайн-формата с фокусом на устойчивый результат.",
-    screen: "clinic",
-  },
+export const checkMetrics: CheckMetric[] = [
+  { id: "energy", label: "Энергия", helper: "ресурс", minLabel: "низко", maxLabel: "высоко" },
+  { id: "mood", label: "Настроение", helper: "фон", minLabel: "тяжело", maxLabel: "легко" },
+  { id: "sleep", label: "Сон", helper: "качество", minLabel: "плохо", maxLabel: "хорошо" },
+  { id: "stress", label: "Стресс", helper: "напряжение", minLabel: "много", maxLabel: "мало" },
 ];
 
-export const homePrograms: Program[] = [
+export const habits: Habit[] = [
   {
-    id: "elixir",
-    title: "Эликсир жизни",
-    tag: "Восстановление",
-    description: "Комплексный протокол для энергии, ресурса и бережного запуска процессов восстановления.",
-    access: "clinic",
-  },
-  {
-    id: "support-point",
-    title: "Точка опоры",
-    tag: "Психика",
-    description: "Работа с внутренними опорами, убеждениями, напряжением и личной устойчивостью.",
-    access: "clinic",
-  },
-  {
-    id: "burnout",
-    title: "Жизнь после выгорания",
-    tag: "Энергия",
-    description: "Возврат сил, смысла, мотивации и здорового ритма после хронического стресса.",
-    access: "clinic",
-  },
-  {
-    id: "rejuvenation",
-    title: "Омоложение без хирургии",
-    tag: "Долголетие",
-    description: "Нехирургические практики и протоколы красоты, восстановления и гормонального баланса.",
-    access: "clinic",
-  },
-  {
-    id: "complex-health",
-    title: "Комплексное восстановление",
-    tag: "Здоровье",
-    description: "Сопровождение при хронических состояниях как дополнение к наблюдению у врача.",
-    access: "clinic",
-  },
-  {
-    id: "dependencies",
-    title: "7-дневная программа",
-    tag: "Перезагрузка",
-    description: "Интенсив для выхода из привычных паттернов и формирования новой опоры.",
-    access: "clinic",
-  },
-];
-
-export const clubPillars = [
-  {
-    id: "neuro",
-    title: "Нейропрограммирование",
-    description: "Работа с ограничивающими убеждениями и привычными сценариями мышления.",
+    id: "water",
+    title: "Вода",
+    description: "Мягко держать питьевой режим в течение дня.",
+    category: "water",
+    target: "4 отметки",
   },
   {
     id: "nutrition",
-    title: "Нутрициология",
-    description: "Питание, протоколы долголетия и бережная настройка ежедневного рациона.",
+    title: "Питание",
+    description: "Один спокойный прием пищи без спешки.",
+    category: "nutrition",
+    target: "1 фокус",
   },
   {
-    id: "sleep",
-    title: "Сомнология",
-    description: "Сон, циркадные ритмы и восстановление нервной системы.",
+    id: "movement",
+    title: "Движение",
+    description: "Короткая прогулка или мягкая разминка.",
+    category: "movement",
+    target: "15 минут",
   },
   {
-    id: "detox",
-    title: "Детокс и очищение",
-    description: "Мягкие протоколы очищения без экстремальных перегрузок.",
+    id: "practice-breath",
+    title: "Практика",
+    description: "Дыхательная пауза и переключение внимания.",
+    category: "practice",
+    target: "7 минут",
   },
   {
-    id: "energy",
-    title: "Женская энергетика",
-    description: "Циклы, ресурс, внутреннее состояние и связь с телом.",
+    id: "sleep-ritual",
+    title: "Сон",
+    description: "Вечерний ритуал без перегруза экранами.",
+    category: "sleep",
+    target: "1 шаг",
   },
 ];
 
-export const clubFeatures = [
-  "Ежемесячные темы и структурированные материалы",
-  "Групповые звонки 2 раза в неделю",
-  "Личная поддержка куратора",
-  "Библиотека протоколов и практик",
-  "Закрытое сообщество участниц",
-];
-
-export const clinicPrograms: Program[] = [
+export const dayPlan: DayPlanItem[] = [
   {
-    id: "fasting",
-    title: "Лечебное голодание",
-    eyebrow: "7 / 14 / 21 день",
-    tag: "Протокол",
-    description: "Очный или онлайн-протокол с сопровождением специалиста и мягкой подготовкой.",
-    access: "clinic",
+    id: "plan-water",
+    title: "Вода",
+    subtitle: "Отметить базовый питьевой ритм",
+    habitId: "water",
+    action: "habit",
   },
   {
-    id: "support-point-clinic",
-    title: "Точка опоры",
-    eyebrow: "5 сессий",
-    tag: "Сессии",
-    description: "Целостная сборка новой идентичности: убеждения, психосоматика, внутренние опоры.",
-    access: "clinic",
+    id: "plan-movement",
+    title: "Движение",
+    subtitle: "15 минут мягкой активности",
+    habitId: "movement",
+    action: "habit",
   },
   {
-    id: "health-recovery",
-    title: "Восстановление здоровья",
-    tag: "Комплекс",
-    description: "Комбинация протоколов, психосоматики и работы с телом в персональной программе.",
-    access: "clinic",
+    id: "plan-practice",
+    title: "Практика",
+    subtitle: "7 минут дыхания",
+    habitId: "practice-breath",
+    action: "practice",
   },
   {
-    id: "burnout-clinic",
-    title: "Жизнь после выгорания",
-    tag: "Нервная система",
-    description: "Выход из выгорания, восстановление энергии, смысла и устойчивого ритма.",
-    access: "clinic",
+    id: "plan-protocol",
+    title: "Протокол",
+    subtitle: "Выполнить первую задачу дня",
+    protocolTaskId: "sleep-d1-rhythm",
+    action: "protocol",
   },
   {
-    id: "no-scalpel",
-    title: "Омоложение без скальпеля",
-    tag: "Красота",
-    description: "Нутрициология красоты, гормональный баланс и натуральные протоколы омоложения.",
-    access: "clinic",
-  },
-  {
-    id: "life-20",
-    title: "Жизнь 2.0",
-    tag: "Поддержка",
-    description: "Интегративная поддержка качества жизни при сложных состояниях вместе с врачебным наблюдением.",
-    access: "clinic",
-  },
-  {
-    id: "fertility-diabetes",
-    title: "Бесплодие и диабет",
-    tag: "Функциональный подход",
-    description: "Карта факторов, образа жизни и сопровождения без замены профильного врача.",
-    access: "clinic",
+    id: "plan-material",
+    title: "Материал",
+    subtitle: "Открыть урок из библиотеки",
+    action: "material",
   },
 ];
 
-export const universityStages = [
+export const protocols: Protocol[] = [
   {
-    id: "biohealer",
-    index: "01",
-    title: "Биохиллер",
-    subtitle: "«Эликсир жизни»",
-    duration: "3 месяца",
-    description:
-      "База интегративного подхода, натуральная регенерация, психосоматика и выбор специализации.",
-    points: ["онкология", "бесплодие", "диабет", "зависимости", "омоложение"],
+    id: "sleep-recovery",
+    title: "Сон и восстановление",
+    subtitle: "14 дней спокойной настройки режима",
+    durationDays: 14,
+    statusLabel: "доступен",
+    access: "free",
+    currentDay: 1,
+    days: [
+      {
+        day: 1,
+        title: "Ритм вечера",
+        summary: "Соберите простой вечерний сценарий и отметьте состояние утром.",
+        tasks: [
+          {
+            id: "sleep-d1-rhythm",
+            title: "Выбрать время замедления",
+            description: "Поставьте мягкую границу для работы и уведомлений.",
+            kind: "habit",
+            minutes: 3,
+          },
+          {
+            id: "sleep-d1-breath",
+            title: "Дыхательная пауза",
+            description: "Короткая практика для переключения внимания.",
+            kind: "practice",
+            minutes: 7,
+          },
+          {
+            id: "sleep-d1-reflection",
+            title: "Отметить утреннее состояние",
+            description: "Заполните быстрый check-in на главном экране.",
+            kind: "reflection",
+            minutes: 2,
+          },
+        ],
+      },
+    ],
   },
   {
-    id: "hypno",
-    index: "02",
-    title: "Гипно-терапевт",
-    subtitle: "Системная интеграция",
-    duration: "3 месяца",
-    description:
-      "Глубинная работа с подсознанием, корневыми убеждениями и устойчивой внутренней опорой.",
-    points: ["практика", "разбор кейсов", "инструменты трансформации"],
+    id: "energy-baseline",
+    title: "Энергия без перегруза",
+    subtitle: "7 дней наблюдения за ресурсом",
+    durationDays: 7,
+    statusLabel: "premium",
+    access: "premium",
+    currentDay: 1,
+    days: [
+      {
+        day: 1,
+        title: "Базовая карта ресурса",
+        summary: "Отмечайте ритм дня и выбирайте легкие действия.",
+        tasks: [
+          {
+            id: "energy-d1-map",
+            title: "Карта энергии",
+            description: "Зафиксируйте периоды подъема и спада.",
+            kind: "reflection",
+            minutes: 5,
+          },
+        ],
+      },
+    ],
   },
   {
-    id: "master",
-    index: "03",
-    title: "Мастер",
-    subtitle: "«Хирургия духа»",
-    duration: "6 месяцев",
-    description:
-      "Продвинутый уровень для сложных случаев, собственной методологии и экосистемы услуг.",
-    points: ["ретриты", "образовательные продукты", "личная практика"],
+    id: "nutrition-awareness",
+    title: "Осознанное питание",
+    subtitle: "10 дней спокойного наблюдения",
+    durationDays: 10,
+    statusLabel: "premium",
+    access: "premium",
+    currentDay: 1,
+    days: [
+      {
+        day: 1,
+        title: "Темп и внимание",
+        summary: "Отметьте один прием пищи без спешки.",
+        tasks: [
+          {
+            id: "nutrition-d1-focus",
+            title: "Один спокойный прием пищи",
+            description: "Наблюдайте темп, насыщение и фон состояния.",
+            kind: "habit",
+            minutes: 12,
+          },
+        ],
+      },
+    ],
   },
 ];
 
-export const universityPrinciples = [
-  "Работа с первопричиной, а не только с симптомом.",
-  "Практика с первого дня через клиентские случаи.",
-  "Сертификация и понятная образовательная траектория.",
-  "Наставничество и сообщество после окончания.",
-  "Встроенная монетизация без обещаний гарантированного дохода.",
-  "Связь профессионального роста и внутреннего пути.",
+export const materials: Material[] = [
+  {
+    id: "intro-vedara",
+    title: "Как устроена Vedara",
+    description: "Короткий вводный урок о трекере, протоколах и материалах.",
+    kind: "lesson",
+    duration: "8 мин",
+    access: "free",
+    tag: "старт",
+  },
+  {
+    id: "breath-soft",
+    title: "Мягкая дыхательная практика",
+    description: "Аудио-практика для паузы в течение дня.",
+    kind: "practice",
+    duration: "7 мин",
+    access: "free",
+    tag: "практика",
+  },
+  {
+    id: "club-pillars",
+    title: "5 столпов Longevita Club",
+    description: "Community, практики, протоколы, знания и сопровождение куратора.",
+    kind: "club",
+    duration: "14 мин",
+    access: "premium",
+    tag: "club",
+  },
+  {
+    id: "sleep-hygiene",
+    title: "Вечерний ритм",
+    description: "Статья о спокойной настройке дня без жестких правил.",
+    kind: "article",
+    duration: "6 мин",
+    access: "free",
+    tag: "сон",
+  },
+  {
+    id: "body-scan",
+    title: "Сканирование тела",
+    description: "Медитация для контакта с телесными сигналами.",
+    kind: "meditation",
+    duration: "11 мин",
+    access: "premium",
+    tag: "медитация",
+  },
+  {
+    id: "university-intro",
+    title: "Введение в Vedara University",
+    description: "Три этапа обучения специалистов: база, практика, интеграция.",
+    kind: "university",
+    duration: "12 мин",
+    access: "university",
+    tag: "university",
+  },
 ];
 
-export const lessons: Lesson[] = [
-  { id: "intro", title: "Введение в VEDARA", duration: "15 мин", access: "free" },
-  { id: "pillars", title: "5 столпов Longevita", duration: "22 мин", access: "club" },
-  { id: "psychosomatics", title: "Психосоматика: основы", duration: "34 мин", access: "club" },
-  { id: "fasting-protocols", title: "Протоколы голодания", duration: "28 мин", access: "club" },
-  { id: "hypno-intro", title: "Гипнотерапия: вводный", duration: "42 мин", access: "university" },
-];
-
-export const protocols = [
-  { title: "16/8 Интервальное", status: "Текущий протокол · 14 дней" },
-  { title: "Сухое 24ч", status: "Следующий этап · через 3 дня" },
-  { title: "Длительное 72ч", status: "Расширенный протокол" },
-];
-
-export const sessions = [
-  { title: "Сессия 1 — Диагностика", status: "Завершено · 01.06.2026" },
-  { title: "Сессия 2 — Психосоматика", status: "Завершено · 07.06.2026" },
-  { title: "Сессия 3 — Работа с телом", status: "Завершено · 11.06.2026" },
-  { title: "Сессия 4 — Убеждения", status: "Запланировано · 18.06.2026" },
+export const productCtas: ProductCta[] = [
+  {
+    id: "club",
+    title: "Longevita Club",
+    text: "7 дней бесплатно, затем месячный или годовой Premium demo в рамках MVP.",
+    cta: "Открыть Premium",
+    target: "profile",
+  },
+  {
+    id: "clinic",
+    title: "Vedara Clinic",
+    text: "Индивидуальная программа и консультация специалиста.",
+    cta: "Оставить заявку",
+    leadType: "clinic",
+  },
+  {
+    id: "university",
+    title: "Vedara University",
+    text: "Вводная заявка на обучение специалистов и живые форматы.",
+    cta: "Заявка на обучение",
+    leadType: "university",
+  },
 ];
 
 export const safetyNotes = [
-  "VEDARA MVP не ставит диагнозы и не заменяет врача.",
-  "Любые протоколы при заболеваниях требуют консультации профильного специалиста.",
-  "В приложении сейчас только демонстрационный доступ, без реальных оплат и медицинских назначений.",
+  "MVP не ставит диагнозы и не заменяет очную работу со специалистом.",
+  "Протоколы являются wellness-структурой для наблюдения и привычек.",
+  "Заявки сохраняются как mock-состояние без отправки на сервер.",
+];
+
+export const leadTitles: Record<LeadType, string> = {
+  clinic: "Заявка в Vedara Clinic",
+  university: "Заявка в Vedara University",
+};
+
+export const premiumCopy = {
+  title: "Vedara Premium",
+  guestText: "Demo-доступ открывает клубные материалы и расширенные протоколы.",
+  activeText: "Premium demo активен. Продолжайте трекинг, материалы и протоколы.",
+  guestCta: "Включить demo",
+  activeCta: "Перейти в профиль",
+  tariffsCta: "Смотреть материалы",
+};
+
+export const homePrograms: Program[] = [
+  {
+    id: "demo-program",
+    title: "Индивидуальная программа",
+    eyebrow: "Clinic",
+    description: "Mock-направление для заявки на персональную работу.",
+    tag: "mock",
+    access: "clinic",
+  },
 ];

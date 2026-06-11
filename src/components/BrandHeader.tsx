@@ -1,4 +1,5 @@
 import { assets } from "../data/assets";
+import { brandContent } from "../data/content";
 import { CabinetCircleIcon } from "./icons/NavIcons";
 
 interface BrandHeaderProps {
@@ -10,9 +11,9 @@ export function BrandHeader({ onCabinetClick }: BrandHeaderProps) {
     <header className="brand-header" aria-label="Vedara">
       <div>
         <img className="brand-logo" src={assets.logoFull} alt="Vedara" />
-        <div className="brand-mini">экосистема для твоего здоровья</div>
+        <div className="brand-mini">{brandContent.tagline}</div>
       </div>
-      <button className="icon-button" type="button" aria-label="Открыть кабинет" onClick={onCabinetClick}>
+      <button className="icon-button" type="button" aria-label={brandContent.profileAria} onClick={onCabinetClick}>
         <CabinetCircleIcon size={22} />
       </button>
     </header>

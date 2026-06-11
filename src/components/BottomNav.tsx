@@ -1,18 +1,18 @@
 import type { ScreenId } from "../data/types";
-import { navItems } from "../data/content";
+import { brandContent, navItems } from "../data/content";
 import { NavIcon } from "./icons/NavIcons";
 
 interface BottomNavProps {
-  active?: string;
-  screen?: string;
-  onNavigate: (screen: any) => void;
+  active?: ScreenId;
+  screen?: ScreenId;
+  onNavigate: (screen: ScreenId) => void;
 }
 
 export function BottomNav({ active, screen, onNavigate }: BottomNavProps) {
-  const current = active ?? screen ?? "home";
+  const current = active ?? screen ?? "today";
 
   return (
-    <nav className="bottom-nav" aria-label="Основная навигация">
+    <nav className="bottom-nav" aria-label={brandContent.navAria}>
       {navItems.map((item) => (
         <button
           key={item.id}
@@ -22,7 +22,7 @@ export function BottomNav({ active, screen, onNavigate }: BottomNavProps) {
           aria-current={current === item.id ? "page" : undefined}
         >
           <span className="bottom-nav__icon">
-            <NavIcon screen={item.id as ScreenId} />
+            <NavIcon screen={item.id} />
           </span>
           <span className="bottom-nav__label">{item.label}</span>
         </button>

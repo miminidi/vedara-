@@ -25,47 +25,57 @@ function IconFrame({ children, size = 22, strokeWidth = 1.8 }: IconProps & { chi
   );
 }
 
-export function HomeIcon(props: IconProps) {
+export function TodayIcon(props: IconProps) {
   return (
     <IconFrame {...props}>
-      <path d="M4.5 11.5 12 5l7.5 6.5" />
-      <path d="M6.5 10.5v8h11v-8" />
-      <path d="M10 18.5v-5h4v5" />
+      <path d="M12 4.5v2.3" />
+      <path d="M12 17.2v2.3" />
+      <path d="M4.5 12h2.3" />
+      <path d="M17.2 12h2.3" />
+      <path d="M7 7l1.6 1.6" />
+      <path d="m15.4 15.4 1.6 1.6" />
+      <path d="m17 7-1.6 1.6" />
+      <path d="m8.6 15.4-1.6 1.6" />
+      <path d="M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
     </IconFrame>
   );
 }
 
-export function ClubIcon(props: IconProps) {
+export function TrackerIcon(props: IconProps) {
   return (
     <IconFrame {...props}>
-      <path d="M12 3.8 19.2 12 12 20.2 4.8 12 12 3.8Z" />
-      <path d="M8.7 12h6.6" />
-      <path d="M12 8.7v6.6" />
+      <path d="M5 19V5" />
+      <path d="M19 19H5" />
+      <path d="M8 15.5v-3" />
+      <path d="M12 15.5v-7" />
+      <path d="M16 15.5v-5" />
     </IconFrame>
   );
 }
 
-export function ClinicIcon(props: IconProps) {
+export function ProtocolsIcon(props: IconProps) {
   return (
     <IconFrame {...props}>
-      <path d="M12 4.5a7.5 7.5 0 1 0 0 15 7.5 7.5 0 0 0 0-15Z" />
-      <path d="M12 8.5v7" />
-      <path d="M8.5 12h7" />
+      <path d="M7 4.5h10A1.5 1.5 0 0 1 18.5 6v12A1.5 1.5 0 0 1 17 19.5H7A1.5 1.5 0 0 1 5.5 18V6A1.5 1.5 0 0 1 7 4.5Z" />
+      <path d="M9 8.2h6" />
+      <path d="M9 12h6" />
+      <path d="M9 15.8h3.5" />
     </IconFrame>
   );
 }
 
-export function UniversityIcon(props: IconProps) {
+export function MaterialsIcon(props: IconProps) {
   return (
     <IconFrame {...props}>
-      <path d="m4 9 8-4 8 4-8 4-8-4Z" />
-      <path d="M7 11v4.2c1.3 1.2 3 1.8 5 1.8s3.7-.6 5-1.8V11" />
-      <path d="M20 9v5" />
+      <path d="M6.5 4.8h8.2A2.8 2.8 0 0 1 17.5 7.6v11.6H8.2a2.7 2.7 0 0 1-2.7-2.7V5.8a1 1 0 0 1 1-1Z" />
+      <path d="M8.5 15.8h9" />
+      <path d="M9 8.5h5.2" />
+      <path d="M9 11.5h4" />
     </IconFrame>
   );
 }
 
-export function CabinetIcon(props: IconProps) {
+export function ProfileIcon(props: IconProps) {
   return (
     <IconFrame {...props}>
       <path d="M12 11.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
@@ -102,12 +112,18 @@ export function ArrowRightIcon(props: IconProps) {
   );
 }
 
+export const HomeIcon = TodayIcon;
+export const ClubIcon = TrackerIcon;
+export const ClinicIcon = ProtocolsIcon;
+export const UniversityIcon = MaterialsIcon;
+export const CabinetIcon = ProfileIcon;
+
 const navIconMap = {
-  home: HomeIcon,
-  club: ClubIcon,
-  clinic: ClinicIcon,
-  university: UniversityIcon,
-  cabinet: CabinetIcon,
+  today: TodayIcon,
+  tracker: TrackerIcon,
+  protocols: ProtocolsIcon,
+  materials: MaterialsIcon,
+  profile: ProfileIcon,
 } satisfies Record<ScreenId, (props: IconProps) => ReactElement>;
 
 export function NavIcon({ screen, ...props }: IconProps & { screen: ScreenId }) {

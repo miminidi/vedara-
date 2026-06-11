@@ -54,21 +54,21 @@
   --color-lilac-40: rgba(214, 191, 233, 0.40);
   --color-success-14: rgba(97, 124, 91, 0.14);
 
-  --font-display: "Prata", Georgia, "Times New Roman", serif;
+  --font-display: "Prata", Georgia, serif;
   --font-ui: Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   --text-xs: 11px;
-  --text-sm: 13px;
-  --text-md: 15px;
-  --text-lg: 18px;
-  --text-xl: 22px;
-  --text-2xl: 28px;
-  --text-3xl: 36px;
-  --text-hero: 42px;
+  --text-sm: 12px;
+  --text-md: 14px;
+  --text-lg: 16px;
+  --text-xl: 20px;
+  --text-2xl: 26px;
+  --text-3xl: 32px;
+  --text-hero: 34px;
 
-  --line-tight: 1.08;
-  --line-heading: 1.16;
-  --line-body: 1.48;
+  --line-tight: 1.06;
+  --line-heading: 1.18;
+  --line-body: 1.5;
   --letter-display: 0;
   --letter-caps: 0;
 
@@ -90,6 +90,23 @@
   --radius-xl: 30px;
   --radius-pill: 999px;
 
+  --surface-card: var(--color-white-76);
+  --surface-card-soft: var(--color-surface-lavender);
+  --surface-card-active: var(--color-success-14);
+  --card-padding: var(--space-5);
+  --card-padding-sm: var(--space-4);
+  --card-radius: var(--radius-lg);
+  --card-radius-sm: var(--radius-md);
+  --card-border: 1px solid var(--color-border-soft);
+  --card-shadow: var(--shadow-card);
+  --card-shadow-strong: var(--shadow-soft);
+  --card-backdrop: blur(18px);
+  --row-icon-size: 44px;
+  --row-icon-glyph-size: 21px;
+  --row-gap: 12px;
+  --row-chip-height: 26px;
+  --row-chip-max-width: 92px;
+
   --shadow-soft: 0 20px 56px var(--color-purple-10);
   --shadow-card: 0 16px 40px var(--color-purple-06);
   --shadow-button: 0 14px 28px var(--color-purple-22);
@@ -99,14 +116,14 @@
 
   --mobile-max-width: 480px;
   --screen-padding: 24px;
-  --bottom-nav-height: 96px;
+  --bottom-nav-height: 106px;
   --tap-target: 48px;
-  --button-height: 48px;
-  --button-padding-x: 22px;
-  --icon-size-nav: 22px;
+  --button-height: 46px;
+  --button-padding-x: 20px;
+  --icon-size-nav: 21px;
   --icon-size-action: 22px;
-  --dock-height: 78px;
+  --dock-height: 74px;
   --dock-padding: 8px;
-  --dock-radius: 28px;
-  --dock-item-radius: 22px;
+  --dock-radius: 26px;
+  --dock-item-radius: 20px;
 }
