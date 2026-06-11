@@ -17,7 +17,7 @@ export function ProgramCard({ program, actionLabel, onAction }: ProgramCardProps
         <span className="badge badge--gold">{program.tag}</span>
       </div>
       <p>{program.description}</p>
-      {actionLabel ? (
+      {actionLabel && onAction ? (
         <button className="button button--ghost u-mt-4" type="button" onClick={onAction}>
           {actionLabel}
         </button>

@@ -1,4 +1,5 @@
 import { assets } from "../data/assets";
+import { CabinetCircleIcon } from "./icons/NavIcons";
 
 interface BrandHeaderProps {
   onCabinetClick?: () => void;
@@ -12,7 +13,7 @@ export function BrandHeader({ onCabinetClick }: BrandHeaderProps) {
         <div className="brand-mini">экосистема для твоего здоровья</div>
       </div>
       <button className="icon-button" type="button" aria-label="Открыть кабинет" onClick={onCabinetClick}>
-        ◌
+        <CabinetCircleIcon size={22} />
       </button>
     </header>
   );

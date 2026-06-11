@@ -1,5 +1,6 @@
 import type { ScreenId } from "../data/types";
 import { navItems } from "../data/content";
+import { NavIcon } from "./icons/NavIcons";
 
 interface BottomNavProps {
   active?: string;
@@ -20,7 +21,9 @@ export function BottomNav({ active, screen, onNavigate }: BottomNavProps) {
           onClick={() => onNavigate(item.id)}
           aria-current={current === item.id ? "page" : undefined}
         >
-          <span className="bottom-nav__icon" aria-hidden="true">{item.icon}</span>
+          <span className="bottom-nav__icon">
+            <NavIcon screen={item.id as ScreenId} />
+          </span>
           <span className="bottom-nav__label">{item.label}</span>
         </button>
       ))}

@@ -36,9 +36,13 @@
   --color-white-72: rgba(255, 255, 255, 0.72);
   --color-white-70: rgba(255, 255, 255, 0.70);
   --color-white-54: rgba(255, 255, 255, 0.54);
+  --color-white-46: rgba(255, 255, 255, 0.46);
   --color-white-12: rgba(255, 255, 255, 0.12);
+  --color-purple-22: rgba(36, 19, 54, 0.22);
   --color-purple-16: rgba(36, 19, 54, 0.16);
+  --color-purple-12: rgba(36, 19, 54, 0.12);
   --color-purple-10: rgba(36, 19, 54, 0.10);
+  --color-purple-06: rgba(36, 19, 54, 0.06);
   --color-purple-03: rgba(36, 19, 54, 0.03);
   --color-gold-24: rgba(198, 167, 94, 0.24);
   --color-gold-18: rgba(198, 167, 94, 0.18);
@@ -46,6 +50,7 @@
   --color-gold-12: rgba(198, 167, 94, 0.12);
   --color-gold-10: rgba(198, 167, 94, 0.10);
   --color-lavender-38: rgba(219, 200, 243, 0.38);
+  --color-lavender-30: rgba(219, 200, 243, 0.30);
   --color-lilac-40: rgba(214, 191, 233, 0.40);
   --color-success-14: rgba(97, 124, 91, 0.14);
 
@@ -81,18 +86,27 @@
   --radius-xs: 10px;
   --radius-sm: 14px;
   --radius-md: 20px;
-  --radius-lg: 28px;
-  --radius-xl: 36px;
+  --radius-lg: 24px;
+  --radius-xl: 30px;
   --radius-pill: 999px;
 
-  --shadow-soft: 0 18px 48px rgba(36, 19, 54, 0.10);
-  --shadow-card: 0 14px 34px rgba(36, 19, 54, 0.09);
-  --shadow-button: 0 12px 28px rgba(36, 19, 54, 0.22);
+  --shadow-soft: 0 20px 56px var(--color-purple-10);
+  --shadow-card: 0 16px 40px var(--color-purple-06);
+  --shadow-button: 0 14px 28px var(--color-purple-22);
+  --shadow-card-hover: 0 20px 44px var(--color-purple-12);
   --shadow-shell: 0 0 0 1px var(--color-purple-03);
   --shadow-nav: 0 18px 44px var(--color-purple-16);
 
   --mobile-max-width: 480px;
   --screen-padding: 24px;
-  --bottom-nav-height: 92px;
+  --bottom-nav-height: 96px;
   --tap-target: 48px;
+  --button-height: 48px;
+  --button-padding-x: 22px;
+  --icon-size-nav: 22px;
+  --icon-size-action: 22px;
+  --dock-height: 78px;
+  --dock-padding: 8px;
+  --dock-radius: 28px;
+  --dock-item-radius: 22px;
 }

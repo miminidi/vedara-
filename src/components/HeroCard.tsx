@@ -1,3 +1,5 @@
+import { ArrowRightIcon } from "./icons/NavIcons";
+
 interface HeroCardProps {
   image?: string;
   title: string;
@@ -38,7 +40,10 @@ export function HeroCard({
         {bodyText ? <p className="hero-text">{bodyText}</p> : null}
         {buttonLabel && handleClick ? (
           <button className="button button--primary" type="button" onClick={handleClick}>
-            {buttonLabel} <span aria-hidden="true">›</span>
+            {buttonLabel}
+            <span className="button__icon">
+              <ArrowRightIcon size={16} strokeWidth={2} />
+            </span>
           </button>
         ) : null}
       </div>

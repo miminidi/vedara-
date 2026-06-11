@@ -27,18 +27,6 @@ export function HomePage({ access, onNavigate, onTrial }: HomePageProps) {
         onClick={() => onNavigate("club")}
       />
 
-      <div className="photo-strip" aria-label="Пространства Vedara">
-        <div className="photo-card photo-card--tall">
-          <img src={assets.photos.bodyPeople} alt={homePageContent.photoAlts.bodyPeople} />
-        </div>
-        <div className="photo-card">
-          <img src={assets.photos.nutritionBowl} alt={homePageContent.photoAlts.nutritionBowl} />
-        </div>
-        <div className="photo-card">
-          <img src={assets.photos.wellnessClub} alt={homePageContent.photoAlts.wellnessClub} />
-        </div>
-      </div>
-
       <SectionHead kicker={homePageContent.directions.kicker} title={homePageContent.directions.title} />
       <div className="grid grid--two">
         {ecosystemDirections.map((item) => (

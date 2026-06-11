@@ -1,5 +1,6 @@
 import type { AccessState, ScreenId } from "../data/types";
 import { premiumCopy } from "../data/content";
+import { CrownIcon } from "./icons/NavIcons";
 
 interface PremiumCardProps {
   access: AccessState;
@@ -12,14 +13,12 @@ export function PremiumCard({ access, onTrial, onNavigate }: PremiumCardProps) {
 
   return (
     <section className="premium-card">
-      <div className="premium-icon" aria-hidden="true">♛</div>
+      <div className="premium-icon">
+        <CrownIcon size={24} />
+      </div>
       <div>
         <h3>{premiumCopy.title}</h3>
-        <p>
-          {isActive
-            ? premiumCopy.activeText
-            : premiumCopy.guestText}
-        </p>
+        <p>{isActive ? premiumCopy.activeText : premiumCopy.guestText}</p>
         <div className="u-wrap">
           <button className="button button--primary" type="button" onClick={isActive ? () => onNavigate("cabinet") : onTrial}>
             {isActive ? premiumCopy.activeCta : premiumCopy.guestCta}
