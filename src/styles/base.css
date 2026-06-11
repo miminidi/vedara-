@@ -1,0 +1,81 @@
+@import "./tokens.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  background: var(--color-page-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background:
+    radial-gradient(circle at 6% 0%, var(--color-gold-12), transparent 28%),
+    radial-gradient(circle at 90% 6%, var(--color-lavender-38), transparent 34%),
+    linear-gradient(180deg, var(--vd-pearl-50), var(--vd-pearl-100));
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--vd-lavender-200);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-shell {
+  min-height: 100vh;
+  max-width: var(--mobile-max-width);
+  margin: 0 auto;
+  position: relative;
+  background:
+    radial-gradient(circle at 8% 2%, var(--color-gold-10), transparent 28%),
+    radial-gradient(circle at 94% 10%, var(--color-lilac-40), transparent 34%),
+    var(--color-page-bg);
+  box-shadow: var(--shadow-shell);
+}
+
+.app-content {
+  min-height: 100vh;
+  padding: calc(env(safe-area-inset-top) + var(--space-5)) var(--screen-padding)
+    calc(var(--bottom-nav-height) + env(safe-area-inset-bottom) + var(--space-8));
+}
+
+.screen {
+  animation: screenIn 220ms ease-out;
+}
+
+@keyframes screenIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
