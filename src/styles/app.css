@@ -132,7 +132,7 @@
 }
 
 .button__icon,
-.bottom-nav__icon,
+.bottom-dock__icon,
 .premium-icon,
 .lesson-index {
   flex: 0 0 auto;
@@ -377,6 +377,28 @@
 .today-hero .hero-title {
   font-size: var(--text-hero);
   text-transform: none;
+}
+
+.home-entry-hero {
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 300px;
+}
+
+.home-entry-hero .hero-text {
+  max-width: 320px;
+}
+
+.home-ecosystem-card .badge {
+  flex: 0 0 auto;
+}
+
+.home-tracker-card {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.home-tracker-card .button {
+  justify-self: start;
 }
 
 .score-card {
@@ -954,7 +976,7 @@ button.tracker-row {
   font-size: var(--text-sm);
 }
 
-.bottom-nav {
+.bottom-dock {
   position: fixed;
   left: 50%;
   bottom: max(var(--space-3), env(safe-area-inset-bottom));
@@ -966,55 +988,97 @@ button.tracker-row {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: var(--space-1);
+  align-items: end;
   border-radius: var(--dock-radius);
-  background: var(--color-white-88);
+  background: var(--dock-bg);
   border: var(--card-border);
   box-shadow: var(--shadow-nav);
   backdrop-filter: blur(18px);
 }
 
-.bottom-nav__item {
+.bottom-dock__item,
+.bottom-dock__center {
   border: 0;
-  border-radius: var(--dock-item-radius);
   background: transparent;
   color: var(--color-text-muted);
+  font-family: var(--font-ui);
+  transition: color 160ms ease, background 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.bottom-dock__item {
+  border-radius: var(--dock-item-radius);
   display: grid;
-  grid-template-rows: var(--icon-size-nav) 14px;
+  grid-template-rows: var(--dock-icon-size) var(--dock-label-height);
   gap: var(--space-1);
   place-items: center;
   padding: var(--space-2) var(--space-1);
   min-width: 0;
   min-height: 58px;
-  font-family: var(--font-ui);
-  transition: color 160ms ease, background 160ms ease, transform 160ms ease;
 }
 
-.bottom-nav__item.is-active {
-  background:
-    linear-gradient(180deg, var(--vd-lavender-100), var(--vd-lilac-100));
-  color: var(--color-accent-primary);
+.bottom-dock__item.is-active {
+  background: var(--dock-item-active-bg);
+  color: var(--dock-item-active-color);
   box-shadow: inset 0 0 0 1px var(--color-border-soft), var(--shadow-card);
 }
 
-.bottom-nav__item:active {
+.bottom-dock__item:active,
+.bottom-dock__center:active {
   transform: translateY(1px);
 }
 
-.bottom-nav__icon {
-  width: var(--icon-size-nav);
-  height: var(--icon-size-nav);
+.bottom-dock__icon {
+  width: var(--dock-icon-size);
+  height: var(--dock-icon-size);
   display: grid;
   place-items: center;
   line-height: 1;
 }
 
-.bottom-nav__icon .svg-icon {
-  width: var(--icon-size-nav);
-  height: var(--icon-size-nav);
+.bottom-dock__icon .svg-icon {
+  width: var(--dock-icon-size);
+  height: var(--dock-icon-size);
   stroke-width: 1.8;
 }
 
-.bottom-nav__label {
+.bottom-dock__center {
+  align-self: start;
+  margin-top: var(--dock-center-offset);
+  display: grid;
+  grid-template-rows: var(--dock-center-size) var(--dock-label-height);
+  gap: var(--space-1);
+  place-items: center;
+  min-width: 0;
+  min-height: calc(var(--dock-center-size) + var(--dock-label-height) + var(--space-1));
+  padding: 0 var(--space-1);
+}
+
+.bottom-dock__center-mark {
+  width: var(--dock-center-size);
+  height: var(--dock-center-size);
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--dock-center-bg);
+  border: var(--dock-center-border);
+  box-shadow: var(--dock-center-shadow);
+}
+
+.bottom-dock__center.is-active {
+  color: var(--color-accent-primary);
+}
+
+.bottom-dock__center.is-active .bottom-dock__center-mark {
+  box-shadow: inset 0 0 0 2px var(--color-accent-primary), var(--dock-center-shadow);
+}
+
+.bottom-dock__center-mark img {
+  width: var(--dock-center-logo-size);
+  height: var(--dock-center-logo-size);
+  object-fit: contain;
+}
+
+.bottom-dock__label {
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1059,6 +1123,10 @@ button.tracker-row {
     grid-template-columns: minmax(0, 1fr) 92px;
     align-items: start;
     gap: var(--space-4);
+  }
+
+  .home-entry-hero {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .score-card {

@@ -26,12 +26,135 @@ export const uiCopy = {
 };
 
 export const navItems: NavItem[] = [
-  { id: "today", label: "Сегодня", icon: "today" },
-  { id: "tracker", label: "Трекер", icon: "tracker" },
-  { id: "protocols", label: "Протоколы", icon: "protocols" },
-  { id: "materials", label: "Материалы", icon: "materials" },
+  { id: "home", label: "Главная", icon: "home" },
+  { id: "practices", label: "Практики", icon: "practices" },
+  { id: "tracker", label: "Трекер", icon: "tracker", center: true },
+  { id: "club", label: "Клуб", icon: "club" },
   { id: "profile", label: "Профиль", icon: "profile" },
 ];
+
+export const homeHubContent = {
+  hero: {
+    kicker: "Главная",
+    title: "Vedara Longevita",
+    text: "Открытый вход в Longevita Club, практики и экосистему Vedara без перегруженного dashboard.",
+    primaryCta: "Оформить доступ",
+    secondaryCta: "Перейти в практики",
+  },
+  tariff: {
+    kicker: "Longevita Club",
+    title: "5 555 ₽ стартовый доступ",
+    text: "Далее 3 333 ₽ / месяц. В MVP это только demo-состояние без реальной оплаты.",
+    cta: "Оформить доступ",
+  },
+  directionsKicker: "Vedara",
+  directionsTitle: "Экосистема Vedara",
+  trackerCta: {
+    kicker: "Трекер",
+    title: "Сегодняшний трекер",
+    text: "Отметьте привычки и состояние дня в центральном разделе.",
+    cta: "Открыть трекер",
+  },
+};
+
+export const homeEcosystemCards = [
+  {
+    id: "longevita",
+    title: "VEDARA LONGEVITA CLUB",
+    description: "Главный открытый продукт: клуб, практики, комьюнити и мягкое сопровождение.",
+    meta: "открыт",
+    target: "club",
+    cta: "Открыть клуб",
+  },
+  {
+    id: "university",
+    title: "VEDARA UNIVERSITY",
+    description: "Обучение специалистов, живые форматы и вводная заявка в demo-режиме.",
+    meta: "locked",
+    target: "profile",
+    cta: "Заявка на обучение",
+  },
+  {
+    id: "clinic",
+    title: "VEDARA CLINIC",
+    description: "Индивидуальные программы и консультация специалиста через mock-заявку.",
+    meta: "locked",
+    target: "profile",
+    cta: "Оставить заявку",
+  },
+  {
+    id: "individual",
+    title: "Индивидуальные программы с Марией Святой",
+    description: "Персональный маршрут восстановления и сопровождения после заявки.",
+    meta: "locked",
+    target: "profile",
+    cta: "Подробнее",
+  },
+] satisfies Array<{
+  id: string;
+  title: string;
+  description: string;
+  meta: string;
+  cta: string;
+  target: NavItem["id"];
+}>;
+
+export const practicesContent = {
+  header: {
+    kicker: "библиотека действий",
+    title: "Практики",
+    subtitle: "Уроки, материалы, мягкие протоколы и короткие действия, которые можно отметить как выполненные.",
+  },
+  progressTitle: "Прогресс практик",
+  progressLabel: "Прогресс практик",
+  listKicker: "library",
+  listTitle: "Сегодня можно изучить",
+  protocolKicker: "wellness",
+  protocolTitle: "Протоколы",
+  completed: "Изучено",
+  premium: "Premium",
+  minuteSuffix: "мин",
+  openTracker: "Открыть трекер",
+};
+
+export const clubContent = {
+  header: {
+    kicker: "Longevita Club",
+    title: "Клуб",
+    subtitle: "Комьюнити-хаб MVP: чат, живые встречи, куратор, объявления и недельный вызов без реального backend.",
+  },
+  stateActive: "demo active",
+  stateMock: "community mock",
+  chatTitle: "Клубный чат",
+  chatText: "Mock-лента для ощущения сообщества. Сообщения никуда не отправляются.",
+  liveSectionKicker: "this week",
+  liveSectionTitle: "Живые форматы",
+  liveTitle: "Ближайшая живая сессия",
+  liveText: "Воскресенье · 19:00 · разбор ритма недели и мягких практик.",
+  curatorTitle: "Куратор",
+  curatorText: "В MVP это информационный блок: вопросы сохраняются только как сценарий интерфейса.",
+  challengeTitle: "Вызов недели",
+  challengeText: "5 спокойных отметок: вода, движение, практика, сон и один материал.",
+  activityKicker: "community",
+  activityTitle: "Активность клуба",
+  activityCards: [
+    {
+      title: "Недельная тема",
+      text: "Мягкий режим без перегруза: участники отмечают базовые привычки и делятся наблюдениями в mock-формате.",
+    },
+    {
+      title: "Объявления",
+      text: "Новые практики недели доступны во вкладке “Практики”. Реальных сообщений и отправки данных в MVP нет.",
+    },
+  ],
+  chips: {
+    mock: "mock",
+    qa: "Q&A",
+    challenge: "5 шагов",
+  },
+  cta: "Включить demo-доступ",
+  secondaryCta: "Открыть практики",
+};
 
 export const userProfile: UserProfile = {
   id: "demo-user",
@@ -77,6 +200,7 @@ export const trackerContent = {
   conditionTitle: "Состояние",
   saveDay: "Сохранить день",
   saved: "День сохранен",
+  homeCta: "На главную",
 };
 
 export const protocolsContent = {
@@ -125,6 +249,7 @@ export const profileContent = {
   enablePremium: "Premium demo",
   reset: "Сбросить demo",
   noLeads: "Заявок пока нет",
+  homeCta: "Вернуться на главную",
 };
 
 export const checkMetrics: CheckMetric[] = [

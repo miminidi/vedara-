@@ -1,4 +1,4 @@
-export type ScreenId = "today" | "tracker" | "protocols" | "materials" | "profile";
+export type ScreenId = "home" | "practices" | "tracker" | "club" | "profile";
 
 export type AccessState = "guest" | "trial" | "clubMonthly" | "clubAnnual" | "clinicLead" | "universityLead";
 
@@ -7,7 +7,8 @@ export type LeadType = "clinic" | "university";
 export interface NavItem {
   id: ScreenId;
   label: string;
-  icon: string;
+  icon: ScreenId;
+  center?: boolean;
 }
 
 export interface UserProfile {

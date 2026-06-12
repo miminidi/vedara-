@@ -123,8 +123,8 @@ export function CabinetPage({
         ) : null}
       </div>
 
-      <button className="button button--primary u-full u-mt-5" type="button" onClick={() => onNavigate("today")}>
-        Вернуться на сегодня
+      <button className="button button--primary u-full u-mt-5" type="button" onClick={() => onNavigate("home")}>
+        {profileContent.homeCta}
       </button>
     </main>
   );

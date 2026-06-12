@@ -23,7 +23,7 @@ export function PremiumCard({ access, onTrial, onNavigate }: PremiumCardProps) {
           <button className="button button--primary" type="button" onClick={isActive ? () => onNavigate("profile") : onTrial}>
             {isActive ? premiumCopy.activeCta : premiumCopy.guestCta}
           </button>
-          <button className="button button--secondary" type="button" onClick={() => onNavigate("materials")}>
+          <button className="button button--secondary" type="button" onClick={() => onNavigate("practices")}>
             {premiumCopy.tariffsCta}
           </button>
         </div>

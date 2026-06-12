@@ -17,13 +17,18 @@ const MATERIALS_KEY = "vedara.completedMaterials";
 const PROTOCOL_TASKS_KEY = "vedara.completedProtocolTasks";
 const LEADS_KEY = "vedara.leads";
 
-const screenIds: ScreenId[] = ["today", "tracker", "protocols", "materials", "profile"];
+const screenIds: ScreenId[] = ["home", "practices", "tracker", "club", "profile"];
 
 const legacyScreenAliases: Record<string, ScreenId> = {
-  home: "today",
-  club: "tracker",
-  clinic: "protocols",
-  university: "materials",
+  today: "home",
+  home: "home",
+  main: "home",
+  protocols: "practices",
+  materials: "practices",
+  practices: "practices",
+  clinic: "practices",
+  university: "practices",
+  club: "club",
   cabinet: "profile",
 };
 
@@ -55,7 +60,7 @@ function getInitialScreen(): ScreenId {
   if (screenIds.includes(hash as ScreenId)) {
     return hash as ScreenId;
   }
-  return legacyScreenAliases[hash] ?? "today";
+  return legacyScreenAliases[hash] ?? "home";
 }
 
 function clampMetric(value: number) {
@@ -183,25 +188,23 @@ export default function App() {
             onToggleHabit={toggleHabit}
           />
         );
-      case "protocols":
+      case "club":
         return (
           <ClinicPage
             access={access}
-            completedProtocolTasks={completedProtocolTasks}
-            onCreateLead={createLead}
             onNavigate={navigate}
             onSetAccess={setAccess}
-            onToggleProtocolTask={toggleProtocolTask}
           />
         );
-      case "materials":
+      case "practices":
         return (
           <UniversityPage
             completedMaterials={completedMaterials}
-            onCreateLead={createLead}
+            completedProtocolTasks={completedProtocolTasks}
             onNavigate={navigate}
             onSetAccess={setAccess}
             onToggleMaterial={toggleMaterial}
+            onToggleProtocolTask={toggleProtocolTask}
           />
         );
       case "profile":
@@ -220,19 +223,12 @@ export default function App() {
             onSetAccess={setAccess}
           />
         );
-      case "today":
+      case "home":
       default:
         return (
           <HomePage
-            access={access}
-            checkIn={todayCheckIn}
-            completedHabits={completedHabits}
-            completedProtocolTasks={completedProtocolTasks}
-            profile={userProfile}
             onNavigate={navigate}
-            onSaveCheckIn={saveCheckIn}
-            onToggleHabit={toggleHabit}
-            onToggleProtocolTask={toggleProtocolTask}
+            onSetAccess={setAccess}
           />
         );
     }

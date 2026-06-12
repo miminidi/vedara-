@@ -28,15 +28,18 @@ function IconFrame({ children, size = 22, strokeWidth = 1.8 }: IconProps & { chi
 export function TodayIcon(props: IconProps) {
   return (
     <IconFrame {...props}>
-      <path d="M12 4.5v2.3" />
-      <path d="M12 17.2v2.3" />
-      <path d="M4.5 12h2.3" />
-      <path d="M17.2 12h2.3" />
-      <path d="M7 7l1.6 1.6" />
-      <path d="m15.4 15.4 1.6 1.6" />
-      <path d="m17 7-1.6 1.6" />
-      <path d="m8.6 15.4-1.6 1.6" />
-      <path d="M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
+      <path d="M3.5 11.2 12 4l8.5 7.2" />
+      <path d="M5.5 10.5V20h5v-5.5h3V20h5v-9.5" />
+    </IconFrame>
+  );
+}
+
+export function PracticesIcon(props: IconProps) {
+  return (
+    <IconFrame {...props}>
+      <path d="M12 20c4.5-2.2 7-5.5 7-10.2V5.5h-4.2C13.2 5.5 12 4.7 12 4s-1.2 1.5-2.8 1.5H5v4.3C5 14.5 7.5 17.8 12 20Z" />
+      <path d="M9 12.5c1.5.1 3.4-.5 5-2.7" />
+      <path d="M12.5 9.8c.7 1.9.5 3.8-.5 5.7" />
     </IconFrame>
   );
 }
@@ -44,11 +47,19 @@ export function TodayIcon(props: IconProps) {
 export function TrackerIcon(props: IconProps) {
   return (
     <IconFrame {...props}>
-      <path d="M5 19V5" />
-      <path d="M19 19H5" />
-      <path d="M8 15.5v-3" />
-      <path d="M12 15.5v-7" />
-      <path d="M16 15.5v-5" />
+      <path d="M4.5 13.2h3l2-5.2 3.3 8 2.2-5h4.5" />
+      <path d="M20 12a8 8 0 1 1-2.35-5.66" />
+    </IconFrame>
+  );
+}
+
+export function ClubNavIcon(props: IconProps) {
+  return (
+    <IconFrame {...props}>
+      <path d="M8 11.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+      <path d="M16 11.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+      <path d="M4.5 19c.5-3 1.9-4.8 3.5-4.8s3 1.8 3.5 4.8" />
+      <path d="M12.5 19c.5-3 1.9-4.8 3.5-4.8s3 1.8 3.5 4.8" />
     </IconFrame>
   );
 }
@@ -113,16 +124,16 @@ export function ArrowRightIcon(props: IconProps) {
 }
 
 export const HomeIcon = TodayIcon;
-export const ClubIcon = TrackerIcon;
+export const ClubIcon = ClubNavIcon;
 export const ClinicIcon = ProtocolsIcon;
 export const UniversityIcon = MaterialsIcon;
 export const CabinetIcon = ProfileIcon;
 
 const navIconMap = {
-  today: TodayIcon,
+  home: TodayIcon,
+  practices: PracticesIcon,
   tracker: TrackerIcon,
-  protocols: ProtocolsIcon,
-  materials: MaterialsIcon,
+  club: ClubNavIcon,
   profile: ProfileIcon,
 } satisfies Record<ScreenId, (props: IconProps) => ReactElement>;
 

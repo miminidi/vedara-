@@ -116,14 +116,25 @@
 
   --mobile-max-width: 480px;
   --screen-padding: 24px;
-  --bottom-nav-height: 106px;
+  --bottom-nav-height: 132px;
   --tap-target: 48px;
   --button-height: 46px;
   --button-padding-x: 20px;
   --icon-size-nav: 21px;
   --icon-size-action: 22px;
-  --dock-height: 74px;
+  --dock-height: 78px;
   --dock-padding: 8px;
-  --dock-radius: 26px;
+  --dock-radius: 30px;
   --dock-item-radius: 20px;
+  --dock-icon-size: 22px;
+  --dock-label-height: 14px;
+  --dock-center-size: 68px;
+  --dock-center-logo-size: 50px;
+  --dock-center-offset: -24px;
+  --dock-bg: var(--color-white-88);
+  --dock-item-active-bg: linear-gradient(180deg, var(--vd-lavender-100), var(--vd-lilac-100));
+  --dock-item-active-color: var(--color-accent-primary);
+  --dock-center-bg: var(--vd-white);
+  --dock-center-border: 1px solid var(--color-gold-24);
+  --dock-center-shadow: 0 20px 42px var(--color-purple-22);
 }

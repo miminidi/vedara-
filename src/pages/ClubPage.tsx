@@ -105,8 +105,8 @@ export function ClubPage({ checkIn, completedHabits, onNavigate, onSaveCheckIn, 
         <button className="button button--primary u-full" type="button" onClick={() => onSaveCheckIn()}>
           {trackerContent.saveDay}
         </button>
-        <button className="button button--ghost u-full" type="button" onClick={() => onNavigate("today")}>
-          На сегодня
+        <button className="button button--ghost u-full" type="button" onClick={() => onNavigate("home")}>
+          {trackerContent.homeCta}
         </button>
       </div>
     </main>

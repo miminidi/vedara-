@@ -6,6 +6,7 @@ import wellnessClub from "../assets/photos/wellness-club.png";
 
 export const assets = {
   logoFull: vedaraLogo,
+  logoMark: vedaraLogo,
   photos: {
     heroYoga,
     bodyPeople,
@@ -17,6 +18,7 @@ export const assets = {
 export const appAssets = {
   brand: {
     logoPrimary: vedaraLogo,
+    logoMark: vedaraLogo,
     logoFallback: vedaraLogo,
     markFallback: vedaraLogo,
   },
