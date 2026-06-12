@@ -173,3 +173,30 @@ assets/brand/vedara-logo.svg
 ```
 
 Use SVG as the preferred logo in the app. PNG files remain fallback/preview assets.
+
+---
+
+# Vedara auto-publish workflow
+
+Current workflow rule:
+
+- For safe MVP UI/product iterations, Codex should commit and push successful
+  changes to `origin/vedara-mvp` after verification.
+- Verification before publish:
+  - `npm.cmd run typecheck`;
+  - `npm.cmd run build`;
+  - mobile QA at 390px and 430px for obvious overflow;
+  - bottom dock and changed CTA/buttons checked;
+  - no raw HEX outside `src/styles/tokens.css`;
+  - no inline styles.
+- Final report should include changed scope, build/typecheck status, commit hash,
+  push status, and what the customer should review in Vercel.
+
+Auto-publish is allowed for UI, copy, cards, navigation, MVP pages, content
+blocks, visual polish, localStorage mock logic, locked states, and mock
+trial/premium states.
+
+Auto-publish is forbidden without confirmation for real payments, auth, backend,
+database migrations, medical recommendation logic, deleting large app sections,
+domain/DNS/Vercel config, merging to main/master, or production release outside
+`vedara-mvp`.
