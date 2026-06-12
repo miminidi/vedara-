@@ -1,6 +1,9 @@
+import { useMemo, useState } from "react";
+import { MonthCalendar, type MonthCalendarDay } from "../components/MonthCalendar";
 import { ProgressBar } from "../components/ProgressBar";
 import { ScreenHeader } from "../components/ScreenHeader";
 import { SectionHead } from "../components/SectionHead";
+import { TrackerMetricCard } from "../components/TrackerMetricCard";
 import { WellnessRow } from "../components/WellnessRow";
 import { checkMetrics, habits, trackerContent } from "../data/content";
 import type { CheckMetricId, DailyCheckIn, ScreenId } from "../data/types";
@@ -8,36 +11,168 @@ import type { CheckMetricId, DailyCheckIn, ScreenId } from "../data/types";
 type CheckInPatch = Partial<Pick<DailyCheckIn, "energy" | "mood" | "sleep" | "stress" | "note">>;
 
 interface ClubPageProps {
-  checkIn?: DailyCheckIn;
-  completedHabits: string[];
+  checkIns: Record<string, DailyCheckIn>;
+  completedHabitKeys: string[];
   onNavigate: (screen: ScreenId) => void;
-  onSaveCheckIn: (patch?: CheckInPatch) => void;
-  onToggleHabit: (habitId: string) => void;
+  onSaveCheckIn: (date: string, patch?: CheckInPatch) => void;
+  onToggleHabit: (date: string, habitId: string) => void;
 }
 
-const metricDefaults: Record<CheckMetricId, number> = {
-  energy: 6,
-  mood: 7,
-  sleep: 6,
-  stress: 4,
+const stateScaleMax = 10;
+const baselineCheckIn: CheckInPatch = {
+  energy: 4,
+  mood: 4,
+  sleep: 4,
+  stress: 7,
 };
 
-function metricValue(checkIn: DailyCheckIn | undefined, id: CheckMetricId) {
-  return checkIn?.[id] ?? metricDefaults[id];
+function formatDateKey(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
-function weekDays() {
-  const formatter = new Intl.DateTimeFormat("ru-RU", { weekday: "short" });
-  return Array.from({ length: 7 }, (_, index) => {
-    const date = new Date();
-    date.setDate(date.getDate() - (6 - index));
-    return formatter.format(date).replace(".", "");
+function parseDateKey(dateKey: string) {
+  const [year, month, day] = dateKey.split("-").map(Number);
+  return new Date(year, month - 1, day);
+}
+
+function todayKey() {
+  return formatDateKey(new Date());
+}
+
+function selectedDateLabel(dateKey: string) {
+  return new Intl.DateTimeFormat("ru-RU", {
+    day: "numeric",
+    month: "long",
+    weekday: "long",
+  }).format(parseDateKey(dateKey));
+}
+
+function monthTitle(dateKey: string) {
+  return new Intl.DateTimeFormat("ru-RU", {
+    month: "long",
+    year: "numeric",
+  }).format(parseDateKey(dateKey));
+}
+
+function monthStartOffset(dateKey: string) {
+  const date = parseDateKey(dateKey);
+  const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+  return (firstDay.getDay() + 6) % 7;
+}
+
+function getCompletedHabitsForDate(completedHabitKeys: string[], dateKey: string) {
+  const prefix = `${dateKey}:`;
+  return completedHabitKeys.filter((key) => key.startsWith(prefix)).map((key) => key.replace(prefix, ""));
+}
+
+function metricValue(checkIn: DailyCheckIn | undefined, id: CheckMetricId) {
+  return checkIn?.[id];
+}
+
+function nextMetricValue(checkIn: DailyCheckIn | undefined, id: CheckMetricId) {
+  const current = metricValue(checkIn, id);
+  if (current === undefined) {
+    return baselineCheckIn[id] ?? 4;
+  }
+  return current >= stateScaleMax ? 1 : current + 1;
+}
+
+function stateScore(checkIn?: DailyCheckIn) {
+  if (!checkIn) {
+    return null;
+  }
+
+  const values = checkMetrics
+    .map((metric) => {
+      const value = metricValue(checkIn, metric.id);
+      if (value === undefined) {
+        return undefined;
+      }
+      return metric.id === "stress" ? stateScaleMax + 1 - value : value;
+    })
+    .filter((value): value is number => value !== undefined);
+
+  if (!values.length) {
+    return null;
+  }
+
+  const average = values.reduce((sum, value) => sum + value, 0) / values.length;
+  return Math.round((average / stateScaleMax) * 100);
+}
+
+function dayIndex(habitPercent: number, hasHabitData: boolean, selectedStateScore: number | null) {
+  if (hasHabitData && selectedStateScore !== null) {
+    return Math.round(habitPercent * 0.55 + selectedStateScore * 0.45);
+  }
+  if (hasHabitData) {
+    return habitPercent;
+  }
+  if (selectedStateScore !== null) {
+    return selectedStateScore;
+  }
+  return null;
+}
+
+function percentLabel(value: number | null) {
+  return value === null ? trackerContent.noValue : `${value}%`;
+}
+
+function buildMonthDays(
+  selectedDate: string,
+  checkIns: Record<string, DailyCheckIn>,
+  completedHabitKeys: string[],
+): MonthCalendarDay[] {
+  const selected = parseDateKey(selectedDate);
+  const year = selected.getFullYear();
+  const month = selected.getMonth();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const currentToday = todayKey();
+
+  return Array.from({ length: daysInMonth }, (_, index) => {
+    const date = new Date(year, month, index + 1);
+    const key = formatDateKey(date);
+    const completedHabits = getCompletedHabitsForDate(completedHabitKeys, key);
+    const checkIn = checkIns[key];
+    const hasCheckIn = stateScore(checkIn) !== null;
+    const isFilled = hasCheckIn && completedHabits.length === habits.length;
+    const isPartial = hasCheckIn || completedHabits.length > 0;
+
+    return {
+      key,
+      label: String(index + 1),
+      status: isFilled ? "filled" : isPartial ? "partial" : "none",
+      hasCheckIn,
+      isSelected: key === selectedDate,
+      isToday: key === currentToday,
+    };
   });
 }
 
-export function ClubPage({ checkIn, completedHabits, onNavigate, onSaveCheckIn, onToggleHabit }: ClubPageProps) {
-  const progress = Math.round((completedHabits.length / habits.length) * 100);
-  const streak = Math.min(7, completedHabits.length + (checkIn ? 1 : 0));
+export function ClubPage({
+  checkIns,
+  completedHabitKeys,
+  onNavigate,
+  onSaveCheckIn,
+  onToggleHabit,
+}: ClubPageProps) {
+  const [selectedDate, setSelectedDate] = useState(todayKey);
+  const selectedCheckIn = checkIns[selectedDate];
+  const selectedCompletedHabits = useMemo(
+    () => getCompletedHabitsForDate(completedHabitKeys, selectedDate),
+    [completedHabitKeys, selectedDate],
+  );
+  const selectedStateScore = stateScore(selectedCheckIn);
+  const habitPercent = Math.round((selectedCompletedHabits.length / habits.length) * 100);
+  const hasHabitData = selectedCompletedHabits.length > 0;
+  const selectedDayIndex = dayIndex(habitPercent, hasHabitData, selectedStateScore);
+  const selectedDayIsEmpty = !hasHabitData && selectedStateScore === null;
+  const monthDays = useMemo(
+    () => buildMonthDays(selectedDate, checkIns, completedHabitKeys),
+    [checkIns, completedHabitKeys, selectedDate],
+  );
 
   return (
     <main className="screen">
@@ -47,25 +182,56 @@ export function ClubPage({ checkIn, completedHabits, onNavigate, onSaveCheckIn, 
         subtitle={trackerContent.header.subtitle}
       />
 
-      <section className="panel">
-        <div className="stat-row stat-row--compact">
-          <div className="stat-card"><span className="stat-value">{streak}</span><span className="stat-label">streak</span></div>
-          <div className="stat-card"><span className="stat-value">{progress}%</span><span className="stat-label">день</span></div>
-          <div className="stat-card"><span className="stat-value">{completedHabits.length}/{habits.length}</span><span className="stat-label">привычки</span></div>
-          <div className="stat-card"><span className="stat-value">{checkIn ? "yes" : "no"}</span><span className="stat-label">check-in</span></div>
-        </div>
-        <div className="tracker-week" aria-label={trackerContent.weekTitle}>
-          {weekDays().map((day, index) => (
-            <div key={`${day}-${index}`} className={`day-chip ${index >= 7 - streak ? "is-active" : ""}`}>{day}</div>
-          ))}
-        </div>
-        <ProgressBar value={progress} label={`Прогресс дня ${progress}%`} />
+      <section className="tracker-summary" aria-label={trackerContent.selectedDayTitle}>
+        <TrackerMetricCard
+          title={trackerContent.summary.habits.title}
+          value={`${selectedCompletedHabits.length}/${habits.length}`}
+          description={trackerContent.summary.habits.description}
+        />
+        <TrackerMetricCard
+          title={trackerContent.summary.state.title}
+          value={percentLabel(selectedStateScore)}
+          description={trackerContent.summary.state.description}
+        />
+        <TrackerMetricCard
+          title={trackerContent.summary.index.title}
+          value={percentLabel(selectedDayIndex)}
+          description={trackerContent.summary.index.description}
+        />
       </section>
 
-      <SectionHead kicker={`${completedHabits.length}/${habits.length}`} title={trackerContent.habitsTitle} />
+      <MonthCalendar
+        ariaLabel={trackerContent.monthLegendAria}
+        days={monthDays}
+        kicker={trackerContent.monthKicker}
+        legend={trackerContent.monthLegend}
+        onSelectDay={setSelectedDate}
+        startOffset={monthStartOffset(selectedDate)}
+        title={monthTitle(selectedDate)}
+        weekdays={["пн", "вт", "ср", "чт", "пт", "сб", "вс"]}
+      />
+
+      {selectedDayIsEmpty ? (
+        <section className="notice tracker-empty-state">
+          <strong>{trackerContent.emptyTitle}</strong>
+          <span>{trackerContent.emptyText}</span>
+          <button
+            className="button button--secondary"
+            type="button"
+            onClick={() => onSaveCheckIn(selectedDate, baselineCheckIn)}
+          >
+            {trackerContent.startCheckIn}
+          </button>
+        </section>
+      ) : null}
+
+      <SectionHead
+        kicker={selectedDateLabel(selectedDate)}
+        title={trackerContent.habitsTitle}
+      />
       <div className="task-list">
         {habits.map((habit) => {
-          const done = completedHabits.includes(habit.id);
+          const done = selectedCompletedHabits.includes(habit.id);
           return (
             <WellnessRow
               key={habit.id}
@@ -74,35 +240,51 @@ export function ClubPage({ checkIn, completedHabits, onNavigate, onSaveCheckIn, 
               icon={habit.category}
               chip={done ? "Готово" : habit.target}
               done={done}
-              onClick={() => onToggleHabit(habit.id)}
+              onClick={() => onToggleHabit(selectedDate, habit.id)}
             />
           );
         })}
       </div>
 
-      <SectionHead kicker="1-10" title={trackerContent.conditionTitle} />
+      <SectionHead kicker={trackerContent.conditionScale} title={trackerContent.conditionTitle} />
       <div className="scale-grid">
         {checkMetrics.map((metric) => {
-          const value = metricValue(checkIn, metric.id);
-          const nextValue = value >= 10 ? 1 : value + 1;
+          const value = metricValue(selectedCheckIn, metric.id);
 
           return (
             <button
-              className="scale-card"
+              className={`scale-card ${value === undefined ? "is-empty" : ""}`}
               key={metric.id}
               type="button"
-              onClick={() => onSaveCheckIn({ [metric.id]: nextValue } as CheckInPatch)}
+              onClick={() =>
+                onSaveCheckIn(selectedDate, {
+                  [metric.id]: nextMetricValue(selectedCheckIn, metric.id),
+                } as CheckInPatch)
+              }
             >
               <span className="metric-card__label">{metric.label}</span>
-              <strong>{value}</strong>
+              <strong>{value ?? trackerContent.noValue}</strong>
               <small>{metric.minLabel} / {metric.maxLabel}</small>
             </button>
           );
         })}
       </div>
 
+      <section className="panel tracker-report-card">
+        <div>
+          <span className="section-kicker">{trackerContent.selectedDayTitle}</span>
+          <h2 className="panel-title">{trackerContent.reportTitle}</h2>
+          <p>{trackerContent.reportText}</p>
+        </div>
+        <ProgressBar value={selectedDayIndex ?? 0} label={`${trackerContent.summary.index.title} ${percentLabel(selectedDayIndex)}`} />
+      </section>
+
       <div className="button-row u-mt-5">
-        <button className="button button--primary u-full" type="button" onClick={() => onSaveCheckIn()}>
+        <button
+          className="button button--primary u-full"
+          type="button"
+          onClick={() => onSaveCheckIn(selectedDate, baselineCheckIn)}
+        >
           {trackerContent.saveDay}
         </button>
         <button className="button button--ghost u-full" type="button" onClick={() => onNavigate("home")}>

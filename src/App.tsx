@@ -52,7 +52,11 @@ function writeStorage<T>(key: string, value: T) {
 }
 
 function getDateKey() {
-  return new Date().toISOString().slice(0, 10);
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 function getInitialScreen(): ScreenId {
@@ -68,15 +72,29 @@ function clampMetric(value: number) {
 }
 
 function buildCheckIn(date: string, previous?: DailyCheckIn, patch: CheckInPatch = {}): DailyCheckIn {
-  return {
+  const next: DailyCheckIn = {
+    ...previous,
     date,
-    energy: clampMetric(patch.energy ?? previous?.energy ?? 6),
-    mood: clampMetric(patch.mood ?? previous?.mood ?? 7),
-    sleep: clampMetric(patch.sleep ?? previous?.sleep ?? 6),
-    stress: clampMetric(patch.stress ?? previous?.stress ?? 4),
-    note: patch.note ?? previous?.note,
     savedAt: new Date().toISOString(),
   };
+
+  if (patch.energy !== undefined) {
+    next.energy = clampMetric(patch.energy);
+  }
+  if (patch.mood !== undefined) {
+    next.mood = clampMetric(patch.mood);
+  }
+  if (patch.sleep !== undefined) {
+    next.sleep = clampMetric(patch.sleep);
+  }
+  if (patch.stress !== undefined) {
+    next.stress = clampMetric(patch.stress);
+  }
+  if (patch.note !== undefined) {
+    next.note = patch.note;
+  }
+
+  return next;
 }
 
 function toggleValue(values: string[], value: string) {
@@ -123,15 +141,15 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const saveCheckIn = (patch: CheckInPatch = {}) => {
+  const saveCheckInForDate = (date: string, patch: CheckInPatch = {}) => {
     setCheckIns((current) => ({
       ...current,
-      [todayKey]: buildCheckIn(todayKey, current[todayKey], patch),
+      [date]: buildCheckIn(date, current[date], patch),
     }));
   };
 
-  const toggleHabit = (habitId: string) => {
-    setCompletedHabitKeys((current) => toggleValue(current, `${todayKey}:${habitId}`));
+  const toggleHabitForDate = (date: string, habitId: string) => {
+    setCompletedHabitKeys((current) => toggleValue(current, `${date}:${habitId}`));
   };
 
   const toggleMaterial = (materialId: string) => {
@@ -181,11 +199,11 @@ export default function App() {
       case "tracker":
         return (
           <ClubPage
-            checkIn={todayCheckIn}
-            completedHabits={completedHabits}
+            checkIns={checkIns}
+            completedHabitKeys={completedHabitKeys}
             onNavigate={navigate}
-            onSaveCheckIn={saveCheckIn}
-            onToggleHabit={toggleHabit}
+            onSaveCheckIn={saveCheckInForDate}
+            onToggleHabit={toggleHabitForDate}
           />
         );
       case "club":
@@ -232,7 +250,7 @@ export default function App() {
           />
         );
     }
-  }, [access, completedHabits, completedMaterials, completedProtocolTasks, leads, screen, todayCheckIn]);
+  }, [access, checkIns, completedHabitKeys, completedHabits, completedMaterials, completedProtocolTasks, leads, screen, todayCheckIn]);
 
   return (
     <div className="app-shell">

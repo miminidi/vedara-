@@ -21,10 +21,10 @@ export interface UserProfile {
 
 export interface DailyCheckIn {
   date: string;
-  energy: number;
-  mood: number;
-  sleep: number;
-  stress: number;
+  energy?: number;
+  mood?: number;
+  sleep?: number;
+  stress?: number;
   note?: string;
   savedAt: string;
 }

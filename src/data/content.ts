@@ -182,12 +182,41 @@ export const trackerContent = {
     title: "Трекер",
     subtitle: "Привычки, состояние и прогресс дня. Данные остаются в localStorage.",
   },
-  weekTitle: "Неделя",
+  monthTitle: "Календарь месяца",
+  monthKicker: "месяц",
+  monthLegendAria: "Легенда календаря",
+  monthLegend: {
+    none: "нет данных",
+    partial: "частично",
+    filled: "заполнен",
+  },
+  selectedDayTitle: "Выбранный день",
+  emptyTitle: "Данных за день пока нет",
+  emptyText: "Выберите привычки или заполните состояние, чтобы день появился в календаре.",
+  reportTitle: "Отчет дня",
+  reportText: "Индекс дня собирается из привычек и состояния выбранного дня.",
   habitsTitle: "Привычки дня",
   conditionTitle: "Состояние",
+  conditionScale: "1-10",
+  noValue: "—",
+  startCheckIn: "Заполнить состояние",
   saveDay: "Сохранить день",
   saved: "День сохранен",
   homeCta: "На главную",
+  summary: {
+    habits: {
+      title: "Привычки",
+      description: "выполнено сегодня",
+    },
+    state: {
+      title: "Состояние",
+      description: "самочувствие дня",
+    },
+    index: {
+      title: "Индекс дня",
+      description: "привычки + состояние",
+    },
+  },
 };
 
 export const protocolsContent = {
