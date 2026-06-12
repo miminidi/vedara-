@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ScreenHeader } from "../components/ScreenHeader";
 import { SectionHead } from "../components/SectionHead";
-import { clubArticles, clubContent, clubVideos } from "../data/content";
+import { chatContent, clubArticles, clubContent, clubVideos } from "../data/content";
 import type { AccessState, ClubArticle, ClubVideo, ScreenId } from "../data/types";
 
 type ClubItemKind = "video" | "article";
@@ -26,29 +26,16 @@ function isClubAccessActive(access: AccessState) {
   return access === "trial" || access === "clubMonthly" || access === "clubAnnual";
 }
 
-function isPremiumAccessActive(access: AccessState) {
-  return access === "clubMonthly" || access === "clubAnnual";
-}
-
-function getAccessCopy(access: AccessState) {
+function getAccessStatus(access: AccessState) {
   if (access === "trial") {
-    return {
-      title: clubContent.access.trial,
-      text: clubContent.access.trialText,
-    };
+    return clubContent.access.trial;
   }
 
-  if (isPremiumAccessActive(access)) {
-    return {
-      title: clubContent.access.premium,
-      text: clubContent.access.premiumText,
-    };
+  if (access === "clubMonthly" || access === "clubAnnual") {
+    return clubContent.access.premium;
   }
 
-  return {
-    title: clubContent.access.guest,
-    text: clubContent.access.guestText,
-  };
+  return clubContent.access.guestStatus;
 }
 
 function getStatus(isLocked: boolean, completed: boolean) {
@@ -76,7 +63,7 @@ export function ClinicPage({
 }: ClinicPageProps) {
   const [selectedItem, setSelectedItem] = useState<SelectedClubItem | null>(null);
   const hasClubAccess = isClubAccessActive(access);
-  const accessCopy = getAccessCopy(access);
+  const accessStatus = getAccessStatus(access);
 
   const openItem = (kind: ClubItemKind, item: ClubVideo | ClubArticle) => {
     setSelectedItem({
@@ -94,27 +81,7 @@ export function ClinicPage({
         subtitle={clubContent.header.subtitle}
       />
 
-      <section className="premium-card club-access-card">
-        <div>
-          <span className="section-kicker">{accessCopy.title}</span>
-          <h3>{clubContent.header.title}</h3>
-          <p>{accessCopy.text}</p>
-          <div className="button-row u-mt-4">
-            <button className="button button--secondary" type="button" onClick={() => onSetAccess("trial")}>
-              {clubContent.trialCta}
-            </button>
-            <button className="button button--primary" type="button" onClick={() => onSetAccess("clubMonthly")}>
-              {clubContent.tariff.cta}
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <section className="panel club-tariff-card">
-        <span className="section-kicker">{clubContent.tariff.kicker}</span>
-        <h2 className="panel-title">{clubContent.tariff.title}</h2>
-        <p>{clubContent.tariff.text}</p>
-      </section>
+      <div className="club-status-line">{accessStatus}</div>
 
       {selectedItem ? (
         <section className="panel club-detail-card">
@@ -197,6 +164,11 @@ export function ClinicPage({
       <SectionHead kicker={clubContent.communityKicker} title={clubContent.communityTitle} />
       <section className="panel club-community-card">
         <p>{clubContent.communityText}</p>
+        <ul className="check-list u-mt-4">
+          <li>{chatContent.liveTitle}</li>
+          <li>{chatContent.weekTitle}</li>
+          <li>{chatContent.curatorTitle}</li>
+        </ul>
         <button className="button button--primary u-mt-4" type="button" onClick={() => onNavigate("chat")}>
           {clubContent.chatCta}
         </button>
