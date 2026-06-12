@@ -2,7 +2,6 @@ import { useMemo, useState } from "react";
 import { MonthCalendar, type MonthCalendarDay } from "../components/MonthCalendar";
 import { ProgressBar } from "../components/ProgressBar";
 import { ScreenHeader } from "../components/ScreenHeader";
-import { SectionHead } from "../components/SectionHead";
 import { TrackerMetricCard } from "../components/TrackerMetricCard";
 import { WellnessRow } from "../components/WellnessRow";
 import { checkMetrics, habits, trackerContent } from "../data/content";
@@ -175,6 +174,10 @@ export function ClubPage({
     [checkIns, completedHabitKeys, selectedDate],
   );
 
+  const saveSelectedDay = () => {
+    onSaveCheckIn(selectedDate, selectedCheckIn ? {} : baselineCheckIn);
+  };
+
   return (
     <main className="screen">
       <ScreenHeader
@@ -182,6 +185,89 @@ export function ClubPage({
         title={trackerContent.header.title}
         subtitle={trackerContent.header.subtitle}
       />
+
+      <section className="panel tracker-selected-day" aria-label={trackerContent.selectedDayTitle}>
+        <span className="section-kicker">{trackerContent.selectedDayTitle}</span>
+        <h2 className="panel-title">{selectedDate === todayKey() ? "Сегодня" : selectedDateLabel(selectedDate)}</h2>
+        <p>{selectedDateLabel(selectedDate)}</p>
+      </section>
+
+      <section className="panel tracker-input-card" aria-label={trackerContent.todayInputTitle}>
+        <span className="section-kicker">{selectedDateLabel(selectedDate)}</span>
+        <h2 className="panel-title">{trackerContent.todayInputTitle}</h2>
+
+        {selectedDayIsEmpty ? (
+          <div className="notice tracker-empty-state">
+            <strong>{trackerContent.emptyTitle}</strong>
+            <span>{trackerContent.emptyText}</span>
+            <button
+              className="button button--secondary"
+              type="button"
+              onClick={() => onSaveCheckIn(selectedDate, baselineCheckIn)}
+            >
+              {trackerContent.startCheckIn}
+            </button>
+          </div>
+        ) : null}
+
+        <div className="tracker-input-section">
+          <h3>{trackerContent.habitsTitle}</h3>
+          <div className="task-list">
+            {habits.map((habit) => {
+              const done = selectedCompletedHabits.includes(habit.id);
+              return (
+                <WellnessRow
+                  key={habit.id}
+                  title={habit.title}
+                  description={habit.description}
+                  icon={habit.category}
+                  chip={done ? "Готово" : habit.target}
+                  done={done}
+                  onClick={() => onToggleHabit(selectedDate, habit.id)}
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="tracker-input-section">
+          <div className="tracker-input-section__heading">
+            <h3>{trackerContent.conditionTitle}</h3>
+            <span>{trackerContent.conditionScale}</span>
+          </div>
+          <div className="scale-grid">
+            {checkMetrics.map((metric) => {
+              const value = metricValue(selectedCheckIn, metric.id);
+
+              return (
+                <button
+                  className={`scale-card ${value === undefined ? "is-empty" : ""}`}
+                  key={metric.id}
+                  type="button"
+                  onClick={() =>
+                    onSaveCheckIn(selectedDate, {
+                      [metric.id]: nextMetricValue(selectedCheckIn, metric.id),
+                    } as CheckInPatch)
+                  }
+                >
+                  <span className="metric-card__label">{metric.label}</span>
+                  <strong>{value ?? trackerContent.noValue}</strong>
+                  <small>{metric.minLabel} / {metric.maxLabel}</small>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="button-row u-mt-5">
+          <button className="button button--primary u-full" type="button" onClick={saveSelectedDay}>
+            {trackerContent.saveDay}
+          </button>
+          <button className="button button--ghost u-full" type="button" onClick={() => onNavigate("home")}>
+            {trackerContent.homeCta}
+          </button>
+        </div>
+      </section>
 
       <section className="tracker-summary" aria-label={trackerContent.selectedDayTitle}>
         <TrackerMetricCard
@@ -221,78 +307,6 @@ export function ClubPage({
         title={monthTitle(selectedDate)}
         weekdays={["пн", "вт", "ср", "чт", "пт", "сб", "вс"]}
       />
-
-      {selectedDayIsEmpty ? (
-        <section className="notice tracker-empty-state">
-          <strong>{trackerContent.emptyTitle}</strong>
-          <span>{trackerContent.emptyText}</span>
-          <button
-            className="button button--secondary"
-            type="button"
-            onClick={() => onSaveCheckIn(selectedDate, baselineCheckIn)}
-          >
-            {trackerContent.startCheckIn}
-          </button>
-        </section>
-      ) : null}
-
-      <SectionHead
-        kicker={selectedDateLabel(selectedDate)}
-        title={trackerContent.habitsTitle}
-      />
-      <div className="task-list">
-        {habits.map((habit) => {
-          const done = selectedCompletedHabits.includes(habit.id);
-          return (
-            <WellnessRow
-              key={habit.id}
-              title={habit.title}
-              description={habit.description}
-              icon={habit.category}
-              chip={done ? "Готово" : habit.target}
-              done={done}
-              onClick={() => onToggleHabit(selectedDate, habit.id)}
-            />
-          );
-        })}
-      </div>
-
-      <SectionHead kicker={trackerContent.conditionScale} title={trackerContent.conditionTitle} />
-      <div className="scale-grid">
-        {checkMetrics.map((metric) => {
-          const value = metricValue(selectedCheckIn, metric.id);
-
-          return (
-            <button
-              className={`scale-card ${value === undefined ? "is-empty" : ""}`}
-              key={metric.id}
-              type="button"
-              onClick={() =>
-                onSaveCheckIn(selectedDate, {
-                  [metric.id]: nextMetricValue(selectedCheckIn, metric.id),
-                } as CheckInPatch)
-              }
-            >
-              <span className="metric-card__label">{metric.label}</span>
-              <strong>{value ?? trackerContent.noValue}</strong>
-              <small>{metric.minLabel} / {metric.maxLabel}</small>
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="button-row u-mt-5">
-        <button
-          className="button button--primary u-full"
-          type="button"
-          onClick={() => onSaveCheckIn(selectedDate, baselineCheckIn)}
-        >
-          {trackerContent.saveDay}
-        </button>
-        <button className="button button--ghost u-full" type="button" onClick={() => onNavigate("home")}>
-          {trackerContent.homeCta}
-        </button>
-      </div>
     </main>
   );
 }

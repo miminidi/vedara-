@@ -958,6 +958,40 @@ button.tracker-row {
   margin-bottom: var(--space-4);
 }
 
+.tracker-selected-day,
+.tracker-input-card {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.tracker-input-section {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.tracker-input-section h3 {
+  margin: 0;
+  color: var(--color-text-heading);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  line-height: var(--line-tight);
+}
+
+.tracker-input-section__heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.tracker-input-section__heading span {
+  flex: 0 0 auto;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
 .tracker-metric-card {
   min-width: 0;
   min-height: 112px;
