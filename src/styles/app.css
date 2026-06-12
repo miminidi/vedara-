@@ -1365,25 +1365,6 @@ button.tracker-row {
   font-size: var(--text-sm);
 }
 
-.tracker-empty-state {
-  display: grid;
-  gap: var(--space-3);
-  margin: var(--space-4) 0;
-}
-
-.tracker-empty-state strong,
-.tracker-empty-state span {
-  display: block;
-}
-
-.tracker-empty-state strong {
-  color: var(--color-text-heading);
-}
-
-.tracker-empty-state .button {
-  justify-self: start;
-}
-
 .tracker-report-card {
   display: grid;
   gap: var(--space-4);

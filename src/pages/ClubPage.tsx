@@ -174,7 +174,6 @@ export function ClubPage({
   );
   const selectedStateScore = stateScore(selectedCheckIn);
   const hasHabitData = selectedCompletedHabits.length > 0;
-  const selectedDayIsEmpty = !hasHabitData && selectedStateScore === null;
   const habitsPercent = Math.round((selectedCompletedHabits.length / habits.length) * 100);
   const reportScore = calculateReportScore(habitsPercent, hasHabitData, selectedStateScore);
   const reportHasData = hasHabitData || selectedStateScore !== null;
@@ -198,20 +197,6 @@ export function ClubPage({
 
       <section className="panel tracker-input-card" aria-label={trackerContent.todayInputTitle}>
         <h2 className="panel-title">{trackerContent.todayInputTitle}</h2>
-
-        {selectedDayIsEmpty ? (
-          <div className="notice tracker-empty-state">
-            <strong>{trackerContent.emptyTitle}</strong>
-            <span>{trackerContent.emptyText}</span>
-            <button
-              className="button button--secondary"
-              type="button"
-              onClick={() => onSaveCheckIn(selectedDate, baselineCheckIn)}
-            >
-              {trackerContent.startCheckIn}
-            </button>
-          </div>
-        ) : null}
 
         <div className="tracker-input-section">
           <h3>{trackerContent.habitsTitle}</h3>
