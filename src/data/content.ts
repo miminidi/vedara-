@@ -27,20 +27,13 @@ export const uiCopy = {
 
 export const navItems: NavItem[] = [
   { id: "home", label: "Главная", icon: "home" },
-  { id: "practices", label: "Практики", icon: "practices" },
+  { id: "practices", label: "Уроки", icon: "practices" },
   { id: "tracker", label: "Трекер", icon: "tracker", center: true },
-  { id: "club", label: "Клуб", icon: "club" },
+  { id: "club", label: "Чат", icon: "club" },
   { id: "profile", label: "Профиль", icon: "profile" },
 ];
 
 export const homeHubContent = {
-  hero: {
-    kicker: "Главная",
-    title: "Vedara Longevita",
-    text: "Открытый вход в Longevita Club, практики и экосистему Vedara без перегруженного dashboard.",
-    primaryCta: "Оформить доступ",
-    secondaryCta: "Перейти в практики",
-  },
   tariff: {
     kicker: "Longevita Club",
     title: "5 555 ₽ стартовый доступ",
@@ -49,12 +42,6 @@ export const homeHubContent = {
   },
   directionsKicker: "Vedara",
   directionsTitle: "Экосистема Vedara",
-  trackerCta: {
-    kicker: "Трекер",
-    title: "Сегодняшний трекер",
-    text: "Отметьте привычки и состояние дня в центральном разделе.",
-    cta: "Открыть трекер",
-  },
 };
 
 export const homeEcosystemCards = [
@@ -64,7 +51,7 @@ export const homeEcosystemCards = [
     description: "Главный открытый продукт: клуб, практики, комьюнити и мягкое сопровождение.",
     meta: "открыт",
     target: "club",
-    cta: "Открыть клуб",
+    cta: "Открыть чат",
   },
   {
     id: "university",
@@ -101,12 +88,12 @@ export const homeEcosystemCards = [
 
 export const practicesContent = {
   header: {
-    kicker: "библиотека действий",
-    title: "Практики",
+    kicker: "библиотека уроков",
+    title: "Уроки",
     subtitle: "Уроки, материалы, мягкие протоколы и короткие действия, которые можно отметить как выполненные.",
   },
-  progressTitle: "Прогресс практик",
-  progressLabel: "Прогресс практик",
+  progressTitle: "Прогресс уроков",
+  progressLabel: "Прогресс уроков",
   listKicker: "library",
   listTitle: "Сегодня можно изучить",
   protocolKicker: "wellness",
@@ -120,12 +107,12 @@ export const practicesContent = {
 export const clubContent = {
   header: {
     kicker: "Longevita Club",
-    title: "Клуб",
+    title: "Чат",
     subtitle: "Комьюнити-хаб MVP: чат, живые встречи, куратор, объявления и недельный вызов без реального backend.",
   },
   stateActive: "demo active",
   stateMock: "community mock",
-  chatTitle: "Клубный чат",
+  chatTitle: "Чат клуба",
   chatText: "Mock-лента для ощущения сообщества. Сообщения никуда не отправляются.",
   liveSectionKicker: "this week",
   liveSectionTitle: "Живые форматы",
@@ -144,7 +131,7 @@ export const clubContent = {
     },
     {
       title: "Объявления",
-      text: "Новые практики недели доступны во вкладке “Практики”. Реальных сообщений и отправки данных в MVP нет.",
+      text: "Новые уроки недели доступны во вкладке “Уроки”. Реальных сообщений и отправки данных в MVP нет.",
     },
   ],
   chips: {
@@ -153,7 +140,7 @@ export const clubContent = {
     challenge: "5 шагов",
   },
   cta: "Включить demo-доступ",
-  secondaryCta: "Открыть практики",
+  secondaryCta: "Открыть уроки",
 };
 
 export const userProfile: UserProfile = {

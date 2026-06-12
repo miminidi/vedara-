@@ -379,26 +379,8 @@
   text-transform: none;
 }
 
-.home-entry-hero {
-  grid-template-columns: minmax(0, 1fr);
-  min-height: 300px;
-}
-
-.home-entry-hero .hero-text {
-  max-width: 320px;
-}
-
 .home-ecosystem-card .badge {
   flex: 0 0 auto;
-}
-
-.home-tracker-card {
-  display: grid;
-  gap: var(--space-4);
-}
-
-.home-tracker-card .button {
-  justify-self: start;
 }
 
 .score-card {
@@ -1123,10 +1105,6 @@ button.tracker-row {
     grid-template-columns: minmax(0, 1fr) 92px;
     align-items: start;
     gap: var(--space-4);
-  }
-
-  .home-entry-hero {
-    grid-template-columns: minmax(0, 1fr);
   }
 
   .score-card {
