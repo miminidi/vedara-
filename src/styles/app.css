@@ -958,7 +958,6 @@ button.tracker-row {
   margin-bottom: var(--space-4);
 }
 
-.tracker-selected-day,
 .tracker-input-card {
   display: grid;
   gap: var(--space-4);

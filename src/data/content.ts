@@ -364,7 +364,7 @@ export const trackerContent = {
     partial: "частично",
     filled: "заполнен",
   },
-  selectedDayTitle: "Выбранный день",
+  selectedDayTitle: "Сводка дня",
   todayInputTitle: "Что отмечаем сегодня",
   emptyTitle: "Данных за день пока нет",
   emptyText: "Выберите привычки или заполните состояние, чтобы день появился в календаре.",
