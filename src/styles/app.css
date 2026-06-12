@@ -383,6 +383,40 @@
   flex: 0 0 auto;
 }
 
+.home-ecosystem-card--featured {
+  grid-column: 1 / -1;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  background:
+    radial-gradient(circle at 84% 10%, var(--color-gold-15), transparent 32%),
+    linear-gradient(145deg, var(--color-surface), var(--vd-lavender-50));
+  box-shadow: var(--card-shadow-strong);
+}
+
+.home-club-offer {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: var(--card-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-white-72);
+}
+
+.home-club-offer span {
+  color: var(--color-text-heading);
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 400;
+  line-height: var(--line-tight);
+}
+
+.home-club-offer p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--line-body);
+}
+
 .home-ecosystem-card--clickable {
   cursor: pointer;
   transition:

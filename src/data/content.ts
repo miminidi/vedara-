@@ -58,6 +58,7 @@ export const homeHubContent = {
         variant: "secondary",
       },
     ],
+    activeCta: "Войти в клуб",
   },
   directionsKicker: "Vedara",
   directionsTitle: "Экосистема Vedara",
@@ -70,7 +71,6 @@ export const homeEcosystemCards = [
     description: "Главный открытый продукт: клуб, практики, комьюнити и мягкое сопровождение.",
     meta: "открыт",
     target: "club",
-    cta: "Войти в клуб",
   },
   {
     id: "university",

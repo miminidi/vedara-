@@ -5,13 +5,19 @@ import type { AccessState, ScreenId } from "../data/types";
 import type { KeyboardEvent } from "react";
 
 interface HomePageProps {
+  access: AccessState;
   onNavigate: (screen: ScreenId) => void;
   onSetAccess: (access: AccessState) => void;
 }
 
-export function HomePage({ onNavigate, onSetAccess }: HomePageProps) {
+function hasClubAccess(access: AccessState) {
+  return access === "trial" || access === "clubMonthly" || access === "clubAnnual";
+}
+
+export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
   const leadershipMembers = teamMembers.filter((member) => member.group === "leadership");
   const staffMembers = teamMembers.filter((member) => member.group === "staff");
+  const isClubActive = hasClubAccess(access);
 
   const handleAction = (target: ScreenId, access?: AccessState) => {
     if (access) {
@@ -33,35 +39,16 @@ export function HomePage({ onNavigate, onSetAccess }: HomePageProps) {
     <main className="screen">
       <BrandHeader />
 
-      <section className="premium-card home-tariff-card">
-        <div>
-          <span className="section-kicker">{homeHubContent.tariff.kicker}</span>
-          <h3>{homeHubContent.tariff.title}</h3>
-          <p>{homeHubContent.tariff.text}</p>
-          <div className="home-ecosystem-card__actions">
-            {homeHubContent.tariff.actions.map((action) => (
-              <button
-                className={`button ${action.variant === "primary" ? "button--primary" : "button--secondary"}`}
-                key={action.id}
-                type="button"
-                onClick={() => handleAction(action.target as ScreenId, action.access as AccessState | undefined)}
-              >
-                {action.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <SectionHead kicker={homeHubContent.directionsKicker} title={homeHubContent.directionsTitle} />
       <div className="grid grid--two">
         {homeEcosystemCards.map((card) => {
           const isClickable = Boolean(card.target);
+          const isClubCard = card.id === "longevita";
 
           return (
           <article
             aria-label={isClickable ? `${card.title}: ${card.cta ?? "Открыть"}` : undefined}
-            className={`program-card home-ecosystem-card ${isClickable ? "home-ecosystem-card--clickable" : ""}`}
+            className={`program-card home-ecosystem-card ${isClubCard ? "home-ecosystem-card--featured" : ""} ${isClickable ? "home-ecosystem-card--clickable" : ""}`}
             key={card.id}
             onClick={isClickable ? () => onNavigate(card.target as ScreenId) : undefined}
             onKeyDown={(event) => handleCardKeyDown(event, card.target)}
@@ -73,7 +60,43 @@ export function HomePage({ onNavigate, onSetAccess }: HomePageProps) {
               <span className="badge">{card.meta}</span>
             </div>
             <p>{card.description}</p>
-            {card.cta && card.target ? (
+            {isClubCard ? (
+              <div className="home-club-offer">
+                <span>{homeHubContent.tariff.title}</span>
+                <p>{homeHubContent.tariff.text}</p>
+              </div>
+            ) : null}
+            {isClubCard && card.target ? (
+              isClubActive ? (
+                <button
+                  className="button button--primary u-mt-4"
+                  type="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onNavigate(card.target);
+                  }}
+                >
+                  {homeHubContent.tariff.activeCta}
+                </button>
+              ) : (
+                <div className="home-ecosystem-card__actions">
+                  {homeHubContent.tariff.actions.map((action) => (
+                    <button
+                      className={`button ${action.variant === "primary" ? "button--primary" : "button--secondary"}`}
+                      key={action.id}
+                      type="button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        handleAction(action.target as ScreenId, action.access as AccessState | undefined);
+                      }}
+                    >
+                      {action.label}
+                    </button>
+                  ))}
+                </div>
+              )
+            ) : null}
+            {!isClubCard && card.cta && card.target ? (
               <button
                 className="button button--ghost u-mt-4"
                 type="button"

@@ -274,6 +274,7 @@ export default function App() {
       default:
         return (
           <HomePage
+            access={access}
             onNavigate={navigate}
             onSetAccess={setAccess}
           />
