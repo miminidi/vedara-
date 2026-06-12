@@ -1,4 +1,4 @@
-export type ScreenId = "home" | "practices" | "tracker" | "club" | "profile";
+export type ScreenId = "home" | "practices" | "tracker" | "club" | "chat" | "profile";
 
 export type AccessState = "guest" | "trial" | "clubMonthly" | "clubAnnual" | "clinicLead" | "universityLead";
 
@@ -17,6 +17,16 @@ export interface UserProfile {
   subtitle: string;
   focus: string;
   goals: string[];
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  description: string;
+  group: "leadership" | "staff";
+  initials: string;
+  photoUrl?: string;
 }
 
 export interface DailyCheckIn {
@@ -94,6 +104,24 @@ export interface Material {
   duration: string;
   access: "free" | "premium" | "university";
   tag: string;
+}
+
+export interface ClubVideo {
+  id: string;
+  title: string;
+  description: string;
+  duration: string;
+  access: "club" | "premium";
+  completed: boolean;
+}
+
+export interface ClubArticle {
+  id: string;
+  title: string;
+  description: string;
+  readingTime: string;
+  access: "club" | "premium";
+  completed: boolean;
 }
 
 export interface ProductCta {

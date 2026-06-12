@@ -134,6 +134,7 @@ const navIconMap = {
   practices: PracticesIcon,
   tracker: TrackerIcon,
   club: ClubNavIcon,
+  chat: ClubNavIcon,
   profile: ProfileIcon,
 } satisfies Record<ScreenId, (props: IconProps) => ReactElement>;
 

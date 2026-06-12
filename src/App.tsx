@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { BottomNav } from "./components/BottomNav";
 import { CabinetPage } from "./pages/CabinetPage";
+import { ChatPage } from "./pages/ChatPage";
 import { ClinicPage } from "./pages/ClinicPage";
 import { ClubPage } from "./pages/ClubPage";
 import { HomePage } from "./pages/HomePage";
@@ -15,9 +16,11 @@ const CHECK_INS_KEY = "vedara.checkIns";
 const HABITS_KEY = "vedara.completedHabits";
 const MATERIALS_KEY = "vedara.completedMaterials";
 const PROTOCOL_TASKS_KEY = "vedara.completedProtocolTasks";
+const CLUB_VIDEOS_KEY = "vedara.completedClubVideos";
+const CLUB_ARTICLES_KEY = "vedara.completedClubArticles";
 const LEADS_KEY = "vedara.leads";
 
-const screenIds: ScreenId[] = ["home", "practices", "tracker", "club", "profile"];
+const screenIds: ScreenId[] = ["home", "practices", "tracker", "club", "chat", "profile"];
 
 const legacyScreenAliases: Record<string, ScreenId> = {
   today: "home",
@@ -29,6 +32,8 @@ const legacyScreenAliases: Record<string, ScreenId> = {
   clinic: "practices",
   university: "practices",
   club: "club",
+  chat: "chat",
+  community: "chat",
   cabinet: "profile",
 };
 
@@ -113,6 +118,12 @@ export default function App() {
   const [completedProtocolTasks, setCompletedProtocolTasks] = useState<string[]>(() =>
     readStorage<string[]>(PROTOCOL_TASKS_KEY, []),
   );
+  const [completedClubVideos, setCompletedClubVideos] = useState<string[]>(() =>
+    readStorage<string[]>(CLUB_VIDEOS_KEY, []),
+  );
+  const [completedClubArticles, setCompletedClubArticles] = useState<string[]>(() =>
+    readStorage<string[]>(CLUB_ARTICLES_KEY, []),
+  );
   const [leads, setLeads] = useState<Lead[]>(() => readStorage<Lead[]>(LEADS_KEY, []));
 
   useEffect(() => {
@@ -126,6 +137,8 @@ export default function App() {
   useEffect(() => writeStorage(HABITS_KEY, completedHabitKeys), [completedHabitKeys]);
   useEffect(() => writeStorage(MATERIALS_KEY, completedMaterials), [completedMaterials]);
   useEffect(() => writeStorage(PROTOCOL_TASKS_KEY, completedProtocolTasks), [completedProtocolTasks]);
+  useEffect(() => writeStorage(CLUB_VIDEOS_KEY, completedClubVideos), [completedClubVideos]);
+  useEffect(() => writeStorage(CLUB_ARTICLES_KEY, completedClubArticles), [completedClubArticles]);
   useEffect(() => writeStorage(LEADS_KEY, leads), [leads]);
 
   const todayCheckIn = checkIns[todayKey];
@@ -160,6 +173,14 @@ export default function App() {
     setCompletedProtocolTasks((current) => toggleValue(current, taskId));
   };
 
+  const toggleClubVideo = (videoId: string) => {
+    setCompletedClubVideos((current) => toggleValue(current, videoId));
+  };
+
+  const toggleClubArticle = (articleId: string) => {
+    setCompletedClubArticles((current) => toggleValue(current, articleId));
+  };
+
   const createLead = (type: LeadType) => {
     const accessByLead: Record<LeadType, AccessState> = {
       clinic: "clinicLead",
@@ -191,6 +212,8 @@ export default function App() {
     setCompletedHabitKeys([]);
     setCompletedMaterials([]);
     setCompletedProtocolTasks([]);
+    setCompletedClubVideos([]);
+    setCompletedClubArticles([]);
     setLeads([]);
   };
 
@@ -210,10 +233,16 @@ export default function App() {
         return (
           <ClinicPage
             access={access}
+            completedArticles={completedClubArticles}
+            completedVideos={completedClubVideos}
             onNavigate={navigate}
             onSetAccess={setAccess}
+            onToggleArticle={toggleClubArticle}
+            onToggleVideo={toggleClubVideo}
           />
         );
+      case "chat":
+        return <ChatPage onNavigate={navigate} />;
       case "practices":
         return (
           <UniversityPage
@@ -250,7 +279,19 @@ export default function App() {
           />
         );
     }
-  }, [access, checkIns, completedHabitKeys, completedHabits, completedMaterials, completedProtocolTasks, leads, screen, todayCheckIn]);
+  }, [
+    access,
+    checkIns,
+    completedClubArticles,
+    completedClubVideos,
+    completedHabitKeys,
+    completedHabits,
+    completedMaterials,
+    completedProtocolTasks,
+    leads,
+    screen,
+    todayCheckIn,
+  ]);
 
   return (
     <div className="app-shell">

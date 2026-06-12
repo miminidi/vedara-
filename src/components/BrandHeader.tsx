@@ -13,9 +13,11 @@ export function BrandHeader({ onCabinetClick }: BrandHeaderProps) {
         <img className="brand-logo" src={assets.logoFull} alt="Vedara" />
         <div className="brand-mini">{brandContent.tagline}</div>
       </div>
-      <button className="icon-button" type="button" aria-label={brandContent.profileAria} onClick={onCabinetClick}>
-        <CabinetCircleIcon size={22} />
-      </button>
+      {onCabinetClick ? (
+        <button className="icon-button" type="button" aria-label={brandContent.profileAria} onClick={onCabinetClick}>
+          <CabinetCircleIcon size={22} />
+        </button>
+      ) : null}
     </header>
   );
 }

@@ -1,5 +1,8 @@
 import type {
+  AccessState,
   CheckMetric,
+  ClubArticle,
+  ClubVideo,
   DayPlanItem,
   Habit,
   LeadType,
@@ -8,6 +11,7 @@ import type {
   ProductCta,
   Program,
   Protocol,
+  TeamMember,
   UserProfile,
 } from "./types";
 
@@ -29,7 +33,7 @@ export const navItems: NavItem[] = [
   { id: "home", label: "Главная", icon: "home" },
   { id: "practices", label: "Уроки", icon: "practices" },
   { id: "tracker", label: "Трекер", icon: "tracker", center: true },
-  { id: "club", label: "Чат", icon: "club" },
+  { id: "chat", label: "Чат", icon: "chat" },
   { id: "profile", label: "Профиль", icon: "profile" },
 ];
 
@@ -38,7 +42,22 @@ export const homeHubContent = {
     kicker: "Longevita Club",
     title: "5 555 ₽ стартовый доступ",
     text: "Далее 3 333 ₽ / месяц. В MVP это только demo-состояние без реальной оплаты.",
-    cta: "Оформить доступ",
+    actions: [
+      {
+        id: "trial",
+        label: "7 дней бесплатно",
+        target: "club",
+        access: "trial",
+        variant: "primary",
+      },
+      {
+        id: "subscription",
+        label: "Оформить подписку",
+        target: "club",
+        access: "clubMonthly",
+        variant: "secondary",
+      },
+    ],
   },
   directionsKicker: "Vedara",
   directionsTitle: "Экосистема Vedara",
@@ -51,7 +70,7 @@ export const homeEcosystemCards = [
     description: "Главный открытый продукт: клуб, практики, комьюнити и мягкое сопровождение.",
     meta: "открыт",
     target: "club",
-    cta: "Открыть чат",
+    cta: "Войти в клуб",
   },
   {
     id: "university",
@@ -82,9 +101,84 @@ export const homeEcosystemCards = [
   title: string;
   description: string;
   meta: string;
-  cta: string;
-  target: NavItem["id"];
+  cta?: string;
+  target?: NavItem["id"];
+  actions?: Array<{
+    id: string;
+    label: string;
+    target: NavItem["id"];
+    access?: AccessState;
+    variant: "primary" | "secondary";
+  }>;
 }>;
+
+export const homeAboutContent = {
+  kicker: "team",
+  title: "О нас",
+  subtitle: "Команда Vedara, которая ведет клуб, практики и сопровождение.",
+  leadershipTitle: "Руководители",
+  staffTitle: "Команда",
+  cta: "Познакомиться с клубом",
+};
+
+export const teamMembers: TeamMember[] = [
+  {
+    id: "maria-svyataya",
+    name: "Мария Святая",
+    role: "Основатель Vedara / автор методологии",
+    description: "Ведет индивидуальные программы, клубную систему и направление осознанного долголетия.",
+    group: "leadership",
+    initials: "МС",
+  },
+  {
+    id: "direction-lead",
+    name: "Руководитель направления",
+    role: "Методология и развитие программ",
+    description: "Координирует структуру направлений и помогает сохранять единый ритм сопровождения.",
+    group: "leadership",
+    initials: "РН",
+  },
+  {
+    id: "club-curator",
+    name: "Куратор клуба",
+    role: "Клубное сопровождение",
+    description: "Помогает участницам ориентироваться в материалах, эфирах и клубных сценариях.",
+    group: "leadership",
+    initials: "КК",
+  },
+  {
+    id: "staff-club-curator",
+    name: "Куратор клуба",
+    role: "Комьюнити и эфиры",
+    description: "Поддерживает клубное общение и недельные темы.",
+    group: "staff",
+    initials: "КК",
+  },
+  {
+    id: "practices-specialist",
+    name: "Специалист по практикам",
+    role: "Мягкие практики",
+    description: "Готовит короткие практики и материалы для регулярного ритма.",
+    group: "staff",
+    initials: "СП",
+  },
+  {
+    id: "tracker-specialist",
+    name: "Специалист по трекеру",
+    role: "Трекер и наблюдение",
+    description: "Помогает связывать привычки, состояние и понятную динамику.",
+    group: "staff",
+    initials: "СТ",
+  },
+  {
+    id: "member-support",
+    name: "Поддержка участниц",
+    role: "Организационная поддержка",
+    description: "Помогает с доступом, навигацией и базовыми вопросами по MVP.",
+    group: "staff",
+    initials: "ПУ",
+  },
+];
 
 export const practicesContent = {
   header: {
@@ -107,41 +201,149 @@ export const practicesContent = {
 export const clubContent = {
   header: {
     kicker: "Longevita Club",
-    title: "Чат",
-    subtitle: "Комьюнити-хаб MVP: чат, живые встречи, куратор, объявления и недельный вызов без реального backend.",
+    title: "VEDARA LONGEVITA CLUB",
+    subtitle: "Клуб молодости, энергии и осознанного долголетия.",
   },
-  stateActive: "demo active",
-  stateMock: "community mock",
-  chatTitle: "Чат клуба",
-  chatText: "Mock-лента для ощущения сообщества. Сообщения никуда не отправляются.",
-  liveSectionKicker: "this week",
-  liveSectionTitle: "Живые форматы",
-  liveTitle: "Ближайшая живая сессия",
-  liveText: "Воскресенье · 19:00 · разбор ритма недели и мягких практик.",
-  curatorTitle: "Куратор",
-  curatorText: "В MVP это информационный блок: вопросы сохраняются только как сценарий интерфейса.",
-  challengeTitle: "Вызов недели",
-  challengeText: "5 спокойных отметок: вода, движение, практика, сон и один материал.",
-  activityKicker: "community",
-  activityTitle: "Активность клуба",
-  activityCards: [
-    {
-      title: "Недельная тема",
-      text: "Мягкий режим без перегруза: участники отмечают базовые привычки и делятся наблюдениями в mock-формате.",
-    },
-    {
-      title: "Объявления",
-      text: "Новые уроки недели доступны во вкладке “Уроки”. Реальных сообщений и отправки данных в MVP нет.",
-    },
-  ],
-  chips: {
-    mock: "mock",
-    qa: "Q&A",
-    challenge: "5 шагов",
+  access: {
+    trial: "Пробный доступ активен",
+    premium: "Подписка активна",
+    guest: "Оформите доступ, чтобы открыть материалы клуба",
+    trialText: "7 дней открывают короткие видео, статьи и клубные материалы в demo-режиме.",
+    premiumText: "Mock-подписка активна. Реальная оплата в MVP не подключена.",
+    guestText: "Вы можете включить пробный доступ или посмотреть тарифный блок без реальной оплаты.",
   },
-  cta: "Включить demo-доступ",
-  secondaryCta: "Открыть уроки",
+  trialCta: "7 дней бесплатно",
+  tariff: {
+    kicker: "подписка",
+    title: "5 555 ₽ стартовый доступ",
+    text: "Далее 3 333 ₽ / месяц. В MVP это mock-состояние без реальной оплаты.",
+    cta: "Активировать mock-подписку",
+  },
+  videosKicker: "club library",
+  videosTitle: "Короткие видео",
+  articlesKicker: "tracker guide",
+  articlesTitle: "Статьи для пользования трекером",
+  communityKicker: "community",
+  communityTitle: "Клубное общение",
+  communityText: "Общение, эфиры, вопросы куратору и объявления вынесены в отдельный community-раздел.",
+  chatCta: "Перейти в чат клуба",
+  open: "Открыть",
+  markWatched: "Отметить просмотренным",
+  watched: "Просмотрено",
+  markRead: "Отметить прочитанным",
+  read: "Прочитано",
+  available: "доступно",
+  locked: "locked",
+  openAccess: "Открыть доступ",
+  detailTitle: "Mock-просмотр",
+  detailText: "Реальные видео и внешние материалы в MVP не подключены. Этот блок показывает, как будет открываться клубный материал.",
+  closeDetail: "Закрыть",
 };
+
+export const chatContent = {
+  header: {
+    kicker: "community",
+    title: "Чат клуба",
+    subtitle: "Клубное общение, эфиры, вопросы куратору и объявления в mock-режиме MVP.",
+  },
+  status: "community mock",
+  introTitle: "Клубное общение",
+  introText: "Здесь собрана community-часть Longevita Club: чат, ближайшие встречи, тема недели и мягкая поддержка куратора.",
+  liveKicker: "ближайший эфир",
+  liveTitle: "Воскресенье · 19:00",
+  liveText: "Разбор ритма недели, вопросы участников и спокойная настройка практик без медицинских назначений.",
+  weekTitle: "Тема недели",
+  weekText: "Мягкая регулярность: вода, движение, практика, сон и один материал без перегруза.",
+  curatorTitle: "Вопрос куратору",
+  curatorText: "В MVP вопрос сохраняется локально как интерфейсное состояние. Реальной отправки на сервер нет.",
+  announcementsTitle: "Объявления",
+  announcements: [
+    "Новые короткие видео доступны на странице клуба.",
+    "Статьи для трекера помогают подготовиться к ежедневным отметкам.",
+    "Чат клуба будет подключен после MVP-проверки сценария.",
+  ],
+  questionCta: "Задать вопрос",
+  questionSaved: "Вопрос сохранен локально",
+  clubCta: "Вернуться в клуб",
+};
+
+export const clubVideos: ClubVideo[] = [
+  {
+    id: "what-is-longevita",
+    title: "Что такое VEDARA Longevita",
+    description: "Короткое введение в клуб, ритм материалов и ежедневную практику наблюдения.",
+    duration: "7 мин",
+    access: "club",
+    completed: false,
+  },
+  {
+    id: "dao-practices",
+    title: "Даосские практики",
+    description: "Мягкие принципы телесного внимания без сложных техник и медицинских обещаний.",
+    duration: "9 мин",
+    access: "club",
+    completed: false,
+  },
+  {
+    id: "breathing-practice",
+    title: "Дыхательная практика",
+    description: "Спокойная короткая пауза для возвращения внимания к телу и состоянию дня.",
+    duration: "6 мин",
+    access: "club",
+    completed: false,
+  },
+  {
+    id: "face-massage",
+    title: "Массаж лица",
+    description: "Деликатный уходовый ритуал как часть вечернего восстановления.",
+    duration: "8 мин",
+    access: "club",
+    completed: false,
+  },
+  {
+    id: "hrv-basics",
+    title: "Показатель HRV",
+    description: "Как относиться к HRV как к наблюдению, а не как к диагнозу или назначению.",
+    duration: "10 мин",
+    access: "club",
+    completed: false,
+  },
+  {
+    id: "soft-training",
+    title: "Тренировка",
+    description: "Мягкая активность, которую можно связать с отметками движения и состояния.",
+    duration: "12 мин",
+    access: "club",
+    completed: false,
+  },
+];
+
+export const clubArticles: ClubArticle[] = [
+  {
+    id: "essentials-list",
+    title: "Список необходимого",
+    description: "Что подготовить для спокойного старта: вода, заметки, удобное место и простой план.",
+    readingTime: "4 мин чтения",
+    access: "club",
+    completed: false,
+  },
+  {
+    id: "recipe-book",
+    title: "Книга рецептов",
+    description: "Идеи простых приемов пищи для наблюдения за питанием без жестких правил.",
+    readingTime: "7 мин чтения",
+    access: "club",
+    completed: false,
+  },
+  {
+    id: "tracker-explainer",
+    title: "Пояснения к трекеру",
+    description: "Как отмечать привычки и состояние, чтобы видеть динамику недели и месяца.",
+    readingTime: "5 мин чтения",
+    access: "club",
+    completed: false,
+  },
+];
 
 export const userProfile: UserProfile = {
   id: "demo-user",
@@ -194,12 +396,9 @@ export const trackerContent = {
   emptyTitle: "Данных за день пока нет",
   emptyText: "Выберите привычки или заполните состояние, чтобы день появился в календаре.",
   reportTitle: "Отчет дня",
-  reportText: {
-    withState:
-      "В этот день выполнено {completed} из {total} привычек. Самочувствие отмечено на {state}. Продолжайте отслеживать связь между привычками и состоянием.",
-    withoutState:
-      "В этот день выполнено {completed} из {total} привычек. Самочувствие пока не отмечено. Добавьте состояние, чтобы видеть динамику самочувствия.",
-  },
+  reportDescription: "На основе привычек и состояния выбранного дня.",
+  reportEmptyText: "Заполните привычки и состояние, чтобы увидеть отчет дня.",
+  reportScoreLabel: "Оценка дня",
   habitsTitle: "Привычки дня",
   conditionTitle: "Состояние",
   conditionScale: "1-10",
