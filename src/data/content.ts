@@ -163,7 +163,7 @@ export const accessLabels = {
 export const todayContent = {
   greeting: "Доброе утро",
   dateLabel: "Сегодня",
-  scoreLabel: "Индекс дня",
+  scoreLabel: "Ритм дня",
   checkInTitle: "Быстрый check-in",
   checkInText: "Отметьте состояние. Vedara сохранит день локально на этом устройстве.",
   planTitle: "План дня",
@@ -180,7 +180,7 @@ export const trackerContent = {
   header: {
     kicker: "ежедневный ритм",
     title: "Трекер",
-    subtitle: "Привычки, состояние и прогресс дня. Данные остаются в localStorage.",
+    subtitle: "Отмечайте привычки и состояние, чтобы видеть динамику недели и месяца.",
   },
   monthTitle: "Календарь месяца",
   monthKicker: "месяц",
@@ -194,7 +194,12 @@ export const trackerContent = {
   emptyTitle: "Данных за день пока нет",
   emptyText: "Выберите привычки или заполните состояние, чтобы день появился в календаре.",
   reportTitle: "Отчет дня",
-  reportText: "Индекс дня собирается из привычек и состояния выбранного дня.",
+  reportText: {
+    withState:
+      "В этот день выполнено {completed} из {total} привычек. Самочувствие отмечено на {state}. Продолжайте отслеживать связь между привычками и состоянием.",
+    withoutState:
+      "В этот день выполнено {completed} из {total} привычек. Самочувствие пока не отмечено. Добавьте состояние, чтобы видеть динамику самочувствия.",
+  },
   habitsTitle: "Привычки дня",
   conditionTitle: "Состояние",
   conditionScale: "1-10",
@@ -211,10 +216,6 @@ export const trackerContent = {
     state: {
       title: "Состояние",
       description: "самочувствие дня",
-    },
-    index: {
-      title: "Индекс дня",
-      description: "привычки + состояние",
     },
   },
 };

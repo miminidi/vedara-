@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
 import { MonthCalendar, type MonthCalendarDay } from "../components/MonthCalendar";
-import { ProgressBar } from "../components/ProgressBar";
 import { ScreenHeader } from "../components/ScreenHeader";
 import { SectionHead } from "../components/SectionHead";
 import { TrackerMetricCard } from "../components/TrackerMetricCard";
@@ -103,21 +102,18 @@ function stateScore(checkIn?: DailyCheckIn) {
   return Math.round((average / stateScaleMax) * 100);
 }
 
-function dayIndex(habitPercent: number, hasHabitData: boolean, selectedStateScore: number | null) {
-  if (hasHabitData && selectedStateScore !== null) {
-    return Math.round(habitPercent * 0.55 + selectedStateScore * 0.45);
-  }
-  if (hasHabitData) {
-    return habitPercent;
-  }
-  if (selectedStateScore !== null) {
-    return selectedStateScore;
-  }
-  return null;
-}
-
 function percentLabel(value: number | null) {
   return value === null ? trackerContent.noValue : `${value}%`;
+}
+
+function buildReportText(completedHabits: number, totalHabits: number, selectedStateScore: number | null) {
+  const template =
+    selectedStateScore === null ? trackerContent.reportText.withoutState : trackerContent.reportText.withState;
+
+  return template
+    .replace("{completed}", String(completedHabits))
+    .replace("{total}", String(totalHabits))
+    .replace("{state}", percentLabel(selectedStateScore));
 }
 
 function buildMonthDays(
@@ -165,10 +161,9 @@ export function ClubPage({
     [completedHabitKeys, selectedDate],
   );
   const selectedStateScore = stateScore(selectedCheckIn);
-  const habitPercent = Math.round((selectedCompletedHabits.length / habits.length) * 100);
   const hasHabitData = selectedCompletedHabits.length > 0;
-  const selectedDayIndex = dayIndex(habitPercent, hasHabitData, selectedStateScore);
   const selectedDayIsEmpty = !hasHabitData && selectedStateScore === null;
+  const reportText = buildReportText(selectedCompletedHabits.length, habits.length, selectedStateScore);
   const monthDays = useMemo(
     () => buildMonthDays(selectedDate, checkIns, completedHabitKeys),
     [checkIns, completedHabitKeys, selectedDate],
@@ -182,22 +177,24 @@ export function ClubPage({
         subtitle={trackerContent.header.subtitle}
       />
 
-      <section className="tracker-summary" aria-label={trackerContent.selectedDayTitle}>
-        <TrackerMetricCard
-          title={trackerContent.summary.habits.title}
-          value={`${selectedCompletedHabits.length}/${habits.length}`}
-          description={trackerContent.summary.habits.description}
-        />
-        <TrackerMetricCard
-          title={trackerContent.summary.state.title}
-          value={percentLabel(selectedStateScore)}
-          description={trackerContent.summary.state.description}
-        />
-        <TrackerMetricCard
-          title={trackerContent.summary.index.title}
-          value={percentLabel(selectedDayIndex)}
-          description={trackerContent.summary.index.description}
-        />
+      <section className="panel tracker-report-card" aria-label={trackerContent.reportTitle}>
+        <div>
+          <span className="section-kicker">{selectedDateLabel(selectedDate)}</span>
+          <h2 className="panel-title">{trackerContent.reportTitle}</h2>
+          <p>{reportText}</p>
+        </div>
+        <div className="tracker-report-card__metrics">
+          <TrackerMetricCard
+            title={trackerContent.summary.habits.title}
+            value={`${selectedCompletedHabits.length}/${habits.length}`}
+            description={trackerContent.summary.habits.description}
+          />
+          <TrackerMetricCard
+            title={trackerContent.summary.state.title}
+            value={percentLabel(selectedStateScore)}
+            description={trackerContent.summary.state.description}
+          />
+        </div>
       </section>
 
       <MonthCalendar
@@ -269,15 +266,6 @@ export function ClubPage({
           );
         })}
       </div>
-
-      <section className="panel tracker-report-card">
-        <div>
-          <span className="section-kicker">{trackerContent.selectedDayTitle}</span>
-          <h2 className="panel-title">{trackerContent.reportTitle}</h2>
-          <p>{trackerContent.reportText}</p>
-        </div>
-        <ProgressBar value={selectedDayIndex ?? 0} label={`${trackerContent.summary.index.title} ${percentLabel(selectedDayIndex)}`} />
-      </section>
 
       <div className="button-row u-mt-5">
         <button

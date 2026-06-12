@@ -755,11 +755,10 @@ button.tracker-row {
   line-height: 1.25;
 }
 
-.tracker-summary {
+.tracker-report-card__metrics {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-3);
-  margin-bottom: var(--space-4);
 }
 
 .tracker-metric-card {
@@ -983,8 +982,7 @@ button.tracker-row {
   gap: var(--space-4);
 }
 
-.tracker-month-card .program-card__top,
-.tracker-report-card .program-card__top {
+.tracker-month-card .program-card__top {
   margin-bottom: 0;
 }
 
@@ -1145,7 +1143,7 @@ button.tracker-row {
 .tracker-report-card {
   display: grid;
   gap: var(--space-4);
-  margin-top: var(--space-6);
+  margin-top: 0;
 }
 
 .bottom-dock {
@@ -1319,7 +1317,7 @@ button.tracker-row {
 }
 
 @media (max-width: 400px) {
-  .tracker-summary {
+  .tracker-report-card__metrics {
     gap: var(--space-2);
   }
 
