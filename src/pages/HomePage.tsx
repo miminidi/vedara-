@@ -15,8 +15,6 @@ function hasClubAccess(access: AccessState) {
 }
 
 export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
-  const leadershipMembers = teamMembers.filter((member) => member.group === "leadership");
-  const staffMembers = teamMembers.filter((member) => member.group === "staff");
   const isClubActive = hasClubAccess(access);
 
   const handleAction = (target: ScreenId, access?: AccessState) => {
@@ -117,45 +115,19 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
         <SectionHead kicker={homeAboutContent.kicker} title={homeAboutContent.title} />
         <p className="home-about-section__subtitle">{homeAboutContent.subtitle}</p>
 
-        <div className="team-group">
-          <h3 className="team-group__title">{homeAboutContent.leadershipTitle}</h3>
-          <div className="grid team-grid team-grid--leadership">
-            {leadershipMembers.map((member) => (
-              <article className="team-card team-card--leadership" key={member.id}>
-                <div className="team-avatar" aria-hidden="true">
-                  {member.photoUrl ? <img src={member.photoUrl} alt="" /> : <span>{member.initials}</span>}
-                </div>
-                <div className="team-card__content">
-                  <h4>{member.name}</h4>
-                  <span>{member.role}</span>
-                  <p>{member.description}</p>
-                </div>
-              </article>
-            ))}
-          </div>
+        <div className="grid team-grid">
+          {teamMembers.map((member) => (
+            <article className="team-card" key={member.id}>
+              <div className="team-avatar team-avatar--sm" aria-hidden="true">
+                {member.photoUrl ? <img src={member.photoUrl} alt="" /> : <span>{member.initials}</span>}
+              </div>
+              <div className="team-card__content">
+                <h4>{member.role}</h4>
+                <p>{member.description}</p>
+              </div>
+            </article>
+          ))}
         </div>
-
-        <div className="team-group">
-          <h3 className="team-group__title">{homeAboutContent.staffTitle}</h3>
-          <div className="grid team-grid">
-            {staffMembers.map((member) => (
-              <article className="team-card" key={member.id}>
-                <div className="team-avatar team-avatar--sm" aria-hidden="true">
-                  {member.photoUrl ? <img src={member.photoUrl} alt="" /> : <span>{member.initials}</span>}
-                </div>
-                <div className="team-card__content">
-                  <h4>{member.name}</h4>
-                  <span>{member.role}</span>
-                  <p>{member.description}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-
-        <button className="button button--secondary home-about-section__cta" type="button" onClick={() => onNavigate("club")}>
-          {homeAboutContent.cta}
-        </button>
       </section>
     </main>
   );

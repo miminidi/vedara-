@@ -452,24 +452,6 @@
   line-height: var(--line-body);
 }
 
-.home-about-section__cta {
-  justify-self: start;
-}
-
-.team-group {
-  display: grid;
-  gap: var(--space-3);
-}
-
-.team-group__title {
-  margin: 0;
-  color: var(--color-text-heading);
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: 400;
-  line-height: var(--line-tight);
-}
-
 .team-grid {
   gap: var(--space-3);
 }
@@ -484,14 +466,6 @@
   border-radius: var(--radius-lg);
   background: var(--color-surface);
   box-shadow: var(--shadow-card);
-}
-
-.team-card--leadership {
-  grid-template-columns: 64px minmax(0, 1fr);
-  padding: var(--space-5);
-  background:
-    radial-gradient(circle at 88% 16%, var(--color-gold-15), transparent 34%),
-    linear-gradient(145deg, var(--color-surface), var(--vd-lavender-50));
 }
 
 .team-avatar {

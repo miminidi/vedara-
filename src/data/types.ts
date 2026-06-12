@@ -21,10 +21,8 @@ export interface UserProfile {
 
 export interface TeamMember {
   id: string;
-  name: string;
   role: string;
   description: string;
-  group: "leadership" | "staff";
   initials: string;
   photoUrl?: string;
 }
