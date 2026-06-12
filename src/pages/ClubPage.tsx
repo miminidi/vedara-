@@ -49,6 +49,15 @@ function selectedDateLabel(dateKey: string) {
   }).format(parseDateKey(dateKey));
 }
 
+function compactSelectedDateLabel(dateKey: string) {
+  const date = new Intl.DateTimeFormat("ru-RU", {
+    day: "numeric",
+    month: "long",
+  }).format(parseDateKey(dateKey));
+
+  return dateKey === todayKey() ? `Сегодня · ${date}` : date;
+}
+
 function monthTitle(dateKey: string) {
   return new Intl.DateTimeFormat("ru-RU", {
     month: "long",
@@ -183,17 +192,11 @@ export function ClubPage({
       <ScreenHeader
         kicker={trackerContent.header.kicker}
         title={trackerContent.header.title}
+        meta={compactSelectedDateLabel(selectedDate)}
         subtitle={trackerContent.header.subtitle}
       />
 
-      <section className="panel tracker-selected-day" aria-label={trackerContent.selectedDayTitle}>
-        <span className="section-kicker">{trackerContent.selectedDayTitle}</span>
-        <h2 className="panel-title">{selectedDate === todayKey() ? "Сегодня" : selectedDateLabel(selectedDate)}</h2>
-        <p>{selectedDateLabel(selectedDate)}</p>
-      </section>
-
       <section className="panel tracker-input-card" aria-label={trackerContent.todayInputTitle}>
-        <span className="section-kicker">{selectedDateLabel(selectedDate)}</span>
         <h2 className="panel-title">{trackerContent.todayInputTitle}</h2>
 
         {selectedDayIsEmpty ? (

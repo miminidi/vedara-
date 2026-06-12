@@ -1036,6 +1036,20 @@ button.tracker-row {
   margin: var(--space-2) 0 var(--space-6);
 }
 
+.screen-header__meta {
+  display: inline-flex;
+  width: fit-content;
+  margin: var(--space-2) 0 0;
+  padding: 7px 12px;
+  border: var(--card-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface-lavender);
+  color: var(--color-text-heading);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: 1;
+}
+
 .back-row {
   display: flex;
   align-items: center;

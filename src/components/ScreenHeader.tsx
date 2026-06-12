@@ -5,10 +5,11 @@ interface ScreenHeaderProps {
   title: string;
   subtitle: string;
   kicker?: string;
+  meta?: string;
   onBack?: () => void;
 }
 
-export function ScreenHeader({ title, subtitle, kicker, onBack }: ScreenHeaderProps) {
+export function ScreenHeader({ title, subtitle, kicker, meta, onBack }: ScreenHeaderProps) {
   return (
     <header className="screen-header">
       {onBack ? (
@@ -18,6 +19,7 @@ export function ScreenHeader({ title, subtitle, kicker, onBack }: ScreenHeaderPr
       ) : null}
       {kicker ? <p className="section-kicker">{kicker}</p> : null}
       <h1 className="screen-heading">{title}</h1>
+      {meta ? <p className="screen-header__meta">{meta}</p> : null}
       <p className="screen-subtitle">{subtitle}</p>
     </header>
   );
