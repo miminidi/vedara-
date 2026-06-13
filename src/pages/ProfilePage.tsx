@@ -63,6 +63,12 @@ export function ProfilePage({
     return { ...pillar, total, done, percent, state };
   });
 
+  const totalPractices = pillarProgress.reduce((sum, pillar) => sum + pillar.total, 0);
+  const donePractices = pillarProgress.reduce((sum, pillar) => sum + pillar.done, 0);
+  const overallPercent = totalPractices ? Math.round((donePractices / totalPractices) * 100) : 0;
+  const levelThresholds = [0, 20, 45, 70, 95];
+  const levelIndex = levelThresholds.reduce((acc, threshold, index) => (overallPercent >= threshold ? index : acc), 0);
+
   const hasLead = (type?: LeadType) => Boolean(type && leads.some((lead) => lead.type === type));
   const hasIntent = (intentId?: string) => Boolean(intentId && productIntents.includes(intentId));
 
@@ -165,8 +171,25 @@ export function ProfilePage({
         <div className="stat-card"><span className="stat-value">{completedHabits.length}</span><span className="stat-label">{profileContent.stats.habits}</span></div>
         <div className="stat-card"><span className="stat-value">{completedMaterials.length}</span><span className="stat-label">{profileContent.stats.materials}</span></div>
         <div className="stat-card"><span className="stat-value">{completedProtocolTasks.length}</span><span className="stat-label">{profileContent.stats.protocolTasks}</span></div>
-        <div className="stat-card"><span className="stat-value">{leads.length}</span><span className="stat-label">{profileContent.stats.leads}</span></div>
       </div>
+
+      <SectionHead kicker={profileContent.progressKicker} title={profileContent.progressTitle} />
+      <p className="section-subcopy">{profileContent.progressSubtitle}</p>
+      <section className="vedara-progress">
+        <div className="vedara-progress__head">
+          <span className="vedara-progress__current">{profileContent.progressLevels[levelIndex]}</span>
+          <span className="vedara-progress__percent">{overallPercent}%</span>
+        </div>
+        <div className="vedara-progress__segments" role="presentation">
+          {profileContent.progressLevels.map((level, index) => (
+            <span className={`vedara-progress__segment ${index <= levelIndex ? "is-filled" : ""}`} key={level} />
+          ))}
+        </div>
+        <div className="vedara-progress__ends">
+          <span>{profileContent.progressLevels[0]}</span>
+          <span>{profileContent.progressLevels[profileContent.progressLevels.length - 1]}</span>
+        </div>
+      </section>
 
       <SectionHead kicker={profileContent.mapKicker} title={profileContent.mapTitle} />
       <p className="section-subcopy">{profileContent.mapSubtitle}</p>
@@ -241,28 +264,6 @@ export function ProfilePage({
         {profile.goals.map((goal) => (
           <span className="badge" key={goal}>{goal}</span>
         ))}
-      </div>
-
-      <SectionHead kicker={profileContent.supportKicker} title={profileContent.supportTitle} />
-      <section className="panel">
-        <p>{profileContent.supportText}</p>
-        <ul className="check-list u-mt-4">
-          {profileContent.supportItems.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </section>
-
-      <SectionHead kicker="mock" title={profileContent.leadsTitle} />
-      <div className="grid">
-        {leads.length ? leads.map((lead) => (
-          <article className="lead-row" key={lead.id}>
-            <h3>{lead.title}</h3>
-            <p>{lead.status} · {dateLabel(lead.createdAt)}</p>
-          </article>
-        )) : (
-          <div className="notice">{profileContent.noLeads}</div>
-        )}
       </div>
 
       <button className="button button--primary u-full u-mt-5" type="button" onClick={() => onNavigate("home")}>

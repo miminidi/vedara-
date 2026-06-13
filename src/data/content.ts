@@ -42,8 +42,8 @@ export const navItems: NavItem[] = [
 export const homeHubContent = {
   tariff: {
     kicker: "Longevita Club",
-    title: "5 555 ₽ стартовый доступ",
-    text: "Далее 3 333 ₽ / месяц. В MVP это только demo-состояние без реальной оплаты.",
+    title: "5 555 ₽ / месяц",
+    text: "Единая подписка без скрытых тарифов. В MVP это только demo-состояние без реальной оплаты.",
     actions: [
       {
         id: "trial",
@@ -403,8 +403,8 @@ export const clubContent = {
   trialCta: "7 дней бесплатно",
   tariff: {
     kicker: "подписка",
-    title: "5 555 ₽ стартовый доступ",
-    text: "Далее 3 333 ₽ / месяц. В MVP это mock-состояние без реальной оплаты.",
+    title: "5 555 ₽ / месяц",
+    text: "Единая подписка без скрытых тарифов. В MVP это mock-состояние без реальной оплаты.",
     cta: "Активировать mock-подписку",
   },
   videosKicker: "эфиры по столпам",
@@ -743,6 +743,10 @@ export const profileContent = {
   goalsTitle: "Цели по методу",
   accessTitle: "Доступ",
   leadsTitle: "Заявки",
+  progressKicker: "мой прогресс",
+  progressTitle: "Мой прогресс Vedara",
+  progressSubtitle: "Путь от первого шага до состояния женщины-Longevita — растёт вместе с практиками.",
+  progressLevels: ["Новичок", "Ученица", "Практик", "Хранительница", "Женщина-Longevita"],
   mapKicker: "the longevita map",
   mapTitle: "Твой путь восстановления",
   mapSubtitle: "Прогресс по пяти столпам метода — отмечай практики в разделе «Практики».",

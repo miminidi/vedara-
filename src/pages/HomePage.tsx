@@ -21,6 +21,8 @@ function hasClubAccess(access: AccessState) {
 
 export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
   const isClubActive = hasClubAccess(access);
+  const clubCard = homeEcosystemCards.find((card) => card.id === "longevita");
+  const otherCards = homeEcosystemCards.filter((card) => card.id !== "longevita");
 
   const handleAction = (target: ScreenId, access?: AccessState) => {
     if (access) {
@@ -42,15 +44,63 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
     <main className="screen">
       <BrandHeader />
 
+      {clubCard && clubCard.target ? (
+        <article
+          aria-label={`${clubCard.title}: ${isClubActive ? homeHubContent.tariff.activeCta : "Открыть"}`}
+          className="program-card home-club-banner home-ecosystem-card--clickable"
+          onClick={() => onNavigate(clubCard.target as ScreenId)}
+          onKeyDown={(event) => handleCardKeyDown(event, clubCard.target)}
+          role="link"
+          tabIndex={0}
+        >
+          <div className="program-card__top">
+            <h3>{clubCard.title}</h3>
+            <span className="badge badge--gold">{clubCard.meta}</span>
+          </div>
+          <p>{clubCard.description}</p>
+          <div className="home-club-offer">
+            <span>{homeHubContent.tariff.title}</span>
+            <p>{homeHubContent.tariff.text}</p>
+          </div>
+          {isClubActive ? (
+            <button
+              className="button button--primary u-mt-4"
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                onNavigate(clubCard.target as ScreenId);
+              }}
+            >
+              {homeHubContent.tariff.activeCta}
+            </button>
+          ) : (
+            <div className="home-ecosystem-card__actions">
+              {homeHubContent.tariff.actions.map((action) => (
+                <button
+                  className={`button ${action.variant === "primary" ? "button--primary" : "button--secondary"}`}
+                  key={action.id}
+                  type="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    handleAction(action.target as ScreenId, action.access as AccessState | undefined);
+                  }}
+                >
+                  {action.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </article>
+      ) : null}
+
       <div className="grid grid--two">
-        {homeEcosystemCards.map((card) => {
+        {otherCards.map((card) => {
           const isClickable = Boolean(card.target);
-          const isClubCard = card.id === "longevita";
 
           return (
           <article
             aria-label={isClickable ? `${card.title}: ${card.cta ?? "Открыть"}` : undefined}
-            className={`program-card home-ecosystem-card ${isClubCard ? "home-ecosystem-card--featured" : ""} ${isClickable ? "home-ecosystem-card--clickable" : ""}`}
+            className={`program-card home-ecosystem-card ${isClickable ? "home-ecosystem-card--clickable" : ""}`}
             key={card.id}
             onClick={isClickable ? () => onNavigate(card.target as ScreenId) : undefined}
             onKeyDown={(event) => handleCardKeyDown(event, card.target)}
@@ -62,49 +112,13 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
               <span className="badge">{card.meta}</span>
             </div>
             <p>{card.description}</p>
-            {isClubCard ? (
-              <div className="home-club-offer">
-                <span>{homeHubContent.tariff.title}</span>
-                <p>{homeHubContent.tariff.text}</p>
-              </div>
-            ) : null}
-            {isClubCard && card.target ? (
-              isClubActive ? (
-                <button
-                  className="button button--primary u-mt-4"
-                  type="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    onNavigate(card.target);
-                  }}
-                >
-                  {homeHubContent.tariff.activeCta}
-                </button>
-              ) : (
-                <div className="home-ecosystem-card__actions">
-                  {homeHubContent.tariff.actions.map((action) => (
-                    <button
-                      className={`button ${action.variant === "primary" ? "button--primary" : "button--secondary"}`}
-                      key={action.id}
-                      type="button"
-                      onClick={(event) => {
-                        event.stopPropagation();
-                        handleAction(action.target as ScreenId, action.access as AccessState | undefined);
-                      }}
-                    >
-                      {action.label}
-                    </button>
-                  ))}
-                </div>
-              )
-            ) : null}
-            {!isClubCard && card.cta && card.target ? (
+            {card.cta && card.target ? (
               <button
                 className="button button--ghost u-mt-4"
                 type="button"
                 onClick={(event) => {
                   event.stopPropagation();
-                  onNavigate(card.target);
+                  onNavigate(card.target as ScreenId);
                 }}
               >
                 {card.cta}

@@ -420,10 +420,11 @@
   flex: 0 0 auto;
 }
 
-.home-ecosystem-card--featured {
+.home-club-banner {
   position: relative;
-  grid-column: 1 / -1;
+  display: grid;
   gap: var(--space-5);
+  margin-bottom: var(--space-4);
   padding: var(--space-6);
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.10);
@@ -432,7 +433,7 @@
   box-shadow: 0 1px 2px rgba(36, 19, 54, 0.1), 0 34px 70px -28px rgba(36, 19, 54, 0.62);
 }
 
-.home-ecosystem-card--featured::before {
+.home-club-banner::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -442,7 +443,7 @@
   pointer-events: none;
 }
 
-.home-ecosystem-card--featured::after {
+.home-club-banner::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -451,21 +452,21 @@
   pointer-events: none;
 }
 
-.home-ecosystem-card--featured > * {
+.home-club-banner > * {
   position: relative;
   z-index: 1;
 }
 
-.home-ecosystem-card--featured h3 {
+.home-club-banner h3 {
   color: var(--color-text-on-dark);
   letter-spacing: var(--letter-display);
 }
 
-.home-ecosystem-card--featured > p {
+.home-club-banner > p {
   color: var(--color-text-on-dark-muted);
 }
 
-.home-ecosystem-card--featured .badge {
+.home-club-banner .badge {
   color: var(--vd-gold-400);
   background: rgba(255, 255, 255, 0.08);
   border-color: var(--color-border-gold);
@@ -509,17 +510,17 @@
   line-height: var(--line-body);
 }
 
-.home-ecosystem-card--featured .button--primary {
+.home-club-banner .button--primary {
   background: var(--gradient-gold);
   color: var(--vd-purple-950);
   box-shadow: var(--shadow-button-gold);
 }
 
-.home-ecosystem-card--featured .button--primary::after {
+.home-club-banner .button--primary::after {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
-.home-ecosystem-card--featured .button--secondary {
+.home-club-banner .button--secondary {
   background: rgba(255, 255, 255, 0.10);
   color: var(--vd-white);
   border-color: rgba(255, 255, 255, 0.22);
@@ -2212,6 +2213,64 @@ button.tracker-row {
 
 .profile-recovery-chip.is-medium strong {
   box-shadow: inset 0 0 0 2px var(--vd-amethyst-300);
+}
+
+/* ---- Profile: Vedara progress scale ---- */
+.vedara-progress {
+  padding: var(--space-4) var(--space-4) var(--space-3);
+  border: var(--card-border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, rgba(245, 240, 251, 0.9), rgba(255, 255, 255, 0.9));
+  box-shadow: var(--card-shadow);
+}
+
+.vedara-progress__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.vedara-progress__current {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: 1.1;
+  color: var(--color-text-heading);
+}
+
+.vedara-progress__percent {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--vd-gold-500);
+}
+
+.vedara-progress__segments {
+  display: flex;
+  gap: 5px;
+  margin-top: var(--space-3);
+}
+
+.vedara-progress__segment {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--vd-lavender-100, rgba(231, 213, 246, 0.5));
+  transition: background var(--transition-base);
+}
+
+.vedara-progress__segment.is-filled {
+  background: linear-gradient(90deg, var(--vd-amethyst-300), var(--vd-gold-500));
+}
+
+.vedara-progress__ends {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+  font-size: 10px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
 }
 
 .longevita-map {
