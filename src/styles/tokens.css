@@ -1,77 +1,109 @@
 :root {
+  /* ---- Brand primitives (Vedara Longevita) ---- */
   --vd-purple-950: #241336;
+  --vd-purple-800: #34204c;
   --vd-graphite-900: #2B2B2F;
+  --vd-gold-600: #b8924a;
   --vd-gold-500: #C6A75E;
+  --vd-gold-400: #d8bd82;
   --vd-pearl-100: #EDEAF4;
-  --vd-pearl-50: #FAF8FC;
+  --vd-pearl-50: #F7F4FB;
+  --vd-pearl-25: #FBF9FE;
   --vd-white: #FFFFFF;
-  --vd-lavender-50: #F8F3FF;
-  --vd-lavender-100: #EEE4FB;
-  --vd-lavender-200: #DBC8F3;
-  --vd-lilac-100: #E9DDF4;
+
+  /* Longevita lilac / amethyst ramp (brandbook) */
+  --vd-lavender-50: #F8F4FF;
+  --vd-lavender-100: #EFE6FA;
+  --vd-lavender-200: #E1CEF3;
+  --vd-lilac-100: #E7D5F6;
   --vd-lilac-200: #D6BFE9;
+  --vd-amethyst-300: #B487C5;
+  --vd-amethyst-400: #9F65C7;
+
   --vd-sand-50: #FBF7EF;
   --vd-sand-100: #F3E9DD;
-  --vd-success-500: #617C5B;
+  --vd-success-500: #5d7a57;
   --vd-danger-500: #B14A4A;
 
-  --color-page-bg: var(--vd-pearl-50);
+  /* ---- Semantic surfaces ---- */
+  --color-page-bg: var(--vd-pearl-25);
   --color-page-bg-alt: var(--vd-pearl-100);
   --color-surface: var(--vd-white);
   --color-surface-pearl: var(--vd-pearl-100);
   --color-surface-lavender: var(--vd-lavender-50);
   --color-surface-lilac: var(--vd-lilac-100);
-  --color-text-primary: var(--vd-graphite-900);
+
+  /* ---- Text ---- */
+  --color-text-primary: #322f37;
   --color-text-heading: var(--vd-purple-950);
-  --color-text-muted: rgba(43, 43, 47, 0.58);
-  --color-text-subtle: rgba(43, 43, 47, 0.36);
+  --color-text-muted: rgba(43, 38, 54, 0.64);
+  --color-text-subtle: rgba(43, 38, 54, 0.44);
+  --color-text-on-dark: rgba(255, 255, 255, 0.94);
+  --color-text-on-dark-muted: rgba(255, 255, 255, 0.70);
+
+  /* ---- Accents ---- */
   --color-accent-primary: var(--vd-purple-950);
-  --color-accent-gold: var(--vd-gold-500);
-  --color-border-soft: rgba(36, 19, 54, 0.09);
+  --color-accent-gold: var(--vd-gold-600);
+  --color-accent-lilac: var(--vd-amethyst-400);
+  --color-border-soft: rgba(36, 19, 54, 0.08);
+  --color-border-hair: rgba(36, 19, 54, 0.12);
+  --color-border-gold: rgba(198, 167, 94, 0.42);
   --color-good: var(--vd-success-500);
   --color-danger: var(--vd-danger-500);
+
+  /* ---- Alpha helpers ---- */
   --color-white-94: rgba(255, 255, 255, 0.94);
-  --color-white-88: rgba(255, 255, 255, 0.88);
-  --color-white-76: rgba(255, 255, 255, 0.76);
+  --color-white-88: rgba(255, 255, 255, 0.90);
+  --color-white-76: rgba(255, 255, 255, 0.82);
   --color-white-72: rgba(255, 255, 255, 0.72);
-  --color-white-70: rgba(255, 255, 255, 0.70);
-  --color-white-54: rgba(255, 255, 255, 0.54);
+  --color-white-70: rgba(255, 255, 255, 0.66);
+  --color-white-54: rgba(255, 255, 255, 0.56);
   --color-white-46: rgba(255, 255, 255, 0.46);
   --color-white-12: rgba(255, 255, 255, 0.12);
+  --color-purple-30: rgba(36, 19, 54, 0.30);
   --color-purple-22: rgba(36, 19, 54, 0.22);
   --color-purple-16: rgba(36, 19, 54, 0.16);
   --color-purple-12: rgba(36, 19, 54, 0.12);
   --color-purple-10: rgba(36, 19, 54, 0.10);
   --color-purple-06: rgba(36, 19, 54, 0.06);
   --color-purple-03: rgba(36, 19, 54, 0.03);
-  --color-gold-24: rgba(198, 167, 94, 0.24);
-  --color-gold-18: rgba(198, 167, 94, 0.18);
-  --color-gold-15: rgba(198, 167, 94, 0.15);
+  --color-gold-24: rgba(198, 167, 94, 0.30);
+  --color-gold-18: rgba(198, 167, 94, 0.20);
+  --color-gold-15: rgba(198, 167, 94, 0.16);
   --color-gold-12: rgba(198, 167, 94, 0.12);
   --color-gold-10: rgba(198, 167, 94, 0.10);
-  --color-lavender-38: rgba(219, 200, 243, 0.38);
-  --color-lavender-30: rgba(219, 200, 243, 0.30);
-  --color-lilac-40: rgba(214, 191, 233, 0.40);
-  --color-success-14: rgba(97, 124, 91, 0.14);
+  --color-lavender-38: rgba(180, 135, 197, 0.30);
+  --color-lavender-30: rgba(180, 135, 197, 0.22);
+  --color-lilac-40: rgba(159, 101, 199, 0.26);
+  --color-success-14: rgba(93, 122, 87, 0.14);
 
-  --font-display: "Prata", Georgia, serif;
+  /* ---- Signature gradients ---- */
+  --gradient-longevita: linear-gradient(150deg, #2c1648 0%, #4a2670 46%, #7c4aa6 100%);
+  --gradient-longevita-soft: linear-gradient(150deg, var(--vd-lavender-100), var(--vd-lilac-100) 70%, #dcc4ee);
+  --gradient-gold: linear-gradient(120deg, var(--vd-gold-400), var(--vd-gold-600));
+  --gradient-pearl: linear-gradient(170deg, var(--vd-white), var(--vd-pearl-50));
+  --gradient-page: linear-gradient(180deg, var(--vd-pearl-25), var(--vd-pearl-100));
+
+  /* ---- Typography ---- */
+  --font-display: "Prata", Georgia, "Times New Roman", serif;
   --font-ui: Arial, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   --text-xs: 11px;
   --text-sm: 12px;
   --text-md: 14px;
   --text-lg: 16px;
-  --text-xl: 20px;
-  --text-2xl: 26px;
-  --text-3xl: 32px;
-  --text-hero: 34px;
+  --text-xl: 21px;
+  --text-2xl: 27px;
+  --text-3xl: 34px;
+  --text-hero: 42px;
 
-  --line-tight: 1.06;
-  --line-heading: 1.18;
-  --line-body: 1.5;
-  --letter-display: 0;
-  --letter-caps: 0;
+  --line-tight: 1.04;
+  --line-heading: 1.16;
+  --line-body: 1.55;
+  --letter-display: -0.012em;
+  --letter-caps: 0.18em;
 
+  /* ---- Spacing ---- */
   --space-1: 4px;
   --space-2: 8px;
   --space-3: 12px;
@@ -83,47 +115,55 @@
   --space-10: 40px;
   --space-12: 48px;
 
+  /* ---- Radii ---- */
   --radius-xs: 10px;
   --radius-sm: 14px;
   --radius-md: 20px;
-  --radius-lg: 24px;
-  --radius-xl: 30px;
+  --radius-lg: 26px;
+  --radius-xl: 32px;
   --radius-pill: 999px;
 
-  --surface-card: var(--color-white-76);
+  /* ---- Card system ---- */
+  --surface-card: var(--vd-white);
   --surface-card-soft: var(--color-surface-lavender);
   --surface-card-active: var(--color-success-14);
-  --card-padding: var(--space-5);
+  --card-padding: var(--space-6);
   --card-padding-sm: var(--space-4);
   --card-radius: var(--radius-lg);
   --card-radius-sm: var(--radius-md);
   --card-border: 1px solid var(--color-border-soft);
   --card-shadow: var(--shadow-card);
   --card-shadow-strong: var(--shadow-soft);
-  --card-backdrop: blur(18px);
-  --row-icon-size: 44px;
+  --card-backdrop: blur(20px);
+  --row-icon-size: 46px;
   --row-icon-glyph-size: 21px;
-  --row-gap: 12px;
+  --row-gap: 14px;
   --row-chip-height: 26px;
   --row-chip-max-width: 92px;
 
-  --shadow-soft: 0 20px 56px var(--color-purple-10);
-  --shadow-card: 0 16px 40px var(--color-purple-06);
-  --shadow-button: 0 14px 28px var(--color-purple-22);
-  --shadow-card-hover: 0 20px 44px var(--color-purple-12);
-  --shadow-shell: 0 0 0 1px var(--color-purple-03);
-  --shadow-nav: 0 18px 44px var(--color-purple-16);
+  /* ---- Premium layered shadows (soft, low-spread) ---- */
+  --shadow-soft: 0 1px 2px rgba(36, 19, 54, 0.05), 0 28px 64px -28px rgba(36, 19, 54, 0.30);
+  --shadow-card: 0 1px 2px rgba(36, 19, 54, 0.04), 0 18px 40px -22px rgba(36, 19, 54, 0.24);
+  --shadow-card-hover: 0 2px 4px rgba(36, 19, 54, 0.06), 0 28px 56px -24px rgba(36, 19, 54, 0.32);
+  --shadow-button: 0 10px 26px -10px rgba(36, 19, 54, 0.55);
+  --shadow-button-gold: 0 10px 24px -10px rgba(184, 146, 74, 0.6);
+  --shadow-shell: 0 0 0 1px rgba(36, 19, 54, 0.04), 0 40px 120px -50px rgba(36, 19, 54, 0.4);
+  --shadow-nav: 0 1px 2px rgba(36, 19, 54, 0.04), 0 24px 50px -18px rgba(36, 19, 54, 0.28);
 
+  /* ---- Layout ---- */
   --mobile-max-width: 480px;
-  --screen-padding: 24px;
+  --screen-padding: 22px;
   --bottom-nav-height: 132px;
   --tap-target: 48px;
-  --button-height: 46px;
-  --button-padding-x: 20px;
+  --button-height: 50px;
+  --button-padding-x: 22px;
   --icon-size-nav: 21px;
   --icon-size-action: 22px;
+  --transition-base: 220ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ---- Bottom dock ---- */
   --dock-height: 78px;
-  --dock-padding: 8px;
+  --dock-padding: 9px;
   --dock-radius: 30px;
   --dock-item-radius: 20px;
   --dock-icon-size: 22px;
@@ -131,10 +171,10 @@
   --dock-center-size: 68px;
   --dock-center-logo-size: 50px;
   --dock-center-offset: -24px;
-  --dock-bg: var(--color-white-88);
+  --dock-bg: rgba(255, 255, 255, 0.78);
   --dock-item-active-bg: linear-gradient(180deg, var(--vd-lavender-100), var(--vd-lilac-100));
   --dock-item-active-color: var(--color-accent-primary);
   --dock-center-bg: var(--vd-white);
-  --dock-center-border: 1px solid var(--color-gold-24);
-  --dock-center-shadow: 0 20px 42px var(--color-purple-22);
+  --dock-center-border: 1px solid var(--color-border-gold);
+  --dock-center-shadow: 0 16px 34px -12px rgba(36, 19, 54, 0.4);
 }

@@ -23,10 +23,14 @@ body {
   font-family: var(--font-ui);
   font-size: var(--text-md);
   line-height: var(--line-body);
+  letter-spacing: 0.005em;
+  color: var(--color-text-primary);
   background:
-    radial-gradient(circle at 6% 0%, var(--color-gold-12), transparent 28%),
-    radial-gradient(circle at 90% 6%, var(--color-lavender-38), transparent 34%),
-    linear-gradient(180deg, var(--vd-pearl-50), var(--vd-pearl-100));
+    radial-gradient(120% 60% at 8% -4%, var(--color-gold-10), transparent 52%),
+    radial-gradient(120% 70% at 100% 4%, var(--color-lavender-38), transparent 56%),
+    radial-gradient(140% 80% at 50% 108%, var(--color-lilac-40), transparent 60%),
+    linear-gradient(180deg, var(--vd-pearl-25), var(--vd-pearl-100));
+  background-attachment: fixed;
 }
 
 h1,
@@ -81,8 +85,9 @@ a {
   margin: 0 auto;
   position: relative;
   background:
-    radial-gradient(circle at 8% 2%, var(--color-gold-10), transparent 28%),
-    radial-gradient(circle at 94% 10%, var(--color-lilac-40), transparent 34%),
+    radial-gradient(130% 55% at 0% -2%, var(--color-gold-10), transparent 50%),
+    radial-gradient(130% 60% at 100% 6%, var(--color-lavender-38), transparent 52%),
+    radial-gradient(150% 70% at 50% 104%, var(--color-lilac-40), transparent 56%),
     var(--color-page-bg);
   box-shadow: var(--shadow-shell);
 }
