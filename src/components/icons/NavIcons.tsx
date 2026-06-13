@@ -6,7 +6,7 @@ type IconProps = {
   strokeWidth?: number;
 };
 
-function IconFrame({ children, size = 22, strokeWidth = 1.8 }: IconProps & { children: ReactNode }) {
+function IconFrame({ children, size = 22, strokeWidth = 1.3 }: IconProps & { children: ReactNode }) {
   return (
     <svg
       aria-hidden="true"
@@ -25,41 +25,92 @@ function IconFrame({ children, size = 22, strokeWidth = 1.8 }: IconProps & { chi
   );
 }
 
+// Главная — дом с арочной дверью
 export function TodayIcon(props: IconProps) {
   return (
     <IconFrame {...props}>
-      <path d="M3.5 11.2 12 4l8.5 7.2" />
-      <path d="M5.5 10.5V20h5v-5.5h3V20h5v-9.5" />
+      <path d="M3.5 11.5 12 4.8l8.5 6.7" />
+      <path d="M6.5 11V20h4v-4.5a1.5 1.5 0 0 0 3 0V20H17V11" />
     </IconFrame>
   );
 }
 
+// Уроки — трёхлепестковый лотос
 export function PracticesIcon(props: IconProps) {
   return (
     <IconFrame {...props}>
-      <path d="M12 20c4.5-2.2 7-5.5 7-10.2V5.5h-4.2C13.2 5.5 12 4.7 12 4s-1.2 1.5-2.8 1.5H5v4.3C5 14.5 7.5 17.8 12 20Z" />
-      <path d="M9 12.5c1.5.1 3.4-.5 5-2.7" />
-      <path d="M12.5 9.8c.7 1.9.5 3.8-.5 5.7" />
+      <path d="M12 19.5V14" />
+      <path d="M12 14c0-3.5-2.5-6.5-5.5-8 .5 3.5 2 6.5 5.5 8Z" />
+      <path d="M12 14c0-3.5 2.5-6.5 5.5-8-.5 3.5-2 6.5-5.5 8Z" />
+      <path d="M12 14c-1.5-3-1.5-7 0-9 1.5 2 1.5 6 0 9Z" />
     </IconFrame>
   );
 }
 
+// Трекер — кольцо с пульсовой линией
 export function TrackerIcon(props: IconProps) {
   return (
     <IconFrame {...props}>
-      <path d="M4.5 13.2h3l2-5.2 3.3 8 2.2-5h4.5" />
-      <path d="M20 12a8 8 0 1 1-2.35-5.66" />
+      <circle cx="12" cy="12" r="7.8" />
+      <path d="M7.5 12h2l1.5-3.5 3 7 1.5-3.5H17" />
     </IconFrame>
   );
 }
 
+// Клуб — корона с тремя пиками и камнями
 export function ClubNavIcon(props: IconProps) {
   return (
     <IconFrame {...props}>
-      <path d="M8 11.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-      <path d="M16 11.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
-      <path d="M4.5 19c.5-3 1.9-4.8 3.5-4.8s3 1.8 3.5 4.8" />
-      <path d="M12.5 19c.5-3 1.9-4.8 3.5-4.8s3 1.8 3.5 4.8" />
+      <path d="M5 17h14" />
+      <path d="M5 17 7.5 9 12 13.5 16.5 9 19 17" />
+      <path d="M12 13.5V7.5" />
+      <circle cx="12" cy="7.5" r="0.8" fill="currentColor" stroke="none" />
+      <circle cx="7.5" cy="9" r="0.8" fill="currentColor" stroke="none" />
+      <circle cx="16.5" cy="9" r="0.8" fill="currentColor" stroke="none" />
+    </IconFrame>
+  );
+}
+
+// Чат — речевой пузырь с тремя точками
+export function ChatNavIcon(props: IconProps) {
+  return (
+    <IconFrame {...props}>
+      <path d="M4 12C4 8.1 7.6 5 12 5S20 8.1 20 12C20 15.9 16.4 19 12 19a9 9 0 0 1-3.5-.7L4.5 21l.5-4A6.5 6.5 0 0 1 4 12Z" />
+      <circle cx="9.5" cy="12" r="0.8" fill="currentColor" stroke="none" />
+      <circle cx="12" cy="12" r="0.8" fill="currentColor" stroke="none" />
+      <circle cx="14.5" cy="12" r="0.8" fill="currentColor" stroke="none" />
+    </IconFrame>
+  );
+}
+
+// Профиль — силуэт персоны
+export function ProfileIcon(props: IconProps) {
+  return (
+    <IconFrame {...props}>
+      <circle cx="12" cy="8.5" r="3.5" />
+      <path d="M5 21c.7-3.8 3.4-6 7-6s6.3 2.2 7 6" />
+    </IconFrame>
+  );
+}
+
+// Иконка кабинета в шапке (круг + персона)
+export function CabinetCircleIcon(props: IconProps) {
+  return (
+    <IconFrame {...props}>
+      <circle cx="12" cy="12" r="8.2" />
+      <circle cx="12" cy="8.7" r="2.5" />
+      <path d="M7.8 17.1c.7-2.3 2.2-3.5 4.2-3.5s3.5 1.2 4.2 3.5" />
+    </IconFrame>
+  );
+}
+
+export function CrownIcon(props: IconProps) {
+  return (
+    <IconFrame {...props}>
+      <path d="M5 17h14" />
+      <path d="M5 17 7.5 9 12 13.5 16.5 9 19 17" />
+      <path d="M12 13.5V7.5" />
+      <circle cx="12" cy="7.5" r="0.8" fill="currentColor" stroke="none" />
     </IconFrame>
   );
 }
@@ -86,34 +137,6 @@ export function MaterialsIcon(props: IconProps) {
   );
 }
 
-export function ProfileIcon(props: IconProps) {
-  return (
-    <IconFrame {...props}>
-      <path d="M12 11.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z" />
-      <path d="M5 20c.9-3.4 3.3-5.2 7-5.2s6.1 1.8 7 5.2" />
-    </IconFrame>
-  );
-}
-
-export function CabinetCircleIcon(props: IconProps) {
-  return (
-    <IconFrame {...props}>
-      <path d="M12 3.8a8.2 8.2 0 1 0 0 16.4 8.2 8.2 0 0 0 0-16.4Z" />
-      <path d="M12 11.2a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-      <path d="M7.8 17.1c.7-2.3 2.2-3.5 4.2-3.5s3.5 1.2 4.2 3.5" />
-    </IconFrame>
-  );
-}
-
-export function CrownIcon(props: IconProps) {
-  return (
-    <IconFrame {...props}>
-      <path d="m4.8 8.2 3.6 3.5L12 6l3.6 5.7 3.6-3.5-1.1 8.8H5.9L4.8 8.2Z" />
-      <path d="M7 20h10" />
-    </IconFrame>
-  );
-}
-
 export function ArrowRightIcon(props: IconProps) {
   return (
     <IconFrame {...props}>
@@ -134,7 +157,7 @@ const navIconMap = {
   practices: PracticesIcon,
   tracker: TrackerIcon,
   club: ClubNavIcon,
-  chat: ClubNavIcon,
+  chat: ChatNavIcon,
   profile: ProfileIcon,
 } satisfies Record<ScreenId, (props: IconProps) => ReactElement>;
 

@@ -2,7 +2,7 @@ import { ProgressBar } from "../components/ProgressBar";
 import { ScreenHeader } from "../components/ScreenHeader";
 import { SectionHead } from "../components/SectionHead";
 import { WellnessRow } from "../components/WellnessRow";
-import { materials, practicesContent, protocols } from "../data/content";
+import { methodPillars, practicesContent, protocols } from "../data/content";
 import type { AccessState, MaterialKind, ProtocolTaskKind, ScreenId } from "../data/types";
 import type { WellnessIconName } from "../components/icons/WellnessIcons";
 
@@ -43,9 +43,11 @@ export function PracticesPage({
   onToggleMaterial,
   onToggleProtocolTask,
 }: PracticesPageProps) {
+  const allPractices = methodPillars.flatMap((pillar) => pillar.practices);
   const totalProtocolTasks = protocols.reduce((count, protocol) => count + protocol.days[0].tasks.length, 0);
-  const totalItems = materials.length + totalProtocolTasks;
-  const completedCount = completedMaterials.length + completedProtocolTasks.length;
+  const completedPractices = allPractices.filter((practice) => completedMaterials.includes(practice.id)).length;
+  const totalItems = allPractices.length + totalProtocolTasks;
+  const completedCount = completedPractices + completedProtocolTasks.length;
   const progress = Math.round((completedCount / totalItems) * 100);
 
   return (
@@ -67,25 +69,30 @@ export function PracticesPage({
         <ProgressBar value={progress} label={`${practicesContent.progressLabel} ${progress}%`} />
       </section>
 
-      <SectionHead kicker={practicesContent.listKicker} title={practicesContent.listTitle} />
-      <div className="task-list">
-        {materials.map((material) => {
-          const done = completedMaterials.includes(material.id);
-          const locked = material.access !== "free" && !done;
+      {methodPillars.map((pillar) => (
+        <section className="pillar-section" key={pillar.id}>
+          <SectionHead kicker={`${pillar.index} · ${pillar.enName}`} title={pillar.title} />
+          <p className="section-subcopy">{pillar.tagline}</p>
+          <div className="task-list">
+            {pillar.practices.map((practice) => {
+              const done = completedMaterials.includes(practice.id);
+              const locked = practice.access !== "free" && !done;
 
-          return (
-            <WellnessRow
-              key={material.id}
-              title={material.title}
-              description={material.description}
-              icon={materialIcon(material.kind)}
-              chip={done ? practicesContent.completed : locked ? practicesContent.premium : material.duration}
-              done={done}
-              onClick={() => (locked ? onSetAccess("trial") : onToggleMaterial(material.id))}
-            />
-          );
-        })}
-      </div>
+              return (
+                <WellnessRow
+                  key={practice.id}
+                  title={practice.title}
+                  description={practice.description}
+                  icon={materialIcon(practice.kind)}
+                  chip={done ? practicesContent.completed : locked ? practicesContent.premium : practice.duration}
+                  done={done}
+                  onClick={() => (locked ? onSetAccess("trial") : onToggleMaterial(practice.id))}
+                />
+              );
+            })}
+          </div>
+        </section>
+      ))}
 
       <SectionHead kicker={practicesContent.protocolKicker} title={practicesContent.protocolTitle} />
       <div className="task-list">

@@ -1,4 +1,5 @@
 import vedaraLogo from "../assets/brand/vedara-logo.svg";
+import vedaraLogoFull from "../assets/brand/vedara-logo-full.png";
 import vedaraTreeMark from "../assets/brand/vedara-tree-mark.png";
 import heroYoga from "../assets/photos/hero-yoga.png";
 import bodyPeople from "../assets/photos/body-people.png";
@@ -6,8 +7,9 @@ import nutritionBowl from "../assets/photos/nutrition-bowl.png";
 import wellnessClub from "../assets/photos/wellness-club.png";
 
 export const assets = {
-  logoFull: vedaraLogo,
+  logoFull: vedaraLogoFull,
   logoMark: vedaraTreeMark,
+  logoText: vedaraLogo,
   photos: {
     heroYoga,
     bodyPeople,

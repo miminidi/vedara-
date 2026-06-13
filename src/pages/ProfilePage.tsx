@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { ProgressBar } from "../components/ProgressBar";
 import { ScreenHeader } from "../components/ScreenHeader";
 import { SectionHead } from "../components/SectionHead";
 import { WellnessIcon } from "../components/icons/WellnessIcons";
-import { accessLabels, profileContent, vedaraProducts } from "../data/content";
+import { accessLabels, methodPillars, profileContent, vedaraProducts } from "../data/content";
 import type { AccessState, DailyCheckIn, Lead, LeadType, ScreenId, UserProfile, VedaraProduct } from "../data/types";
+import { computeRecoveryScore } from "../utils/recovery";
 
 interface ProfilePageProps {
   access: AccessState;
@@ -51,6 +53,15 @@ export function ProfilePage({
 }: ProfilePageProps) {
   const [selectedProduct, setSelectedProduct] = useState<VedaraProduct | null>(null);
   const premiumActive = isPremiumAccess(access);
+  const recoveryScore = computeRecoveryScore(checkIn);
+
+  const pillarProgress = methodPillars.map((pillar) => {
+    const total = pillar.practices.length;
+    const done = pillar.practices.filter((practice) => completedMaterials.includes(practice.id)).length;
+    const percent = total ? Math.round((done / total) * 100) : 0;
+    const state = done === 0 ? "notStarted" : done === total ? "done" : "inProgress";
+    return { ...pillar, total, done, percent, state };
+  });
 
   const hasLead = (type?: LeadType) => Boolean(type && leads.some((lead) => lead.type === type));
   const hasIntent = (intentId?: string) => Boolean(intentId && productIntents.includes(intentId));
@@ -139,7 +150,15 @@ export function ProfilePage({
           <h1>{profile.name}</h1>
           <p>{profile.focus}</p>
         </div>
-        <span className="badge badge--gold">{accessLabels[access]}</span>
+        <div className="profile-banner__aside">
+          <span className="badge badge--gold">{accessLabels[access]}</span>
+          {recoveryScore ? (
+            <span className={`profile-recovery-chip is-${recoveryScore.level}`}>
+              <strong>{recoveryScore.value}</strong>
+              Recovery Score
+            </span>
+          ) : null}
+        </div>
       </section>
 
       <div className="stat-row">
@@ -148,6 +167,26 @@ export function ProfilePage({
         <div className="stat-card"><span className="stat-value">{completedProtocolTasks.length}</span><span className="stat-label">{profileContent.stats.protocolTasks}</span></div>
         <div className="stat-card"><span className="stat-value">{leads.length}</span><span className="stat-label">{profileContent.stats.leads}</span></div>
       </div>
+
+      <SectionHead kicker={profileContent.mapKicker} title={profileContent.mapTitle} />
+      <p className="section-subcopy">{profileContent.mapSubtitle}</p>
+      <ol className="longevita-map">
+        {pillarProgress.map((pillar) => (
+          <li className={`longevita-map__step is-${pillar.state}`} key={pillar.id}>
+            <span className="longevita-map__index">{pillar.index}</span>
+            <div className="longevita-map__body">
+              <div className="longevita-map__head">
+                <span className="longevita-map__title">{pillar.title}</span>
+                <span className="longevita-map__count">{pillar.done}/{pillar.total}</span>
+              </div>
+              <ProgressBar value={pillar.percent} label={`${pillar.title}: ${pillar.percent}%`} />
+              <span className="longevita-map__state">
+                {profileContent.mapStates[pillar.state as keyof typeof profileContent.mapStates]}
+              </span>
+            </div>
+          </li>
+        ))}
+      </ol>
 
       {selectedProduct ? (
         <section className="panel product-detail-card">
@@ -203,6 +242,16 @@ export function ProfilePage({
           <span className="badge" key={goal}>{goal}</span>
         ))}
       </div>
+
+      <SectionHead kicker={profileContent.supportKicker} title={profileContent.supportTitle} />
+      <section className="panel">
+        <p>{profileContent.supportText}</p>
+        <ul className="check-list u-mt-4">
+          {profileContent.supportItems.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
 
       <SectionHead kicker="mock" title={profileContent.leadsTitle} />
       <div className="grid">

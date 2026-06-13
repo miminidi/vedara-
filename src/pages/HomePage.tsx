@@ -1,6 +1,11 @@
 import { BrandHeader } from "../components/BrandHeader";
 import { SectionHead } from "../components/SectionHead";
-import { homeAboutContent, homeEcosystemCards, homeHubContent, teamMembers } from "../data/content";
+import {
+  homeAboutContent,
+  homeEcosystemCards,
+  homeHubContent,
+  teamMembers,
+} from "../data/content";
 import type { AccessState, ScreenId } from "../data/types";
 import type { KeyboardEvent } from "react";
 
@@ -37,7 +42,6 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
     <main className="screen">
       <BrandHeader />
 
-      <SectionHead kicker={homeHubContent.directionsKicker} title={homeHubContent.directionsTitle} />
       <div className="grid grid--two">
         {homeEcosystemCards.map((card) => {
           const isClickable = Boolean(card.target);

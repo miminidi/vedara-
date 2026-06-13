@@ -4,8 +4,11 @@ import { ProgressBar } from "../components/ProgressBar";
 import { ScreenHeader } from "../components/ScreenHeader";
 import { TrackerMetricCard } from "../components/TrackerMetricCard";
 import { WellnessRow } from "../components/WellnessRow";
-import { checkMetrics, habits, trackerContent } from "../data/content";
+import { checkMetrics, dailyRituals, habits, trackerContent } from "../data/content";
 import type { CheckMetricId, DailyCheckIn, ScreenId } from "../data/types";
+import { computeRecoveryScore } from "../utils/recovery";
+
+const habitIds = new Set(habits.map((habit) => habit.id));
 
 type CheckInPatch = Partial<Pick<DailyCheckIn, "energy" | "mood" | "sleep" | "stress" | "note">>;
 
@@ -143,9 +146,10 @@ function buildMonthDays(
     const date = new Date(year, month, index + 1);
     const key = formatDateKey(date);
     const completedHabits = getCompletedHabitsForDate(completedHabitKeys, key);
+    const habitCount = completedHabits.filter((id) => habitIds.has(id)).length;
     const checkIn = checkIns[key];
     const hasCheckIn = stateScore(checkIn) !== null;
-    const isFilled = hasCheckIn && completedHabits.length === habits.length;
+    const isFilled = hasCheckIn && habitCount === habits.length;
     const isPartial = hasCheckIn || completedHabits.length > 0;
 
     return {
@@ -173,8 +177,10 @@ export function TrackerPage({
     [completedHabitKeys, selectedDate],
   );
   const selectedStateScore = stateScore(selectedCheckIn);
-  const hasHabitData = selectedCompletedHabits.length > 0;
-  const habitsPercent = Math.round((selectedCompletedHabits.length / habits.length) * 100);
+  const selectedHabitCount = selectedCompletedHabits.filter((id) => habitIds.has(id)).length;
+  const recoveryScore = computeRecoveryScore(selectedCheckIn);
+  const hasHabitData = selectedHabitCount > 0;
+  const habitsPercent = Math.round((selectedHabitCount / habits.length) * 100);
   const reportScore = calculateReportScore(habitsPercent, hasHabitData, selectedStateScore);
   const reportHasData = hasHabitData || selectedStateScore !== null;
   const monthDays = useMemo(
@@ -194,6 +200,30 @@ export function TrackerPage({
         meta={compactSelectedDateLabel(selectedDate)}
         subtitle={trackerContent.header.subtitle}
       />
+
+      <section aria-label={trackerContent.recoveryKicker}>
+        {recoveryScore ? (
+          <div className={`recovery-card recovery-card--static recovery-card--${recoveryScore.level}`}>
+            <span className="recovery-card__ring">
+              <strong>{recoveryScore.value}</strong>
+              <small>{trackerContent.recoveryOfLabel}</small>
+            </span>
+            <span className="recovery-card__body">
+              <span className="recovery-card__kicker">{trackerContent.recoveryKicker}</span>
+              <span className="recovery-card__label">{recoveryScore.label}</span>
+              <span className="recovery-card__hint">{recoveryScore.hint}</span>
+            </span>
+          </div>
+        ) : (
+          <div className="recovery-card recovery-card--static recovery-card--empty">
+            <span className="recovery-card__body recovery-card__body--empty">
+              <span className="recovery-card__kicker">{trackerContent.recoveryKicker}</span>
+              <span className="recovery-card__label">{trackerContent.recoveryEmptyTitle}</span>
+              <span className="recovery-card__hint">{trackerContent.recoveryEmptyHint}</span>
+            </span>
+          </div>
+        )}
+      </section>
 
       <section className="panel tracker-input-card" aria-label={trackerContent.todayInputTitle}>
         <h2 className="panel-title">{trackerContent.todayInputTitle}</h2>
@@ -257,10 +287,54 @@ export function TrackerPage({
         </div>
       </section>
 
+      <section className="panel tracker-rituals" aria-label={trackerContent.ritualsTitle}>
+        <h2 className="panel-title">{trackerContent.ritualsTitle}</h2>
+
+        <div className="tracker-input-section">
+          <h3>{trackerContent.ritualsMorning}</h3>
+          <div className="task-list">
+            {dailyRituals.morning.map((ritual) => {
+              const done = selectedCompletedHabits.includes(ritual.id);
+              return (
+                <WellnessRow
+                  key={ritual.id}
+                  title={ritual.title}
+                  description={ritual.description}
+                  icon={ritual.icon}
+                  chip={done ? "Готово" : "ритуал"}
+                  done={done}
+                  onClick={() => onToggleHabit(selectedDate, ritual.id)}
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="tracker-input-section">
+          <h3>{trackerContent.ritualsEvening}</h3>
+          <div className="task-list">
+            {dailyRituals.evening.map((ritual) => {
+              const done = selectedCompletedHabits.includes(ritual.id);
+              return (
+                <WellnessRow
+                  key={ritual.id}
+                  title={ritual.title}
+                  description={ritual.description}
+                  icon={ritual.icon}
+                  chip={done ? "Готово" : "ритуал"}
+                  done={done}
+                  onClick={() => onToggleHabit(selectedDate, ritual.id)}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       <section className="tracker-summary" aria-label={trackerContent.selectedDayTitle}>
         <TrackerMetricCard
           title={trackerContent.summary.habits.title}
-          value={`${selectedCompletedHabits.length}/${habits.length}`}
+          value={`${selectedHabitCount}/${habits.length}`}
           description={trackerContent.summary.habits.description}
         />
         <TrackerMetricCard

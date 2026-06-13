@@ -9,12 +9,9 @@ interface BrandHeaderProps {
 export function BrandHeader({ onCabinetClick }: BrandHeaderProps) {
   return (
     <header className="brand-header" aria-label="Vedara">
-      <div>
-        <img className="brand-logo" src={assets.logoFull} alt="Vedara" />
-        <div className="brand-mini">{brandContent.tagline}</div>
-      </div>
+      <img className="brand-logo" src={assets.logoFull} alt="Vedara" />
       {onCabinetClick ? (
-        <button className="icon-button" type="button" aria-label={brandContent.profileAria} onClick={onCabinetClick}>
+        <button className="icon-button brand-header__cabinet" type="button" aria-label={brandContent.profileAria} onClick={onCabinetClick}>
           <CabinetCircleIcon size={22} />
         </button>
       ) : null}

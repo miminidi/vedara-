@@ -1,38 +1,21 @@
 .brand-header {
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: var(--space-4);
-  margin: var(--space-2) 0 var(--space-8);
+  position: relative;
+  margin: var(--space-4) 0 var(--space-6);
+}
+
+.brand-header__cabinet {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 .brand-logo {
-  width: min(150px, 46vw);
-  height: auto;
+  width: auto;
+  height: min(130px, 34vw);
   object-fit: contain;
-  margin-left: -2px;
-}
-
-.brand-mini {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin-top: var(--space-3);
-  padding-left: 2px;
-  color: var(--color-text-muted);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: var(--letter-caps);
-  text-transform: uppercase;
-}
-
-.brand-mini::before {
-  content: "";
-  width: 26px;
-  height: 1px;
-  background: var(--gradient-gold);
-  opacity: 0.9;
 }
 
 .icon-button {
@@ -2023,6 +2006,316 @@ button.tracker-row {
   display: flex;
   gap: var(--space-3);
   flex-wrap: wrap;
+}
+
+/* ---- Method pillars (Practices) ---- */
+.pillar-section + .pillar-section {
+  margin-top: var(--space-2);
+}
+
+.pillar-section .section-head {
+  margin-bottom: var(--space-3);
+}
+
+/* ---- Home: hero promise ---- */
+.home-hero {
+  margin: 0 0 var(--space-6);
+}
+
+.home-hero__title {
+  margin: var(--space-2) 0 var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  line-height: var(--line-tight);
+  letter-spacing: var(--letter-display);
+  color: var(--color-text-heading);
+}
+
+.home-hero__text {
+  max-width: 40ch;
+  color: var(--color-text-muted);
+  font-size: var(--text-md);
+  line-height: var(--line-body);
+}
+
+/* ---- Home: Recovery Score card ---- */
+.recovery-card {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: left;
+  padding: var(--space-5);
+  margin-bottom: var(--space-7);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  background:
+    radial-gradient(120% 130% at 100% 0%, var(--color-lavender-30), transparent 52%),
+    var(--surface-card);
+  box-shadow: var(--card-shadow);
+  color: inherit;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.recovery-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.recovery-card:active {
+  transform: translateY(1px);
+}
+
+.recovery-card--static {
+  cursor: default;
+  margin-bottom: var(--space-6);
+}
+
+.recovery-card--static:hover {
+  transform: none;
+  box-shadow: var(--card-shadow);
+}
+
+.tracker-rituals {
+  display: grid;
+  gap: var(--space-5);
+  margin-bottom: var(--space-4);
+}
+
+.recovery-card__ring {
+  width: 78px;
+  height: 78px;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 2px;
+  border-radius: var(--radius-pill);
+  background: radial-gradient(circle at 50% 32%, var(--vd-white), var(--vd-pearl-50));
+  border: 2px solid var(--color-border-gold);
+  box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.7), var(--card-shadow);
+}
+
+.recovery-card--low .recovery-card__ring {
+  border-color: rgba(177, 74, 74, 0.42);
+}
+
+.recovery-card--medium .recovery-card__ring {
+  border-color: var(--vd-amethyst-300);
+}
+
+.recovery-card--high .recovery-card__ring {
+  border-color: var(--vd-gold-500);
+}
+
+.recovery-card__ring strong {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: 1;
+  color: var(--color-text-heading);
+}
+
+.recovery-card__ring small {
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.recovery-card__body {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.recovery-card__body--empty {
+  grid-column: 1 / -1;
+}
+
+.recovery-card__kicker {
+  color: var(--color-accent-gold);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--letter-caps);
+}
+
+.recovery-card__label {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: var(--line-tight);
+  color: var(--color-text-heading);
+}
+
+.recovery-card__hint {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--line-body);
+}
+
+.recovery-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  color: var(--color-accent-primary);
+  font-weight: 700;
+  font-size: var(--text-sm);
+}
+
+.recovery-card__chevron {
+  color: var(--color-text-subtle);
+}
+
+/* ---- Profile: recovery chip + Longevita Map ---- */
+.profile-banner__aside {
+  display: grid;
+  justify-items: end;
+  align-content: start;
+  gap: var(--space-2);
+}
+
+.profile-recovery-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 12px 6px 8px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-border-hair);
+  background: rgba(255, 255, 255, 0.6);
+  color: var(--color-text-muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.profile-recovery-chip strong {
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: 400;
+  color: var(--color-text-heading);
+  background: var(--vd-pearl-50);
+  box-shadow: inset 0 0 0 2px var(--color-border-gold);
+}
+
+.profile-recovery-chip.is-low strong {
+  box-shadow: inset 0 0 0 2px rgba(177, 74, 74, 0.42);
+}
+
+.profile-recovery-chip.is-medium strong {
+  box-shadow: inset 0 0 0 2px var(--vd-amethyst-300);
+}
+
+.longevita-map {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.longevita-map__step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: start;
+  padding: var(--space-4);
+  border: var(--card-border);
+  border-radius: var(--radius-md);
+  background: var(--surface-card);
+  box-shadow: var(--card-shadow);
+}
+
+.longevita-map__step::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--space-4) + 19px);
+  top: calc(var(--space-4) + 40px);
+  bottom: calc(-1 * var(--space-2));
+  width: 2px;
+  background: var(--color-border-hair);
+}
+
+.longevita-map__step:last-child::before {
+  display: none;
+}
+
+.longevita-map__index {
+  position: relative;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  color: var(--color-accent-gold);
+  background: var(--vd-lavender-50);
+  box-shadow: inset 0 0 0 1px var(--color-border-soft);
+}
+
+.longevita-map__step.is-inProgress .longevita-map__index {
+  color: var(--color-accent-primary);
+  background: linear-gradient(180deg, var(--vd-lavender-100), var(--vd-lilac-100));
+}
+
+.longevita-map__step.is-done .longevita-map__index {
+  color: var(--vd-purple-950);
+  background: var(--gradient-gold);
+  box-shadow: inset 0 0 0 1px var(--color-border-gold);
+}
+
+.longevita-map__body {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.longevita-map__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.longevita-map__title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  line-height: var(--line-tight);
+  color: var(--color-text-heading);
+}
+
+.longevita-map__count {
+  flex: 0 0 auto;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.longevita-map .progress-bar {
+  height: 8px;
+}
+
+.longevita-map__state {
+  color: var(--color-text-subtle);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.longevita-map__step.is-done .longevita-map__state {
+  color: var(--color-accent-gold);
 }
 
 /* ---- Editorial Light polish ---- */

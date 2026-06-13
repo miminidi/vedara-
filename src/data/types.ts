@@ -104,6 +104,15 @@ export interface Material {
   tag: string;
 }
 
+export interface MethodPillar {
+  id: string;
+  index: string;
+  enName: string;
+  title: string;
+  tagline: string;
+  practices: Material[];
+}
+
 export interface ClubVideo {
   id: string;
   title: string;
