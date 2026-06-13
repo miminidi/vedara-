@@ -1737,14 +1737,37 @@ button.tracker-row {
   min-height: var(--dock-height);
   padding: var(--dock-padding);
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: 1fr 1fr 1.32fr 1fr 1fr;
   gap: var(--space-1);
   align-items: end;
   border-radius: var(--dock-radius);
-  background: var(--dock-bg);
-  border: var(--card-border);
-  box-shadow: var(--shadow-nav);
-  backdrop-filter: blur(18px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.40));
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    var(--shadow-nav),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(26px) saturate(185%);
+  -webkit-backdrop-filter: blur(26px) saturate(185%);
+}
+
+/* Liquid-glass sheen sweeping across the dock */
+.bottom-dock::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(120% 140% at 12% -20%, rgba(255, 255, 255, 0.55), transparent 46%),
+    radial-gradient(90% 120% at 88% -30%, rgba(231, 213, 246, 0.4), transparent 52%);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.bottom-dock > * {
+  position: relative;
+  z-index: 1;
 }
 
 .bottom-dock__item,
@@ -1767,10 +1790,23 @@ button.tracker-row {
   min-height: 58px;
 }
 
+.bottom-dock__item {
+  position: relative;
+}
+
+.bottom-dock__item:hover {
+  color: var(--color-accent-primary);
+  background: rgba(255, 255, 255, 0.4);
+}
+
 .bottom-dock__item.is-active {
-  background: var(--dock-item-active-bg);
+  background:
+    linear-gradient(180deg, rgba(238, 228, 251, 0.85), rgba(231, 213, 246, 0.6));
   color: var(--dock-item-active-color);
-  box-shadow: inset 0 0 0 1px var(--color-border-soft), var(--shadow-card);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+    0 6px 16px -8px rgba(36, 19, 54, 0.3);
 }
 
 .bottom-dock__item:active,
@@ -1793,6 +1829,8 @@ button.tracker-row {
 }
 
 .bottom-dock__center {
+  position: relative;
+  z-index: 3;
   align-self: start;
   margin-top: var(--dock-center-offset);
   display: grid;
@@ -2047,13 +2085,7 @@ button.tracker-row {
   background: linear-gradient(165deg, var(--vd-purple-800), var(--vd-purple-950));
 }
 
-/* Dock — slightly deeper glass for a premium float */
-.bottom-dock {
-  border-color: rgba(255, 255, 255, 0.55);
-  background: var(--dock-bg);
-}
-
 .bottom-dock__center-mark {
   background:
-    radial-gradient(120% 120% at 50% 0%, var(--vd-white), var(--vd-pearl-50));
+    radial-gradient(120% 120% at 50% 18%, #2a153f 0%, #170b25 58%, #0d0716 100%);
 }
