@@ -2,8 +2,8 @@ import { useState } from "react";
 import { ScreenHeader } from "../components/ScreenHeader";
 import { SectionHead } from "../components/SectionHead";
 import { WellnessIcon } from "../components/icons/WellnessIcons";
-import { chatContent, clubArticles, clubContent, clubVideos } from "../data/content";
-import type { AccessState, ClubArticle, ClubVideo, ScreenId } from "../data/types";
+import { clubArticles, clubContent, clubVideos } from "../data/content";
+import type { ClubArticle, ClubVideo } from "../data/types";
 
 type ClubItemKind = "video" | "article";
 
@@ -14,44 +14,19 @@ interface SelectedClubItem {
 }
 
 interface ClinicPageProps {
-  access: AccessState;
-  completedArticles: string[];
   completedVideos: string[];
-  onNavigate: (screen: ScreenId) => void;
-  onToggleArticle: (articleId: string) => void;
   onToggleVideo: (videoId: string) => void;
-}
-
-function getAccessStatus(access: AccessState) {
-  if (access === "trial") {
-    return clubContent.access.trial;
-  }
-
-  if (access === "clubMonthly" || access === "clubAnnual") {
-    return clubContent.access.premium;
-  }
-
-  return clubContent.access.guestStatus;
 }
 
 function getStatus(completed: boolean) {
   return completed ? clubContent.watched : clubContent.available;
 }
 
-function getArticleStatus(completed: boolean) {
-  return completed ? clubContent.read : clubContent.available;
-}
-
 export function ClinicPage({
-  access,
-  completedArticles,
   completedVideos,
-  onNavigate,
-  onToggleArticle,
   onToggleVideo,
 }: ClinicPageProps) {
   const [selectedItem, setSelectedItem] = useState<SelectedClubItem | null>(null);
-  const accessStatus = getAccessStatus(access);
 
   const openItem = (kind: ClubItemKind, item: ClubVideo | ClubArticle) => {
     setSelectedItem({
@@ -68,8 +43,6 @@ export function ClinicPage({
         title={clubContent.header.title}
         subtitle={clubContent.header.subtitle}
       />
-
-      <div className="club-status-line">{accessStatus}</div>
 
       {selectedItem ? (
         <section className="panel club-detail-card">
@@ -96,37 +69,23 @@ export function ClinicPage({
 
       <SectionHead kicker={clubContent.articlesKicker} title={clubContent.articlesTitle} />
       <div className="grid club-document-list">
-        {clubArticles.map((article) => {
-          const completed = completedArticles.includes(article.id);
-
-          return (
-            <article className={`panel club-document-card ${completed ? "is-completed" : ""}`} key={article.id}>
-              <div className="club-card-icon" aria-hidden="true">
-                <WellnessIcon name={article.icon} />
-              </div>
-              <div className="program-card__top">
-                <div>
-                  <h2 className="panel-title">{article.title}</h2>
-                  <span className="club-card-meta">{article.readingTime}</span>
-                </div>
-                <span className="badge">{getArticleStatus(completed)}</span>
-              </div>
-              <p>{article.description}</p>
-              <div className="button-row u-mt-4">
-                <button
-                  className="button button--primary"
-                  type="button"
-                  onClick={() => openItem("article", article)}
-                >
-                  {clubContent.open}
-                </button>
-                <button className="button button--secondary" type="button" onClick={() => onToggleArticle(article.id)}>
-                  {completed ? clubContent.read : clubContent.markRead}
-                </button>
-              </div>
-            </article>
-          );
-        })}
+        {clubArticles.map((article) => (
+          <button
+            className="club-document-row"
+            key={article.id}
+            type="button"
+            onClick={() => openItem("article", article)}
+          >
+            <span className="club-card-icon" aria-hidden="true">
+              <WellnessIcon name={article.icon} />
+            </span>
+            <span className="club-document-row__content">
+              <span className="club-document-row__title">{article.title}</span>
+              <span className="club-document-row__description">{article.description}</span>
+            </span>
+            <span className="club-document-row__meta">{article.readingTime}</span>
+          </button>
+        ))}
       </div>
 
       <SectionHead kicker={clubContent.videosKicker} title={clubContent.videosTitle} />
@@ -158,18 +117,6 @@ export function ClinicPage({
         })}
       </div>
 
-      <SectionHead kicker={clubContent.communityKicker} title={clubContent.communityTitle} />
-      <section className="panel club-community-card">
-        <p>{clubContent.communityText}</p>
-        <ul className="check-list u-mt-4">
-          <li>{chatContent.liveTitle}</li>
-          <li>{chatContent.weekTitle}</li>
-          <li>{chatContent.curatorTitle}</li>
-        </ul>
-        <button className="button button--primary u-mt-4" type="button" onClick={() => onNavigate("chat")}>
-          {clubContent.chatCta}
-        </button>
-      </section>
     </main>
   );
 }

@@ -232,11 +232,7 @@ export default function App() {
       case "club":
         return (
           <ClinicPage
-            access={access}
-            completedArticles={completedClubArticles}
             completedVideos={completedClubVideos}
-            onNavigate={navigate}
-            onToggleArticle={toggleClubArticle}
             onToggleVideo={toggleClubVideo}
           />
         );
