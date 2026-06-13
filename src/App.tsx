@@ -19,6 +19,7 @@ const PROTOCOL_TASKS_KEY = "vedara.completedProtocolTasks";
 const CLUB_VIDEOS_KEY = "vedara.completedClubVideos";
 const CLUB_ARTICLES_KEY = "vedara.completedClubArticles";
 const LEADS_KEY = "vedara.leads";
+const PRODUCT_INTENTS_KEY = "vedara.productIntents";
 
 const screenIds: ScreenId[] = ["home", "practices", "tracker", "club", "chat", "profile"];
 
@@ -125,6 +126,7 @@ export default function App() {
     readStorage<string[]>(CLUB_ARTICLES_KEY, []),
   );
   const [leads, setLeads] = useState<Lead[]>(() => readStorage<Lead[]>(LEADS_KEY, []));
+  const [productIntents, setProductIntents] = useState<string[]>(() => readStorage<string[]>(PRODUCT_INTENTS_KEY, []));
 
   useEffect(() => {
     const onHashChange = () => setScreen(getInitialScreen());
@@ -140,6 +142,7 @@ export default function App() {
   useEffect(() => writeStorage(CLUB_VIDEOS_KEY, completedClubVideos), [completedClubVideos]);
   useEffect(() => writeStorage(CLUB_ARTICLES_KEY, completedClubArticles), [completedClubArticles]);
   useEffect(() => writeStorage(LEADS_KEY, leads), [leads]);
+  useEffect(() => writeStorage(PRODUCT_INTENTS_KEY, productIntents), [productIntents]);
 
   const todayCheckIn = checkIns[todayKey];
 
@@ -182,12 +185,15 @@ export default function App() {
   };
 
   const createLead = (type: LeadType) => {
-    const accessByLead: Record<LeadType, AccessState> = {
+    const accessByLead: Partial<Record<LeadType, AccessState>> = {
       clinic: "clinicLead",
       university: "universityLead",
     };
 
-    setAccess(accessByLead[type]);
+    const nextAccess = accessByLead[type];
+    if (nextAccess) {
+      setAccess(nextAccess);
+    }
     setLeads((current) => {
       if (current.some((lead) => lead.type === type)) {
         return current;
@@ -206,6 +212,10 @@ export default function App() {
     });
   };
 
+  const saveProductIntent = (intentId: string) => {
+    setProductIntents((current) => current.includes(intentId) ? current : [...current, intentId]);
+  };
+
   const resetDemo = () => {
     setAccess("guest");
     setCheckIns({});
@@ -215,6 +225,7 @@ export default function App() {
     setCompletedClubVideos([]);
     setCompletedClubArticles([]);
     setLeads([]);
+    setProductIntents([]);
   };
 
   const currentPage = useMemo(() => {
@@ -258,10 +269,12 @@ export default function App() {
             completedMaterials={completedMaterials}
             completedProtocolTasks={completedProtocolTasks}
             leads={leads}
+            productIntents={productIntents}
             profile={userProfile}
             onCreateLead={createLead}
             onNavigate={navigate}
             onResetDemo={resetDemo}
+            onSaveProductIntent={saveProductIntent}
             onSetAccess={setAccess}
           />
         );
@@ -285,6 +298,7 @@ export default function App() {
     completedMaterials,
     completedProtocolTasks,
     leads,
+    productIntents,
     screen,
     todayCheckIn,
   ]);

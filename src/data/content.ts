@@ -13,6 +13,7 @@ import type {
   Protocol,
   TeamMember,
   UserProfile,
+  VedaraProduct,
 } from "./types";
 
 export const brandContent = {
@@ -465,7 +466,12 @@ export const profileContent = {
   goalsTitle: "Цели",
   accessTitle: "Доступ",
   leadsTitle: "Заявки",
-  productsTitle: "Следующие шаги",
+  productsTitle: "Продукты Vedara",
+  productsSubtitle: "Ваши доступы, заявки и дополнительные программы.",
+  productIntentSaved: "Заявка на доступ сохранена",
+  subscriptionIntentSaved: "Запрос на подписку сохранен",
+  productDetailText: "Mock-доступ открыт локально. Реальная оплата и внешние материалы в MVP не подключены.",
+  closeProductDetail: "Закрыть",
   enableTrial: "Включить demo",
   enablePremium: "Premium demo",
   reset: "Сбросить demo",
@@ -728,6 +734,69 @@ export const productCtas: ProductCta[] = [
   },
 ];
 
+export const vedaraProducts: VedaraProduct[] = [
+  {
+    id: "longevita-tracker",
+    title: "Трекер Longevita",
+    description: "Ежедневные привычки, состояние, календарь и динамика.",
+    status: "Открыт",
+    accessType: "open",
+    actionLabel: "Зайти",
+    route: "tracker",
+    icon: "protocol",
+  },
+  {
+    id: "hunger-mimicry",
+    title: "Мимикрия голода",
+    description: "Клубный материал, доступный при активной платной подписке.",
+    status: "Доступно с подпиской",
+    accessType: "premium",
+    actionLabel: "Оформить подписку",
+    intentId: "hungerMimicrySubscription",
+    icon: "nutrition",
+  },
+  {
+    id: "therapeutic-fasting",
+    title: "Лечебное голодание",
+    description: "Отдельная программа с доступом после покупки.",
+    status: "Купить доступ",
+    accessType: "purchase",
+    actionLabel: "Купить доступ",
+    intentId: "therapeuticFastingPurchase",
+    icon: "practice",
+  },
+  {
+    id: "diagnostics",
+    title: "Бесплатная диагностика онлайн с ментором Vedara",
+    description: "Первичная встреча для определения запроса и подходящего маршрута.",
+    status: "Можно подать заявку",
+    accessType: "lead",
+    actionLabel: "Подать заявку",
+    leadType: "diagnostics",
+    icon: "clinic",
+  },
+  {
+    id: "individual-protocol",
+    title: "Индивидуальный протокол с Марией Святой",
+    description: "Персональное сопровождение при сложных состояниях и восстановлении ресурса.",
+    status: "Можно подать заявку",
+    accessType: "lead",
+    actionLabel: "Подать заявку",
+    leadType: "individualProtocol",
+    icon: "material",
+  },
+  {
+    id: "vedara-university",
+    title: "Vedara Университет",
+    description: "Обучение специалистов и живые форматы.",
+    status: "Можно подать заявку",
+    accessType: "lead",
+    actionLabel: "Подать заявку",
+    leadType: "university",
+    icon: "protocol",
+  },
+];
+
 export const safetyNotes = [
   "MVP не ставит диагнозы и не заменяет очную работу со специалистом.",
   "Протоколы являются wellness-структурой для наблюдения и привычек.",
@@ -737,6 +806,8 @@ export const safetyNotes = [
 export const leadTitles: Record<LeadType, string> = {
   clinic: "Заявка в Vedara Clinic",
   university: "Заявка в Vedara University",
+  diagnostics: "Заявка на диагностику Vedara",
+  individualProtocol: "Заявка на индивидуальный протокол",
 };
 
 export const premiumCopy = {

@@ -2,7 +2,7 @@ export type ScreenId = "home" | "practices" | "tracker" | "club" | "chat" | "pro
 
 export type AccessState = "guest" | "trial" | "clubMonthly" | "clubAnnual" | "clinicLead" | "universityLead";
 
-export type LeadType = "clinic" | "university";
+export type LeadType = "clinic" | "university" | "diagnostics" | "individualProtocol";
 
 export interface NavItem {
   id: ScreenId;
@@ -132,6 +132,21 @@ export interface ProductCta {
   cta: string;
   target?: ScreenId;
   leadType?: LeadType;
+}
+
+export type VedaraProductAccessType = "open" | "premium" | "purchase" | "lead";
+
+export interface VedaraProduct {
+  id: string;
+  title: string;
+  description: string;
+  status: string;
+  accessType: VedaraProductAccessType;
+  actionLabel: string;
+  route?: ScreenId;
+  leadType?: LeadType;
+  intentId?: string;
+  icon: "water" | "nutrition" | "movement" | "practice" | "sleep" | "material" | "protocol" | "clinic";
 }
 
 export interface Lead {

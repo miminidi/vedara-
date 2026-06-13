@@ -854,6 +854,84 @@ button.tracker-row {
   padding: var(--card-padding);
 }
 
+.section-subcopy {
+  margin: calc(-1 * var(--space-2)) 0 var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--line-body);
+}
+
+.profile-products-list {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.profile-product-row {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  align-items: center;
+  padding: var(--space-3);
+  border: var(--card-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white-76);
+  box-shadow: var(--shadow-card);
+}
+
+.profile-product-row__icon {
+  width: 42px;
+  height: 42px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-lilac);
+  color: var(--color-accent-primary);
+}
+
+.profile-product-row__content {
+  min-width: 0;
+  display: grid;
+  gap: var(--space-1);
+}
+
+.profile-product-row__title,
+.profile-product-row__description,
+.profile-product-row__status {
+  display: block;
+}
+
+.profile-product-row__title {
+  color: var(--color-text-heading);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.profile-product-row__description {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: 1.35;
+}
+
+.profile-product-row__status {
+  color: var(--color-accent-primary);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.profile-product-row__button {
+  min-width: 96px;
+  min-height: 38px;
+  padding: 0 var(--space-3);
+  white-space: nowrap;
+}
+
+.product-detail-card {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
 .profile-next-card {
   display: grid;
   gap: var(--space-4);
@@ -1679,6 +1757,15 @@ button.tracker-row {
   .material-row .badge {
     justify-self: start;
     grid-column: 2;
+  }
+
+  .profile-product-row {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .profile-product-row__button {
+    grid-column: 2;
+    justify-self: start;
   }
 }
 
