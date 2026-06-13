@@ -884,9 +884,17 @@ button.tracker-row {
 }
 
 .club-detail-card,
+.club-welcome-card,
+.club-method-card,
+.club-document-card,
 .club-community-card {
   display: grid;
   gap: var(--space-3);
+}
+
+.club-welcome-card,
+.club-method-card {
+  background: var(--color-white-88);
 }
 
 .club-library-grid {
@@ -919,6 +927,87 @@ button.tracker-row {
   font-size: var(--text-xs);
   font-weight: 700;
   line-height: 1;
+}
+
+.club-document-list {
+  gap: var(--space-4);
+}
+
+.club-document-card.is-completed,
+.club-practice-tile.is-completed {
+  background: var(--surface-card-active);
+}
+
+.club-card-icon {
+  width: 42px;
+  height: 42px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-lilac);
+  color: var(--color-accent-primary);
+  box-shadow: var(--shadow-card);
+}
+
+.club-practice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.club-practice-tile {
+  min-height: 184px;
+  display: grid;
+  align-content: space-between;
+  gap: var(--space-3);
+  padding: var(--card-padding-sm);
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  background: var(--color-white-76);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text-primary);
+  text-align: left;
+  font-family: var(--font-ui);
+}
+
+.club-practice-tile:active {
+  transform: translateY(1px);
+}
+
+.club-practice-tile__body {
+  min-width: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.club-practice-tile__title {
+  color: var(--color-text-heading);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  line-height: var(--line-heading);
+}
+
+.club-practice-tile__description {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.club-practice-tile__meta,
+.club-practice-tile__status {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.club-practice-tile__status {
+  color: var(--color-accent-primary);
 }
 
 .stat-row--compact {

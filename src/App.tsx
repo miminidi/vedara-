@@ -236,7 +236,6 @@ export default function App() {
             completedArticles={completedClubArticles}
             completedVideos={completedClubVideos}
             onNavigate={navigate}
-            onSetAccess={setAccess}
             onToggleArticle={toggleClubArticle}
             onToggleVideo={toggleClubVideo}
           />

@@ -108,7 +108,9 @@ export interface ClubVideo {
   id: string;
   title: string;
   description: string;
+  category: string;
   duration: string;
+  icon: "water" | "nutrition" | "movement" | "practice" | "sleep" | "material" | "protocol" | "clinic";
   access: "club" | "premium";
   completed: boolean;
 }
@@ -118,6 +120,7 @@ export interface ClubArticle {
   title: string;
   description: string;
   readingTime: string;
+  icon: "water" | "nutrition" | "movement" | "practice" | "sleep" | "material" | "protocol" | "clinic";
   access: "club" | "premium";
   completed: boolean;
 }
