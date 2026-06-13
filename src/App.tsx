@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { BottomNav } from "./components/BottomNav";
-import { CabinetPage } from "./pages/CabinetPage";
 import { ChatPage } from "./pages/ChatPage";
-import { ClinicPage } from "./pages/ClinicPage";
 import { ClubPage } from "./pages/ClubPage";
 import { HomePage } from "./pages/HomePage";
-import { UniversityPage } from "./pages/UniversityPage";
+import { PracticesPage } from "./pages/PracticesPage";
+import { ProfilePage } from "./pages/ProfilePage";
+import { TrackerPage } from "./pages/TrackerPage";
 import { leadTitles, userProfile } from "./data/content";
 import type { AccessState, DailyCheckIn, Lead, LeadType, ScreenId } from "./data/types";
 import "./styles/base.css";
@@ -232,7 +232,7 @@ export default function App() {
     switch (screen) {
       case "tracker":
         return (
-          <ClubPage
+          <TrackerPage
             checkIns={checkIns}
             completedHabitKeys={completedHabitKeys}
             onNavigate={navigate}
@@ -242,7 +242,7 @@ export default function App() {
         );
       case "club":
         return (
-          <ClinicPage
+          <ClubPage
             completedVideos={completedClubVideos}
             onToggleVideo={toggleClubVideo}
           />
@@ -251,7 +251,7 @@ export default function App() {
         return <ChatPage onNavigate={navigate} />;
       case "practices":
         return (
-          <UniversityPage
+          <PracticesPage
             completedMaterials={completedMaterials}
             completedProtocolTasks={completedProtocolTasks}
             onNavigate={navigate}
@@ -262,7 +262,7 @@ export default function App() {
         );
       case "profile":
         return (
-          <CabinetPage
+          <ProfilePage
             access={access}
             checkIn={todayCheckIn}
             completedHabits={completedHabits}

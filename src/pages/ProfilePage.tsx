@@ -5,7 +5,7 @@ import { WellnessIcon } from "../components/icons/WellnessIcons";
 import { accessLabels, profileContent, vedaraProducts } from "../data/content";
 import type { AccessState, DailyCheckIn, Lead, LeadType, ScreenId, UserProfile, VedaraProduct } from "../data/types";
 
-interface CabinetPageProps {
+interface ProfilePageProps {
   access: AccessState;
   checkIn?: DailyCheckIn;
   completedHabits: string[];
@@ -34,7 +34,7 @@ function isPremiumAccess(access: AccessState) {
   return access === "clubMonthly" || access === "clubAnnual";
 }
 
-export function CabinetPage({
+export function ProfilePage({
   access,
   checkIn,
   completedHabits,
@@ -48,7 +48,7 @@ export function CabinetPage({
   onResetDemo,
   onSaveProductIntent,
   onSetAccess,
-}: CabinetPageProps) {
+}: ProfilePageProps) {
   const [selectedProduct, setSelectedProduct] = useState<VedaraProduct | null>(null);
   const premiumActive = isPremiumAccess(access);
 

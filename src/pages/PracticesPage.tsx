@@ -6,7 +6,7 @@ import { materials, practicesContent, protocols } from "../data/content";
 import type { AccessState, MaterialKind, ProtocolTaskKind, ScreenId } from "../data/types";
 import type { WellnessIconName } from "../components/icons/WellnessIcons";
 
-interface UniversityPageProps {
+interface PracticesPageProps {
   completedMaterials: string[];
   completedProtocolTasks: string[];
   onNavigate: (screen: ScreenId) => void;
@@ -35,14 +35,14 @@ function protocolTaskIcon(kind: ProtocolTaskKind): WellnessIconName {
   return "protocol";
 }
 
-export function UniversityPage({
+export function PracticesPage({
   completedMaterials,
   completedProtocolTasks,
   onNavigate,
   onSetAccess,
   onToggleMaterial,
   onToggleProtocolTask,
-}: UniversityPageProps) {
+}: PracticesPageProps) {
   const totalProtocolTasks = protocols.reduce((count, protocol) => count + protocol.days[0].tasks.length, 0);
   const totalItems = materials.length + totalProtocolTasks;
   const completedCount = completedMaterials.length + completedProtocolTasks.length;
