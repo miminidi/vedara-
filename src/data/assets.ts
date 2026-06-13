@@ -5,6 +5,7 @@ import heroYoga from "../assets/photos/hero-yoga.png";
 import bodyPeople from "../assets/photos/body-people.png";
 import nutritionBowl from "../assets/photos/nutrition-bowl.png";
 import wellnessClub from "../assets/photos/wellness-club.png";
+import clubHero from "../assets/photos/club-hero.png";
 
 export const assets = {
   logoFull: vedaraLogoFull,
@@ -15,6 +16,7 @@ export const assets = {
     bodyPeople,
     nutritionBowl,
     wellnessClub,
+    clubHero,
   },
 } as const;
 

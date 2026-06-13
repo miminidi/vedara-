@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { ScreenHeader } from "../components/ScreenHeader";
 import { SectionHead } from "../components/SectionHead";
 import { WellnessIcon } from "../components/icons/WellnessIcons";
+import { assets } from "../data/assets";
 import { clubArticles, clubContent, clubVideos } from "../data/content";
 import type { ClubArticle, ClubVideo } from "../data/types";
 
@@ -38,11 +38,14 @@ export function ClubPage({
 
   return (
     <main className="screen">
-      <ScreenHeader
-        kicker={clubContent.header.kicker}
-        title={clubContent.header.title}
-        subtitle={clubContent.header.subtitle}
-      />
+      <section className="club-hero">
+        <img className="club-hero__img" src={assets.photos.clubHero} alt="" />
+        <div className="club-hero__overlay">
+          <span className="club-hero__kicker">{clubContent.header.kicker}</span>
+          <h1 className="club-hero__title">{clubContent.header.title}</h1>
+          <p className="club-hero__subtitle">{clubContent.header.subtitle}</p>
+        </div>
+      </section>
 
       {selectedItem ? (
         <section className="panel club-detail-card">
