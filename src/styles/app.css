@@ -1274,6 +1274,96 @@ button.tracker-row {
   color: var(--color-accent-primary);
 }
 
+/* ---- Club: practices as tiles (плитка) ---- */
+.club-tile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.club-tile {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  text-align: left;
+  border: var(--card-border);
+  border-radius: var(--card-radius);
+  background: var(--color-white-88, #ffffff);
+  color: inherit;
+  cursor: pointer;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+}
+
+.club-tile:hover {
+  box-shadow: var(--card-shadow);
+  border-color: var(--color-lilac-40);
+}
+
+.club-tile:active {
+  transform: translateY(1px);
+}
+
+.club-tile__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 120% at 85% 115%, rgba(198, 167, 94, 0.20), transparent 58%),
+    linear-gradient(140deg, var(--vd-lavender-50, #F2ECFA), var(--color-surface-lilac, #E9E1F5));
+}
+
+.club-tile__icon {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  width: 38px;
+  height: 38px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--color-accent-primary);
+  box-shadow: 0 4px 12px rgba(36, 19, 54, 0.14);
+}
+
+.club-tile__badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--vd-purple-950, #241336);
+  background: var(--gradient-gold, linear-gradient(90deg, #E4CF9B, #C6A75E));
+}
+
+.club-tile__body {
+  display: grid;
+  gap: 4px;
+  padding: var(--space-3) var(--space-4) var(--space-4);
+}
+
+.club-tile__title {
+  color: var(--color-text-heading);
+  font-family: var(--font-display);
+  font-size: var(--text-base, 15px);
+  font-weight: 400;
+  line-height: var(--line-heading);
+}
+
+.club-tile__meta {
+  color: var(--color-text-subtle);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
+.club-tile.is-completed .club-tile__media {
+  filter: saturate(0.7);
+}
+
 .stat-row--compact {
   margin-bottom: var(--space-4);
 }
