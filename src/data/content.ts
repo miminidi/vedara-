@@ -3,19 +3,53 @@ import type {
   CheckMetric,
   ClubArticle,
   ClubVideo,
-  DayPlanItem,
   Habit,
   LeadType,
   Material,
   MethodPillar,
   NavItem,
-  ProductCta,
-  Program,
   Protocol,
   TeamMember,
   UserProfile,
   VedaraProduct,
 } from "./types";
+
+/**
+ * VEDARA — CONTENT SOURCE OF TRUTH
+ * =================================
+ * All static content for the MVP. Organised top-to-bottom BY SCREEN so the
+ * file mirrors the app:
+ *
+ *   GLOBAL    brandContent, uiCopy, navItems, accessLabels, leadTitles, premiumCopy
+ *   ГЛАВНАЯ    homeHubContent, homeEcosystemCards, homeAboutContent, teamMembers
+ *   УРОКИ      practicesContent, methodPillars, materials, protocols
+ *   ТРЕКЕР     trackerContent, checkMetrics, habits, dailyRituals
+ *   КЛУБ       clubContent, clubVideos, clubArticles
+ *   ЧАТ        chatContent
+ *   ПРОФИЛЬ    userProfile, profileContent, vedaraProducts
+ *
+ * BACKEND READINESS
+ * -----------------
+ * No server today. Static content lives here; user/runtime state is persisted
+ * to localStorage in App.tsx. When a backend is added, each labelled collection
+ * maps to one resource (every item already carries a stable `id`):
+ *
+ *   methodPillars / materials / protocols  → GET /content/lessons
+ *   clubVideos / clubArticles              → GET /content/club (videos, documents)
+ *   habits / dailyRituals / checkMetrics   → GET /content/tracker
+ *   vedaraProducts                         → GET /content/products
+ *   teamMembers                            → GET /content/team
+ *   *Content / *Labels / *Copy objects     → CMS copy strings (i18n-ready)
+ *
+ * USER DATA (NOT here — would move server-side):
+ *   userProfile (demo), access/tariff, check-ins, completed practices/materials/
+ *   protocol tasks, club video progress, leads, product intents.
+ *   → /me, /me/progress, /me/leads, /me/subscription
+ */
+
+/* ============================================================================
+ * GLOBAL / SHARED
+ * ==========================================================================*/
 
 export const brandContent = {
   tagline: "мобильный ритм здоровья",
@@ -38,6 +72,35 @@ export const navItems: NavItem[] = [
   { id: "chat", label: "Чат", icon: "chat" },
   { id: "profile", label: "Профиль", icon: "profile" },
 ];
+
+export const accessLabels = {
+  guest: "Гость",
+  trial: "Demo доступ",
+  clubMonthly: "Premium месяц",
+  clubAnnual: "Premium год",
+  clinicLead: "Заявка в клинику",
+  universityLead: "Заявка в университет",
+} as const;
+
+export const leadTitles: Record<LeadType, string> = {
+  clinic: "Заявка в Vedara Clinic",
+  university: "Заявка в Vedara University",
+  diagnostics: "Заявка на диагностику Vedara",
+  individualProtocol: "Заявка на индивидуальный протокол",
+};
+
+export const premiumCopy = {
+  title: "Vedara Premium",
+  guestText: "Demo-доступ открывает клубные материалы и расширенные протоколы.",
+  activeText: "Premium demo активен. Продолжайте трекинг, материалы и протоколы.",
+  guestCta: "Включить demo",
+  activeCta: "Перейти в профиль",
+  tariffsCta: "Смотреть материалы",
+};
+
+/* ============================================================================
+ * SCREEN: ГЛАВНАЯ (Home)
+ * ==========================================================================*/
 
 export const homeHubContent = {
   tariff: {
@@ -64,28 +127,6 @@ export const homeHubContent = {
   },
   directionsKicker: "экосистема",
   directionsTitle: "Экосистема Vedara",
-};
-
-export const homeHeroContent = {
-  kicker: "the longevita method",
-  title: "Создавать здоровье, а не лечить болезни",
-  text: "Премиальный клуб осознанного долголетия для женщин: энергия, молодость, спокойная нервная система и сильное окружение.",
-};
-
-export const homeRecoveryContent = {
-  kicker: "recovery score",
-  emptyTitle: "Узнай свой уровень ресурса",
-  emptyText: "Пройди ежедневную диагностику состояния — энергия, сон, стресс — и увидь свой Recovery Score.",
-  emptyCta: "Пройти диагностику",
-  scoreCta: "Открыть трекер",
-  ofLabel: "из 100",
-};
-
-export const homePillarsContent = {
-  kicker: "5 столпов метода",
-  title: "Путь восстановления",
-  text: "Пять направлений, по которым идёт каждая участница — от спокойной нервной системы до новой жизни.",
-  cta: "Открыть практики",
 };
 
 export const homeEcosystemCards = [
@@ -174,6 +215,10 @@ export const teamMembers: TeamMember[] = [
     initials: "RM",
   },
 ];
+
+/* ============================================================================
+ * SCREEN: УРОКИ (Practices) — method pillars + shared content library
+ * ==========================================================================*/
 
 export const practicesContent = {
   header: {
@@ -385,434 +430,60 @@ export const methodPillars: MethodPillar[] = [
   },
 ];
 
-export const clubContent = {
-  header: {
-    kicker: "Longevita Club",
-    title: "VEDARA LONGEVITA CLUB",
-    subtitle: "Клуб молодости, энергии и осознанного долголетия.",
-  },
-  access: {
-    trial: "Пробный доступ активен",
-    premium: "Подписка активна",
-    guest: "Оформите доступ, чтобы открыть материалы клуба",
-    guestStatus: "Доступ можно открыть на главной",
-    trialText: "7 дней открывают короткие видео, статьи и клубные материалы в demo-режиме.",
-    premiumText: "Mock-подписка активна. Реальная оплата в MVP не подключена.",
-    guestText: "Вы можете включить пробный доступ или посмотреть тарифный блок без реальной оплаты.",
-  },
-  trialCta: "7 дней бесплатно",
-  tariff: {
-    kicker: "подписка",
-    title: "5 555 ₽ / месяц",
-    text: "Единая подписка без скрытых тарифов. В MVP это mock-состояние без реальной оплаты.",
-    cta: "Активировать mock-подписку",
-  },
-  videosKicker: "короткие уроки",
-  videosTitle: "Практики клуба",
-  articlesKicker: "с чего начать",
-  articlesTitle: "Документы клуба",
-  welcomeTitle: "Рады, что ты с нами",
-  welcomeText:
-    "Мы так рады, что ты решила присоединиться. Это твоё пространство восстановления: спокойная нервная система, энергия, молодость тела и сильное женское окружение. Начни с документов ниже — и в путь.",
-  methodTitle: "Что такое Longevita-метод",
-  methodText:
-    "Longevita — это путь восстановления женщины из пяти столпов: нервная система, энергия, очищение и омоложение тела, образ жизни против старения и новая жизнь. Ты идёшь по шагам, отмечаешь состояние в трекере и видишь, как ресурс возвращается — без давления и гонки.",
-  open: "Открыть",
-  markWatched: "Отметить выполненным",
-  watched: "Выполнено",
-  available: "доступно",
-  locked: "locked",
-  openAccess: "Открыть доступ",
-  detailTitle: "Mock-просмотр",
-  detailText: "Реальные видео и внешние материалы в MVP не подключены. Этот блок показывает, как будет открываться клубный материал.",
-  closeDetail: "Закрыть",
-};
-
-export const chatContent = {
-  header: {
-    kicker: "community",
-    title: "Чат клуба",
-    subtitle: "Клубное общение, эфиры, вопросы куратору и объявления в mock-режиме MVP.",
-  },
-  status: "community mock",
-  introTitle: "Женское сообщество Vedara",
-  introText: "Здесь собрана community-часть Longevita Club: эфиры, ближайшие встречи, тема недели и поддержка куратора в окружении единомышленниц.",
-  liveKicker: "ближайший эфир",
-  liveTitle: "Воскресенье · 19:00",
-  liveText: "«Почему отдых не помогает» — разбор столпа нервной системы и вопросы участниц.",
-  weekTitle: "Тема недели",
-  weekText: "Столп 1 — нервная система: выходим из режима выживания через утренние и вечерние ритуалы.",
-  curatorTitle: "Вопрос куратору",
-  curatorText: "В MVP вопрос сохраняется локально как интерфейсное состояние. Реальной отправки на сервер нет.",
-  announcementsTitle: "Объявления",
-  announcements: [
-    "Новые эфиры по столпам метода доступны на странице клуба.",
-    "Vedara Daily Rituals в трекере помогают удерживать ритм дня.",
-    "Recovery Score показывает уровень ресурса по ежедневным отметкам.",
-  ],
-  questionCta: "Задать вопрос",
-  questionSaved: "Вопрос сохранен локально",
-  clubCta: "Вернуться в клуб",
-};
-
-export const clubVideos: ClubVideo[] = [
+export const materials: Material[] = [
   {
-    id: "practice-daoist",
-    title: "Даосские практики",
-    description: "Мягкие даосские техники для энергии, тонуса и баланса тела.",
-    category: "энергия",
-    duration: "12 мин",
-    icon: "movement",
-    access: "club",
-    completed: false,
+    id: "intro-vedara",
+    title: "Как устроена Vedara",
+    description: "Короткий вводный урок о трекере, протоколах и материалах.",
+    kind: "lesson",
+    duration: "8 мин",
+    access: "free",
+    tag: "старт",
   },
   {
-    id: "practice-breathing",
-    title: "Дыхательная практика",
-    description: "Дыхание для нервной системы и спокойного состояния.",
-    category: "нервная система",
+    id: "breath-soft",
+    title: "Мягкая дыхательная практика",
+    description: "Аудио-практика для паузы в течение дня.",
+    kind: "practice",
     duration: "7 мин",
-    icon: "practice",
-    access: "club",
-    completed: false,
+    access: "free",
+    tag: "практика",
   },
   {
-    id: "practice-face-massage",
-    title: "Массаж лица",
-    description: "Лимфодренажный самомассаж для свежести и тонуса лица.",
-    category: "красота",
-    duration: "10 мин",
-    icon: "sleep",
-    access: "club",
-    completed: false,
-  },
-];
-
-export const clubArticles: ClubArticle[] = [
-  {
-    id: "doc-essentials",
-    title: "Список необходимого",
-    description: "Что подготовить для старта: минералы, добавки и мелочи для практик.",
-    readingTime: "чек-лист",
-    icon: "protocol",
-    access: "club",
-    completed: false,
+    id: "club-pillars",
+    title: "5 столпов Longevita Club",
+    description: "Community, практики, протоколы, знания и сопровождение куратора.",
+    kind: "club",
+    duration: "14 мин",
+    access: "premium",
+    tag: "club",
   },
   {
-    id: "doc-tracker-guide",
-    title: "Пояснение к трекеру",
-    description: "Как пользоваться трекером: привычки, состояние дня и Recovery Score.",
-    readingTime: "гайд",
-    icon: "material",
-    access: "club",
-    completed: false,
+    id: "sleep-hygiene",
+    title: "Вечерний ритм",
+    description: "Статья о спокойной настройке дня без жестких правил.",
+    kind: "article",
+    duration: "6 мин",
+    access: "free",
+    tag: "сон",
   },
   {
-    id: "doc-recipes",
-    title: "Книга рецептов",
-    description: "Противовоспалительные блюда и напитки для энергии и лёгкости.",
-    readingTime: "PDF",
-    icon: "nutrition",
-    access: "club",
-    completed: false,
-  },
-];
-
-export const userProfile: UserProfile = {
-  id: "demo-user",
-  name: "Мария",
-  subtitle: "demo-профиль Vedara",
-  focus: "Спокойный режим, сон и регулярность базовых привычек",
-  age: "38 лет",
-  weight: "62 кг",
-  height: "168 см",
-  goals: ["больше энергии", "мягкий режим дня", "устойчивые практики", "осознанное питание"],
-};
-
-export const accessLabels = {
-  guest: "Гость",
-  trial: "Demo доступ",
-  clubMonthly: "Premium месяц",
-  clubAnnual: "Premium год",
-  clinicLead: "Заявка в клинику",
-  universityLead: "Заявка в университет",
-} as const;
-
-export const todayContent = {
-  greeting: "Доброе утро",
-  dateLabel: "Сегодня",
-  scoreLabel: "Ритм дня",
-  checkInTitle: "Быстрый check-in",
-  checkInText: "Отметьте состояние. Vedara сохранит день локально на этом устройстве.",
-  planTitle: "План дня",
-  planAction: "Открыть трекер",
-  focusTitle: "Фокус недели",
-  focusText: "Соберите минимум: вода, движение, короткая практика и один материал без перегруза.",
-  protocolTitle: "Текущий протокол",
-  primaryCta: "Отметить состояние",
-  practiceCta: "Начать практику",
-  protocolCta: "Открыть протокол",
-};
-
-export const trackerContent = {
-  header: {
-    kicker: "ежедневный ритм",
-    title: "Трекер",
-    subtitle: "Отмечайте привычки и состояние, чтобы видеть динамику недели и месяца.",
-  },
-  monthTitle: "Календарь месяца",
-  monthKicker: "месяц",
-  monthLegendAria: "Легенда календаря",
-  monthLegend: {
-    none: "нет данных",
-    partial: "частично",
-    filled: "заполнен",
-  },
-  selectedDayTitle: "Сводка дня",
-  todayInputTitle: "Что отмечаем сегодня",
-  reportTitle: "Отчет дня",
-  reportDescription: "На основе привычек и состояния выбранного дня.",
-  reportEmptyText: "Заполните привычки и состояние, чтобы увидеть отчет дня.",
-  reportScoreLabel: "Оценка дня",
-  habitsTitle: "Привычки дня",
-  conditionTitle: "Состояние",
-  conditionScale: "1-10",
-  noValue: "—",
-  recoveryKicker: "recovery score",
-  recoveryOfLabel: "из 100",
-  recoveryEmptyTitle: "Отметь состояние дня",
-  recoveryEmptyHint: "Заполни энергию, сон и стресс — и увидишь свой Recovery Score за день.",
-  ritualsTitle: "Vedara Daily Rituals",
-  ritualsMorning: "Утро",
-  ritualsEvening: "Вечер",
-  saveDay: "Сохранить день",
-  saved: "День сохранен",
-  homeCta: "На главную",
-  summary: {
-    habits: {
-      title: "Привычки",
-      description: "выполнено сегодня",
-    },
-    state: {
-      title: "Состояние",
-      description: "самочувствие дня",
-    },
-  },
-};
-
-export const dailyRituals = {
-  morning: [
-    {
-      id: "ritual-morning-phone",
-      title: "1 час для себя без телефона",
-      description: "Спокойное утро без ленты и уведомлений.",
-      icon: "practice" as const,
-    },
-    {
-      id: "ritual-morning-breath",
-      title: "Дыхательная практика",
-      description: "Несколько минут дыхания для нервной системы.",
-      icon: "practice" as const,
-    },
-    {
-      id: "ritual-morning-water",
-      title: "Вода и минералы",
-      description: "Стакан воды с минералами до кофе.",
-      icon: "water" as const,
-    },
-    {
-      id: "ritual-morning-light",
-      title: "Утренний свет",
-      description: "Дневной свет или прогулка для биоритма.",
-      icon: "movement" as const,
-    },
-  ],
-  evening: [
-    {
-      id: "ritual-evening-phone",
-      title: "1 час без телефона до сна",
-      description: "Тёплый приглушённый свет вместо экранов.",
-      icon: "sleep" as const,
-    },
-    {
-      id: "ritual-evening-meditation",
-      title: "Медитация перед сном",
-      description: "Замедление и мягкая разгрузка дня.",
-      icon: "practice" as const,
-    },
-    {
-      id: "ritual-evening-bed",
-      title: "Отбой в 22:00",
-      description: "Сон — основа восстановления и молодости.",
-      icon: "sleep" as const,
-    },
-    {
-      id: "ritual-evening-gratitude",
-      title: "Итоги дня",
-      description: "Благодарность себе и спокойный план на завтра.",
-      icon: "material" as const,
-    },
-  ],
-};
-
-export const protocolsContent = {
-  header: {
-    kicker: "мягкие протоколы",
-    title: "Протоколы",
-    subtitle: "Пошаговые wellness-задачи без медицинских рекомендаций и без обещаний результата.",
-  },
-  currentTitle: "Активный протокол",
-  tasksTitle: "Задачи дня",
-  catalogTitle: "Доступные протоколы",
-  premiumCta: "Открыть с Premium",
-  clinicCta: "Нужна индивидуальная программа",
-  leadSaved: "Заявка сохранена",
-};
-
-export const materialsContent = {
-  header: {
-    kicker: "библиотека Vedara",
-    title: "Материалы",
-    subtitle: "Уроки, практики, медитации и вводные материалы клуба и университета.",
-  },
-  progressTitle: "Прогресс обучения",
-  listTitle: "Сегодня можно изучить",
-  completed: "Изучено",
-  open: "Отметить изученным",
-};
-
-export const profileContent = {
-  header: {
-    kicker: "личный кабинет",
-    title: "Профиль",
-    subtitle: "Demo-доступ, цели, заявки и локальная история MVP.",
-  },
-  stats: {
-    habits: "привычек сегодня",
-    materials: "материалов",
-    protocolTasks: "задач протокола",
-    leads: "заявок",
-  },
-  vitals: {
-    age: "Возраст",
-    weight: "Вес",
-    height: "Рост",
-  },
-  goalsTitle: "Цели по методу",
-  accessTitle: "Доступ",
-  leadsTitle: "Заявки",
-  progressKicker: "мой прогресс",
-  progressTitle: "Мой прогресс Vedara",
-  progressSubtitle: "Путь от первого шага до состояния женщины-Longevita — растёт вместе с практиками.",
-  progressLevels: ["Новичок", "Ученица", "Практик", "Хранительница", "Женщина-Longevita"],
-  mapKicker: "the longevita map",
-  mapTitle: "Твой путь восстановления",
-  mapSubtitle: "Прогресс по пяти столпам метода — отмечай практики в разделе «Практики».",
-  mapStates: {
-    notStarted: "не начат",
-    inProgress: "в процессе",
-    done: "пройден",
-  },
-  supportKicker: "поддержка",
-  supportTitle: "Протоколы и адаптогены",
-  supportText: "Нутрицевтики для мягкой поддержки восстановления — не назначение, а ориентир. Подбор индивидуально с ментором.",
-  supportItems: [
-    "Минералы и электролиты — энергия и гидратация",
-    "Ашваганда, родиола — спокойствие и адаптация к стрессу",
-    "Рейши, траметес — мягкая поддержка восстановления и сна",
-  ],
-  productsTitle: "Продукты Vedara",
-  productsSubtitle: "Ваши доступы, заявки и дополнительные программы.",
-  productIntentSaved: "Заявка на доступ сохранена",
-  subscriptionIntentSaved: "Запрос на подписку сохранен",
-  productDetailText: "Mock-доступ открыт локально. Реальная оплата и внешние материалы в MVP не подключены.",
-  closeProductDetail: "Закрыть",
-  enableTrial: "Включить demo",
-  enablePremium: "Premium demo",
-  reset: "Сбросить demo",
-  noLeads: "Заявок пока нет",
-  homeCta: "Вернуться на главную",
-};
-
-export const checkMetrics: CheckMetric[] = [
-  { id: "energy", label: "Энергия", helper: "ресурс", minLabel: "низко", maxLabel: "высоко" },
-  { id: "mood", label: "Настроение", helper: "фон", minLabel: "тяжело", maxLabel: "легко" },
-  { id: "sleep", label: "Сон", helper: "качество", minLabel: "плохо", maxLabel: "хорошо" },
-  { id: "stress", label: "Стресс", helper: "напряжение", minLabel: "много", maxLabel: "мало" },
-];
-
-export const habits: Habit[] = [
-  {
-    id: "water",
-    title: "Вода",
-    description: "Мягко держать питьевой режим в течение дня.",
-    category: "water",
-    target: "4 отметки",
+    id: "body-scan",
+    title: "Сканирование тела",
+    description: "Медитация для контакта с телесными сигналами.",
+    kind: "meditation",
+    duration: "11 мин",
+    access: "premium",
+    tag: "медитация",
   },
   {
-    id: "nutrition",
-    title: "Питание",
-    description: "Один спокойный прием пищи без спешки.",
-    category: "nutrition",
-    target: "1 фокус",
-  },
-  {
-    id: "movement",
-    title: "Движение",
-    description: "Короткая прогулка или мягкая разминка.",
-    category: "movement",
-    target: "15 минут",
-  },
-  {
-    id: "practice-breath",
-    title: "Практика",
-    description: "Дыхательная пауза и переключение внимания.",
-    category: "practice",
-    target: "7 минут",
-  },
-  {
-    id: "sleep-ritual",
-    title: "Сон",
-    description: "Вечерний ритуал без перегруза экранами.",
-    category: "sleep",
-    target: "1 шаг",
-  },
-];
-
-export const dayPlan: DayPlanItem[] = [
-  {
-    id: "plan-water",
-    title: "Вода",
-    subtitle: "Отметить базовый питьевой ритм",
-    habitId: "water",
-    action: "habit",
-  },
-  {
-    id: "plan-movement",
-    title: "Движение",
-    subtitle: "15 минут мягкой активности",
-    habitId: "movement",
-    action: "habit",
-  },
-  {
-    id: "plan-practice",
-    title: "Практика",
-    subtitle: "7 минут дыхания",
-    habitId: "practice-breath",
-    action: "practice",
-  },
-  {
-    id: "plan-protocol",
-    title: "Протокол",
-    subtitle: "Выполнить первую задачу дня",
-    protocolTaskId: "sleep-d1-rhythm",
-    action: "protocol",
-  },
-  {
-    id: "plan-material",
-    title: "Материал",
-    subtitle: "Открыть урок из библиотеки",
-    action: "material",
+    id: "university-intro",
+    title: "Введение в Vedara University",
+    description: "Три этапа обучения специалистов: база, практика, интеграция.",
+    kind: "university",
+    duration: "12 мин",
+    access: "university",
+    tag: "university",
   },
 ];
 
@@ -908,86 +579,353 @@ export const protocols: Protocol[] = [
   },
 ];
 
-export const materials: Material[] = [
+/* ============================================================================
+ * SCREEN: ТРЕКЕР (Tracker)
+ * ==========================================================================*/
+
+export const trackerContent = {
+  header: {
+    kicker: "ежедневный ритм",
+    title: "Трекер",
+    subtitle: "Отмечайте привычки и состояние, чтобы видеть динамику недели и месяца.",
+  },
+  monthTitle: "Календарь месяца",
+  monthKicker: "месяц",
+  monthLegendAria: "Легенда календаря",
+  monthLegend: {
+    none: "нет данных",
+    partial: "частично",
+    filled: "заполнен",
+  },
+  selectedDayTitle: "Сводка дня",
+  todayInputTitle: "Что отмечаем сегодня",
+  reportTitle: "Отчет дня",
+  reportDescription: "На основе привычек и состояния выбранного дня.",
+  reportEmptyText: "Заполните привычки и состояние, чтобы увидеть отчет дня.",
+  reportScoreLabel: "Оценка дня",
+  habitsTitle: "Привычки дня",
+  conditionTitle: "Состояние",
+  conditionScale: "1-10",
+  noValue: "—",
+  recoveryKicker: "recovery score",
+  recoveryOfLabel: "из 100",
+  recoveryEmptyTitle: "Отметь состояние дня",
+  recoveryEmptyHint: "Заполни энергию, сон и стресс — и увидишь свой Recovery Score за день.",
+  ritualsTitle: "Vedara Daily Rituals",
+  ritualsMorning: "Утро",
+  ritualsEvening: "Вечер",
+  saveDay: "Сохранить день",
+  saved: "День сохранен",
+  homeCta: "На главную",
+  summary: {
+    habits: {
+      title: "Привычки",
+      description: "выполнено сегодня",
+    },
+    state: {
+      title: "Состояние",
+      description: "самочувствие дня",
+    },
+  },
+};
+
+export const checkMetrics: CheckMetric[] = [
+  { id: "energy", label: "Энергия", helper: "ресурс", minLabel: "низко", maxLabel: "высоко" },
+  { id: "mood", label: "Настроение", helper: "фон", minLabel: "тяжело", maxLabel: "легко" },
+  { id: "sleep", label: "Сон", helper: "качество", minLabel: "плохо", maxLabel: "хорошо" },
+  { id: "stress", label: "Стресс", helper: "напряжение", minLabel: "много", maxLabel: "мало" },
+];
+
+export const habits: Habit[] = [
   {
-    id: "intro-vedara",
-    title: "Как устроена Vedara",
-    description: "Короткий вводный урок о трекере, протоколах и материалах.",
-    kind: "lesson",
-    duration: "8 мин",
-    access: "free",
-    tag: "старт",
+    id: "water",
+    title: "Вода",
+    description: "Мягко держать питьевой режим в течение дня.",
+    category: "water",
+    target: "4 отметки",
   },
   {
-    id: "breath-soft",
-    title: "Мягкая дыхательная практика",
-    description: "Аудио-практика для паузы в течение дня.",
-    kind: "practice",
-    duration: "7 мин",
-    access: "free",
-    tag: "практика",
+    id: "nutrition",
+    title: "Питание",
+    description: "Один спокойный прием пищи без спешки.",
+    category: "nutrition",
+    target: "1 фокус",
   },
   {
-    id: "club-pillars",
-    title: "5 столпов Longevita Club",
-    description: "Community, практики, протоколы, знания и сопровождение куратора.",
-    kind: "club",
-    duration: "14 мин",
-    access: "premium",
-    tag: "club",
+    id: "movement",
+    title: "Движение",
+    description: "Короткая прогулка или мягкая разминка.",
+    category: "movement",
+    target: "15 минут",
   },
   {
-    id: "sleep-hygiene",
-    title: "Вечерний ритм",
-    description: "Статья о спокойной настройке дня без жестких правил.",
-    kind: "article",
-    duration: "6 мин",
-    access: "free",
-    tag: "сон",
+    id: "practice-breath",
+    title: "Практика",
+    description: "Дыхательная пауза и переключение внимания.",
+    category: "practice",
+    target: "7 минут",
   },
   {
-    id: "body-scan",
-    title: "Сканирование тела",
-    description: "Медитация для контакта с телесными сигналами.",
-    kind: "meditation",
-    duration: "11 мин",
-    access: "premium",
-    tag: "медитация",
-  },
-  {
-    id: "university-intro",
-    title: "Введение в Vedara University",
-    description: "Три этапа обучения специалистов: база, практика, интеграция.",
-    kind: "university",
-    duration: "12 мин",
-    access: "university",
-    tag: "university",
+    id: "sleep-ritual",
+    title: "Сон",
+    description: "Вечерний ритуал без перегруза экранами.",
+    category: "sleep",
+    target: "1 шаг",
   },
 ];
 
-export const productCtas: ProductCta[] = [
+export const dailyRituals = {
+  morning: [
+    {
+      id: "ritual-morning-phone",
+      title: "1 час для себя без телефона",
+      description: "Спокойное утро без ленты и уведомлений.",
+      icon: "practice" as const,
+    },
+    {
+      id: "ritual-morning-breath",
+      title: "Дыхательная практика",
+      description: "Несколько минут дыхания для нервной системы.",
+      icon: "practice" as const,
+    },
+    {
+      id: "ritual-morning-water",
+      title: "Вода и минералы",
+      description: "Стакан воды с минералами до кофе.",
+      icon: "water" as const,
+    },
+    {
+      id: "ritual-morning-light",
+      title: "Утренний свет",
+      description: "Дневной свет или прогулка для биоритма.",
+      icon: "movement" as const,
+    },
+  ],
+  evening: [
+    {
+      id: "ritual-evening-phone",
+      title: "1 час без телефона до сна",
+      description: "Тёплый приглушённый свет вместо экранов.",
+      icon: "sleep" as const,
+    },
+    {
+      id: "ritual-evening-meditation",
+      title: "Медитация перед сном",
+      description: "Замедление и мягкая разгрузка дня.",
+      icon: "practice" as const,
+    },
+    {
+      id: "ritual-evening-bed",
+      title: "Отбой в 22:00",
+      description: "Сон — основа восстановления и молодости.",
+      icon: "sleep" as const,
+    },
+    {
+      id: "ritual-evening-gratitude",
+      title: "Итоги дня",
+      description: "Благодарность себе и спокойный план на завтра.",
+      icon: "material" as const,
+    },
+  ],
+};
+
+/* ============================================================================
+ * SCREEN: КЛУБ (Club)
+ * ==========================================================================*/
+
+export const clubContent = {
+  header: {
+    kicker: "Longevita Club",
+    title: "VEDARA LONGEVITA CLUB",
+    subtitle: "Клуб молодости, энергии и осознанного долголетия.",
+  },
+  access: {
+    trial: "Пробный доступ активен",
+    premium: "Подписка активна",
+    guest: "Оформите доступ, чтобы открыть материалы клуба",
+    guestStatus: "Доступ можно открыть на главной",
+    trialText: "7 дней открывают короткие видео, статьи и клубные материалы в demo-режиме.",
+    premiumText: "Mock-подписка активна. Реальная оплата в MVP не подключена.",
+    guestText: "Вы можете включить пробный доступ или посмотреть тарифный блок без реальной оплаты.",
+  },
+  trialCta: "7 дней бесплатно",
+  tariff: {
+    kicker: "подписка",
+    title: "5 555 ₽ / месяц",
+    text: "Единая подписка без скрытых тарифов. В MVP это mock-состояние без реальной оплаты.",
+    cta: "Активировать mock-подписку",
+  },
+  videosKicker: "короткие уроки",
+  videosTitle: "Практики клуба",
+  articlesKicker: "с чего начать",
+  articlesTitle: "Документы клуба",
+  welcomeTitle: "Рады, что ты с нами",
+  welcomeText:
+    "Мы так рады, что ты решила присоединиться. Это твоё пространство восстановления: спокойная нервная система, энергия, молодость тела и сильное женское окружение. Начни с документов ниже — и в путь.",
+  methodTitle: "Что такое Longevita-метод",
+  methodText:
+    "Longevita — это путь восстановления женщины из пяти столпов: нервная система, энергия, очищение и омоложение тела, образ жизни против старения и новая жизнь. Ты идёшь по шагам, отмечаешь состояние в трекере и видишь, как ресурс возвращается — без давления и гонки.",
+  open: "Открыть",
+  markWatched: "Отметить выполненным",
+  watched: "Выполнено",
+  available: "доступно",
+  locked: "locked",
+  openAccess: "Открыть доступ",
+  detailTitle: "Mock-просмотр",
+  detailText: "Реальные видео и внешние материалы в MVP не подключены. Этот блок показывает, как будет открываться клубный материал.",
+  closeDetail: "Закрыть",
+};
+
+export const clubVideos: ClubVideo[] = [
   {
-    id: "club",
-    title: "Longevita Club",
-    text: "7 дней бесплатно, затем месячный или годовой Premium demo в рамках MVP.",
-    cta: "Открыть Premium",
-    target: "profile",
+    id: "practice-daoist",
+    title: "Даосские практики",
+    description: "Мягкие даосские техники для энергии, тонуса и баланса тела.",
+    category: "энергия",
+    duration: "12 мин",
+    icon: "movement",
+    access: "club",
+    completed: false,
   },
   {
-    id: "clinic",
-    title: "Vedara Clinic",
-    text: "Индивидуальная программа и консультация специалиста.",
-    cta: "Оставить заявку",
-    leadType: "clinic",
+    id: "practice-breathing",
+    title: "Дыхательная практика",
+    description: "Дыхание для нервной системы и спокойного состояния.",
+    category: "нервная система",
+    duration: "7 мин",
+    icon: "practice",
+    access: "club",
+    completed: false,
   },
   {
-    id: "university",
-    title: "Vedara University",
-    text: "Вводная заявка на обучение специалистов и живые форматы.",
-    cta: "Заявка на обучение",
-    leadType: "university",
+    id: "practice-face-massage",
+    title: "Массаж лица",
+    description: "Лимфодренажный самомассаж для свежести и тонуса лица.",
+    category: "красота",
+    duration: "10 мин",
+    icon: "sleep",
+    access: "club",
+    completed: false,
   },
 ];
+
+export const clubArticles: ClubArticle[] = [
+  {
+    id: "doc-essentials",
+    title: "Список необходимого",
+    description: "Что подготовить для старта: минералы, добавки и мелочи для практик.",
+    readingTime: "чек-лист",
+    icon: "protocol",
+    access: "club",
+    completed: false,
+  },
+  {
+    id: "doc-tracker-guide",
+    title: "Пояснение к трекеру",
+    description: "Как пользоваться трекером: привычки, состояние дня и Recovery Score.",
+    readingTime: "гайд",
+    icon: "material",
+    access: "club",
+    completed: false,
+  },
+  {
+    id: "doc-recipes",
+    title: "Книга рецептов",
+    description: "Противовоспалительные блюда и напитки для энергии и лёгкости.",
+    readingTime: "PDF",
+    icon: "nutrition",
+    access: "club",
+    completed: false,
+  },
+];
+
+/* ============================================================================
+ * SCREEN: ЧАТ (Chat)
+ * ==========================================================================*/
+
+export const chatContent = {
+  header: {
+    kicker: "community",
+    title: "Чат клуба",
+    subtitle: "Клубное общение, эфиры, вопросы куратору и объявления в mock-режиме MVP.",
+  },
+  status: "community mock",
+  introTitle: "Женское сообщество Vedara",
+  introText: "Здесь собрана community-часть Longevita Club: эфиры, ближайшие встречи, тема недели и поддержка куратора в окружении единомышленниц.",
+  liveKicker: "ближайший эфир",
+  liveTitle: "Воскресенье · 19:00",
+  liveText: "«Почему отдых не помогает» — разбор столпа нервной системы и вопросы участниц.",
+  weekTitle: "Тема недели",
+  weekText: "Столп 1 — нервная система: выходим из режима выживания через утренние и вечерние ритуалы.",
+  curatorTitle: "Вопрос куратору",
+  curatorText: "В MVP вопрос сохраняется локально как интерфейсное состояние. Реальной отправки на сервер нет.",
+  announcementsTitle: "Объявления",
+  announcements: [
+    "Новые эфиры по столпам метода доступны на странице клуба.",
+    "Vedara Daily Rituals в трекере помогают удерживать ритм дня.",
+    "Recovery Score показывает уровень ресурса по ежедневным отметкам.",
+  ],
+  questionCta: "Задать вопрос",
+  questionSaved: "Вопрос сохранен локально",
+  clubCta: "Вернуться в клуб",
+};
+
+/* ============================================================================
+ * SCREEN: ПРОФИЛЬ (Profile)
+ * ==========================================================================*/
+
+export const userProfile: UserProfile = {
+  id: "demo-user",
+  name: "Мария",
+  subtitle: "demo-профиль Vedara",
+  focus: "Спокойный режим, сон и регулярность базовых привычек",
+  age: "38 лет",
+  weight: "62 кг",
+  height: "168 см",
+  goals: ["больше энергии", "мягкий режим дня", "устойчивые практики", "осознанное питание"],
+};
+
+export const profileContent = {
+  header: {
+    kicker: "личный кабинет",
+    title: "Профиль",
+    subtitle: "Demo-доступ, цели, заявки и локальная история MVP.",
+  },
+  stats: {
+    habits: "привычек сегодня",
+    materials: "материалов",
+    protocolTasks: "задач протокола",
+  },
+  vitals: {
+    age: "Возраст",
+    weight: "Вес",
+    height: "Рост",
+  },
+  goalsTitle: "Цели по методу",
+  accessTitle: "Доступ",
+  progressKicker: "мой прогресс",
+  progressTitle: "Мой прогресс Vedara",
+  progressSubtitle: "Путь от первого шага до состояния женщины-Longevita — растёт вместе с практиками.",
+  progressLevels: ["Новичок", "Ученица", "Практик", "Хранительница", "Женщина-Longevita"],
+  mapKicker: "the longevita map",
+  mapTitle: "Твой путь восстановления",
+  mapSubtitle: "Прогресс по пяти столпам метода — отмечай практики в разделе «Практики».",
+  mapStates: {
+    notStarted: "не начат",
+    inProgress: "в процессе",
+    done: "пройден",
+  },
+  productsTitle: "Продукты Vedara",
+  productsSubtitle: "Ваши доступы, заявки и дополнительные программы.",
+  productIntentSaved: "Заявка на доступ сохранена",
+  subscriptionIntentSaved: "Запрос на подписку сохранен",
+  productDetailText: "Mock-доступ открыт локально. Реальная оплата и внешние материалы в MVP не подключены.",
+  closeProductDetail: "Закрыть",
+  enableTrial: "Включить demo",
+  enablePremium: "Premium demo",
+  reset: "Сбросить demo",
+  homeCta: "Вернуться на главную",
+};
 
 export const vedaraProducts: VedaraProduct[] = [
   {
@@ -1049,38 +987,5 @@ export const vedaraProducts: VedaraProduct[] = [
     actionLabel: "Подать заявку",
     leadType: "university",
     icon: "protocol",
-  },
-];
-
-export const safetyNotes = [
-  "MVP не ставит диагнозы и не заменяет очную работу со специалистом.",
-  "Протоколы являются wellness-структурой для наблюдения и привычек.",
-  "Заявки сохраняются как mock-состояние без отправки на сервер.",
-];
-
-export const leadTitles: Record<LeadType, string> = {
-  clinic: "Заявка в Vedara Clinic",
-  university: "Заявка в Vedara University",
-  diagnostics: "Заявка на диагностику Vedara",
-  individualProtocol: "Заявка на индивидуальный протокол",
-};
-
-export const premiumCopy = {
-  title: "Vedara Premium",
-  guestText: "Demo-доступ открывает клубные материалы и расширенные протоколы.",
-  activeText: "Premium demo активен. Продолжайте трекинг, материалы и протоколы.",
-  guestCta: "Включить demo",
-  activeCta: "Перейти в профиль",
-  tariffsCta: "Смотреть материалы",
-};
-
-export const homePrograms: Program[] = [
-  {
-    id: "demo-program",
-    title: "Индивидуальная программа",
-    eyebrow: "Clinic",
-    description: "Mock-направление для заявки на персональную работу.",
-    tag: "mock",
-    access: "clinic",
   },
 ];
