@@ -16,6 +16,9 @@ export interface UserProfile {
   name: string;
   subtitle: string;
   focus: string;
+  age?: string;
+  weight?: string;
+  height?: string;
   goals: string[];
 }
 

@@ -573,6 +573,9 @@ export const userProfile: UserProfile = {
   name: "Мария",
   subtitle: "demo-профиль Vedara",
   focus: "Спокойный режим, сон и регулярность базовых привычек",
+  age: "38 лет",
+  weight: "62 кг",
+  height: "168 см",
   goals: ["больше энергии", "мягкий режим дня", "устойчивые практики", "осознанное питание"],
 };
 
@@ -739,6 +742,11 @@ export const profileContent = {
     materials: "материалов",
     protocolTasks: "задач протокола",
     leads: "заявок",
+  },
+  vitals: {
+    age: "Возраст",
+    weight: "Вес",
+    height: "Рост",
   },
   goalsTitle: "Цели по методу",
   accessTitle: "Доступ",

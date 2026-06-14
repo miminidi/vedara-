@@ -155,6 +155,28 @@ export function ProfilePage({
           <span className="section-kicker">{profile.subtitle}</span>
           <h1>{profile.name}</h1>
           <p>{profile.focus}</p>
+          {profile.age || profile.weight || profile.height ? (
+            <dl className="profile-vitals">
+              {profile.age ? (
+                <div className="profile-vital">
+                  <dt>{profileContent.vitals.age}</dt>
+                  <dd>{profile.age}</dd>
+                </div>
+              ) : null}
+              {profile.weight ? (
+                <div className="profile-vital">
+                  <dt>{profileContent.vitals.weight}</dt>
+                  <dd>{profile.weight}</dd>
+                </div>
+              ) : null}
+              {profile.height ? (
+                <div className="profile-vital">
+                  <dt>{profileContent.vitals.height}</dt>
+                  <dd>{profile.height}</dd>
+                </div>
+              ) : null}
+            </dl>
+          ) : null}
         </div>
         <div className="profile-banner__aside">
           <span className="badge badge--gold">{accessLabels[access]}</span>
@@ -167,7 +189,7 @@ export function ProfilePage({
         </div>
       </section>
 
-      <div className="stat-row">
+      <div className="stat-row stat-row--mini">
         <div className="stat-card"><span className="stat-value">{completedHabits.length}</span><span className="stat-label">{profileContent.stats.habits}</span></div>
         <div className="stat-card"><span className="stat-value">{completedMaterials.length}</span><span className="stat-label">{profileContent.stats.materials}</span></div>
         <div className="stat-card"><span className="stat-value">{completedProtocolTasks.length}</span><span className="stat-label">{profileContent.stats.protocolTasks}</span></div>

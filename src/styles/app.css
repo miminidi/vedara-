@@ -950,6 +950,36 @@ button.tracker-row {
   margin-bottom: var(--space-5);
 }
 
+.profile-vitals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin: var(--space-4) 0 0;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.profile-vital {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.profile-vital dt {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.profile-vital dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  line-height: 1.1;
+  color: var(--color-text-heading);
+}
+
 .goal-grid {
   display: flex;
   flex-wrap: wrap;
@@ -1392,6 +1422,33 @@ button.tracker-row {
   color: var(--color-text-muted);
   font-size: var(--text-xs);
   line-height: 1.25;
+}
+
+/* Compact one-line stat row (profile) */
+.stat-row--mini {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.stat-row--mini .stat-card {
+  min-height: 0;
+  padding: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.stat-row--mini .stat-value {
+  margin-top: 0;
+  font-size: var(--text-lg);
+  line-height: 1.05;
+}
+
+.stat-row--mini .stat-label {
+  font-size: 10px;
+  line-height: 1.15;
+  text-align: center;
 }
 
 .tracker-summary {
