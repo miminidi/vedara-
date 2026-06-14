@@ -1311,6 +1311,15 @@ button.tracker-row {
   gap: var(--space-4);
 }
 
+/* A lone last tile (odd count) spans full width — no empty cell */
+.club-tile-grid .club-tile:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.club-tile-grid .club-tile:last-child:nth-child(odd) .club-tile__media {
+  aspect-ratio: 24 / 7;
+}
+
 .club-tile {
   display: flex;
   flex-direction: column;
