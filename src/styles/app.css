@@ -2584,3 +2584,107 @@ button.tracker-row {
   background:
     radial-gradient(120% 120% at 50% 18%, #2a153f 0%, #170b25 58%, #0d0716 100%);
 }
+
+/* ===================== Liquid Glass — chrome layer (Apple-style) ===================== */
+/* Reusable translucent material for navigation, overlays and controls.
+   Defined at the end so it overrides the opaque .panel / .button surfaces. */
+.glass-surface {
+  position: relative;
+  background: var(--glass-tint);
+  border: 1px solid var(--glass-border-color);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  isolation: isolate;
+}
+
+/* Detail/overlay panels float above content → frosted glass sheets */
+.club-detail-card,
+.product-detail-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--glass-tint-strong);
+  border: 1px solid var(--glass-border-color);
+  box-shadow: var(--glass-highlight), var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  backdrop-filter: var(--glass-blur-strong);
+}
+
+/* Specular sheen */
+.glass-surface::before,
+.club-detail-card::before,
+.product-detail-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--glass-specular);
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-surface > *,
+.club-detail-card > *,
+.product-detail-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Controls — glass capsules (primary button stays solid for emphasis) */
+.button--secondary {
+  background: var(--glass-tint-strong);
+  color: var(--color-accent-primary);
+  border: 1px solid var(--glass-border-color);
+  box-shadow: var(--glass-highlight);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+.button--ghost {
+  background: var(--glass-tint-quiet);
+  color: var(--color-accent-primary);
+  border: 1px solid var(--glass-border-color);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+
+.button--ghost:hover {
+  background: var(--glass-tint);
+}
+
+/* Dock — align to the glass system, a touch more depth */
+.bottom-dock {
+  background:
+    linear-gradient(180deg, var(--glass-tint-strong), var(--glass-tint-quiet));
+  -webkit-backdrop-filter: var(--glass-blur-strong);
+  backdrop-filter: var(--glass-blur-strong);
+}
+
+/* Edge-swipe back: the screen layer follows the finger */
+.app-content {
+  will-change: transform;
+}
+
+.app-content.is-swiping {
+  box-shadow: -22px 0 50px -24px rgba(36, 19, 54, 0.5);
+}
+
+/* Graceful fallback where backdrop-filter is unsupported */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-surface,
+  .club-detail-card,
+  .product-detail-card,
+  .button--secondary,
+  .button--ghost,
+  .bottom-dock {
+    background: var(--color-white-88);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-content {
+    transition: none !important;
+  }
+}

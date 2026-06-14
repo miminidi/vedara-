@@ -46,7 +46,7 @@ export function ClubPage({
       </section>
 
       {selectedItem ? (
-        <section className="panel club-detail-card">
+        <section className="panel club-detail-card glass-surface">
           <span className="section-kicker">{selectedItem.kind === "video" ? clubContent.videosTitle : clubContent.articlesTitle}</span>
           <h2 className="panel-title">{selectedItem.title}</h2>
           <p>{selectedItem.description}</p>

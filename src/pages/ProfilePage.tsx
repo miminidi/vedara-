@@ -212,7 +212,7 @@ export function ProfilePage({
       </ol>
 
       {selectedProduct ? (
-        <section className="panel product-detail-card">
+        <section className="panel product-detail-card glass-surface">
           <span className="section-kicker">{productStatus(selectedProduct)}</span>
           <h2 className="panel-title">{selectedProduct.title}</h2>
           <p>{selectedProduct.description}</p>

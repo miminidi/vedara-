@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BottomNav } from "./components/BottomNav";
+import { useEdgeSwipeBack } from "./hooks/useEdgeSwipeBack";
 import { ChatPage } from "./pages/ChatPage";
 import { ClubPage } from "./pages/ClubPage";
 import { HomePage } from "./pages/HomePage";
@@ -110,6 +111,8 @@ function toggleValue(values: string[], value: string) {
 export default function App() {
   const todayKey = getDateKey();
   const [screen, setScreen] = useState<ScreenId>(getInitialScreen);
+  const [navStack, setNavStack] = useState<ScreenId[]>(() => [getInitialScreen()]);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [access, setAccess] = useState<AccessState>(() => readStorage<AccessState>(ACCESS_KEY, "guest"));
   const [checkIns, setCheckIns] = useState<Record<string, DailyCheckIn>>(() =>
     readStorage<Record<string, DailyCheckIn>>(CHECK_INS_KEY, {}),
@@ -153,9 +156,21 @@ export default function App() {
 
   const navigate = (next: ScreenId) => {
     setScreen(next);
+    setNavStack((stack) => (stack[stack.length - 1] === next ? stack : [...stack, next]));
     window.history.replaceState(null, "", `#${next}`);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const goBack = () => {
+    if (navStack.length <= 1) return;
+    const prev = navStack[navStack.length - 2];
+    setNavStack((stack) => stack.slice(0, -1));
+    setScreen(prev);
+    window.history.replaceState(null, "", `#${prev}`);
+    window.scrollTo({ top: 0, behavior: "auto" });
+  };
+
+  useEdgeSwipeBack(contentRef, { enabled: navStack.length > 1, onBack: goBack });
 
   const saveCheckInForDate = (date: string, patch: CheckInPatch = {}) => {
     setCheckIns((current) => ({
@@ -305,7 +320,7 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <div className="app-content">{currentPage}</div>
+      <div className="app-content" ref={contentRef}>{currentPage}</div>
       <BottomNav active={screen} onNavigate={navigate} />
     </div>
   );

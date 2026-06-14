@@ -177,4 +177,19 @@
   --dock-center-bg: var(--vd-white);
   --dock-center-border: 1px solid var(--color-border-gold);
   --dock-center-shadow: 0 16px 34px -12px rgba(36, 19, 54, 0.4);
+
+  /* ---- Liquid Glass (Apple-style chrome layer) ---- */
+  --glass-tint: rgba(255, 255, 255, 0.55);
+  --glass-tint-strong: rgba(255, 255, 255, 0.72);
+  --glass-tint-quiet: rgba(255, 255, 255, 0.40);
+  --glass-blur: blur(28px) saturate(180%);
+  --glass-blur-strong: blur(40px) saturate(200%);
+  --glass-border-color: rgba(255, 255, 255, 0.6);
+  --glass-highlight:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  --glass-shadow: 0 1px 2px rgba(36, 19, 54, 0.05), 0 24px 60px -24px rgba(36, 19, 54, 0.34);
+  --glass-specular:
+    radial-gradient(120% 150% at 14% -12%, rgba(255, 255, 255, 0.62), transparent 46%),
+    radial-gradient(100% 130% at 90% -22%, rgba(231, 213, 246, 0.45), transparent 54%);
 }
