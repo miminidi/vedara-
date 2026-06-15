@@ -55,7 +55,7 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
 
       <HeroCarousel slides={ecosystemContent.heroSlides} />
 
-      <SectionHead kicker={ecosystemContent.kicker} title={ecosystemContent.title} />
+      <SectionHead title={ecosystemContent.title} />
 
       {clubDirection ? (
         <article
@@ -122,7 +122,7 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
       </section>
 
       <section className="home-about-section">
-        <SectionHead kicker={homeAboutContent.kicker} title={homeAboutContent.title} />
+        <SectionHead title={homeAboutContent.title} />
         <p className="home-about-section__subtitle">{homeAboutContent.subtitle}</p>
 
         <div className="grid team-grid">
