@@ -1,7 +1,7 @@
 import { BrandHeader } from "../components/BrandHeader";
 import { HeroCarousel } from "../components/HeroCarousel";
 import { SectionHead } from "../components/SectionHead";
-import { CrownIcon } from "../components/icons/NavIcons";
+import { ArrowRightIcon, CrownIcon } from "../components/icons/NavIcons";
 import { assets } from "../data/assets";
 import {
   ecosystemContent,
@@ -41,12 +41,12 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
     onNavigate(target);
   };
 
-  const handleClubKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+  const handleCardKeyDown = (event: KeyboardEvent<HTMLElement>, target: ScreenId) => {
     if (event.key !== "Enter" && event.key !== " ") {
       return;
     }
     event.preventDefault();
-    onNavigate("club");
+    onNavigate(target);
   };
 
   return (
@@ -62,7 +62,7 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
           aria-label={`${clubDirection.name}: открыть клуб`}
           className="ecosystem-card ecosystem-card--wide home-ecosystem-card--clickable"
           onClick={() => onNavigate("club")}
-          onKeyDown={handleClubKeyDown}
+          onKeyDown={(event) => handleCardKeyDown(event, "club")}
           role="link"
           tabIndex={0}
         >
@@ -72,19 +72,35 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
           <div className="ecosystem-card__body">
             <h4 className="ecosystem-card__title">{clubDirection.short}</h4>
             <p className="ecosystem-card__text">{clubDirection.text}</p>
+            <span className="ecosystem-card__cta">
+              {ecosystemContent.clubCta}
+              <ArrowRightIcon size={15} />
+            </span>
           </div>
         </article>
       ) : null}
 
       <div className="ecosystem-cards">
         {otherDirections.map((direction) => (
-          <article className="ecosystem-card" key={direction.id}>
+          <article
+            aria-label={`${direction.name}: ${ecosystemContent.directionCta}`}
+            className="ecosystem-card home-ecosystem-card--clickable"
+            key={direction.id}
+            onClick={() => onNavigate("profile")}
+            onKeyDown={(event) => handleCardKeyDown(event, "profile")}
+            role="link"
+            tabIndex={0}
+          >
             <span className="ecosystem-card__media" aria-hidden="true">
               <img src={ecosystemPhotos[direction.id]} alt="" loading="lazy" />
             </span>
             <div className="ecosystem-card__body">
               <h4 className="ecosystem-card__title">{direction.short}</h4>
               <p className="ecosystem-card__text">{direction.text}</p>
+              <span className="ecosystem-card__cta ecosystem-card__cta--ghost">
+                {ecosystemContent.directionCta}
+                <ArrowRightIcon size={14} />
+              </span>
             </div>
           </article>
         ))}

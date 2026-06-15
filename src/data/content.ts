@@ -184,6 +184,8 @@ export const homeEcosystemCards = [
 export const ecosystemContent = {
   kicker: "экосистема",
   title: "Экосистема Vedara",
+  clubCta: "Войти в клуб",
+  directionCta: "Подробнее",
   heroSlides: [
     "VEDARA — экосистема здоровья, восстановления и долголетия.",
     "Медицина нового тысячелетия — система глубинного восстановления организма, психики и раскрытия потенциала.",
