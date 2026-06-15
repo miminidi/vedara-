@@ -101,13 +101,16 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
             <p key={text}>{text}</p>
           ))}
         </div>
-        <div className="home-ecosystem__directions">
-          {ecosystemContent.directions.map((direction) => (
-            <article className="home-ecosystem-direction" key={direction.id}>
-              <h4>{direction.name}</h4>
-              <p>{direction.text}</p>
-            </article>
-          ))}
+        <div className="ecosystem-cards">
+          {ecosystemContent.directions
+            .filter((direction) => direction.id !== "longevita")
+            .map((direction) => (
+              <article className="ecosystem-card" key={direction.id}>
+                <span className="ecosystem-card__media" aria-hidden="true" />
+                <h4 className="ecosystem-card__title">{direction.short}</h4>
+                <p className="ecosystem-card__text">{direction.text}</p>
+              </article>
+            ))}
         </div>
       </section>
 

@@ -189,21 +189,25 @@ export const ecosystemContent = {
     {
       id: "longevita",
       name: "VEDARA Longevita",
+      short: "Longevita",
       text: "Клуб женщин нового времени: энергия, молодость, осознанное долголетие.",
     },
     {
       id: "university",
       name: "VEDARA University",
+      short: "University",
       text: "Университет новой цивилизации здоровья и подготовки специалистов будущего.",
     },
     {
       id: "clinic",
       name: "VEDARA Clinic",
+      short: "Clinic",
       text: "Клиника системного восстановления женщины.",
     },
     {
       id: "recovery",
       name: "VEDARA Recovery",
+      short: "Recovery",
       text: "Персональные программы системного восстановления с Марией Святой.",
     },
   ],
