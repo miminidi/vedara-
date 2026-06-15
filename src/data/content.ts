@@ -125,6 +125,10 @@ export const homeHubContent = {
     ],
     activeCta: "Войти в клуб",
   },
+  premium: {
+    label: "VEDARA Premium",
+    text: "Полный доступ ко всем пространствам и возможностям экосистемы.",
+  },
   directionsKicker: "экосистема",
   directionsTitle: "Экосистема Vedara",
 };
@@ -180,8 +184,8 @@ export const homeEcosystemCards = [
 export const ecosystemContent = {
   kicker: "экосистема",
   title: "Экосистема Vedara",
-  lead: "VEDARA — экосистема здоровья, восстановления и долголетия.",
-  paragraphs: [
+  heroSlides: [
+    "VEDARA — экосистема здоровья, восстановления и долголетия.",
     "Медицина нового тысячелетия — система глубинного восстановления организма, психики и раскрытия потенциала.",
     "Миссия — мы создаём новую цивилизацию здоровья, долголетия и высокого качества жизни.",
   ],
@@ -190,7 +194,7 @@ export const ecosystemContent = {
       id: "longevita",
       name: "VEDARA Longevita",
       short: "Longevita",
-      text: "Клуб женщин нового времени: энергия, молодость, осознанное долголетие.",
+      text: "Клуб женщин нового времени: энергия, молодость и осознанное долголетие.",
     },
     {
       id: "university",

@@ -1,9 +1,10 @@
 import { BrandHeader } from "../components/BrandHeader";
+import { HeroCarousel } from "../components/HeroCarousel";
 import { SectionHead } from "../components/SectionHead";
+import { CrownIcon } from "../components/icons/NavIcons";
 import {
   ecosystemContent,
   homeAboutContent,
-  homeEcosystemCards,
   homeHubContent,
   teamMembers,
 } from "../data/content";
@@ -22,7 +23,8 @@ function hasClubAccess(access: AccessState) {
 
 export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
   const isClubActive = hasClubAccess(access);
-  const clubCard = homeEcosystemCards.find((card) => card.id === "longevita");
+  const clubDirection = ecosystemContent.directions.find((direction) => direction.id === "longevita");
+  const otherDirections = ecosystemContent.directions.filter((direction) => direction.id !== "longevita");
 
   const handleAction = (target: ScreenId, access?: AccessState) => {
     if (access) {
@@ -31,87 +33,78 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
     onNavigate(target);
   };
 
-  const handleCardKeyDown = (event: KeyboardEvent<HTMLElement>, target?: ScreenId) => {
-    if (!target || (event.key !== "Enter" && event.key !== " ")) {
+  const handleClubKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key !== "Enter" && event.key !== " ") {
       return;
     }
-
     event.preventDefault();
-    onNavigate(target);
+    onNavigate("club");
   };
 
   return (
     <main className="screen">
       <BrandHeader />
 
-      {clubCard && clubCard.target ? (
+      <HeroCarousel slides={ecosystemContent.heroSlides} />
+
+      <SectionHead kicker={ecosystemContent.kicker} title={ecosystemContent.title} />
+
+      {clubDirection ? (
         <article
-          aria-label={`${clubCard.title}: ${isClubActive ? homeHubContent.tariff.activeCta : "Открыть"}`}
-          className="program-card home-club-banner home-ecosystem-card--clickable"
-          onClick={() => onNavigate(clubCard.target as ScreenId)}
-          onKeyDown={(event) => handleCardKeyDown(event, clubCard.target)}
+          aria-label={`${clubDirection.name}: открыть клуб`}
+          className="ecosystem-card ecosystem-card--wide home-ecosystem-card--clickable"
+          onClick={() => onNavigate("club")}
+          onKeyDown={handleClubKeyDown}
           role="link"
           tabIndex={0}
         >
-          <div className="program-card__top">
-            <h3>{clubCard.title}</h3>
-            <span className="badge badge--gold">{clubCard.meta}</span>
+          <span className="ecosystem-card__media" aria-hidden="true" />
+          <div className="ecosystem-card__body">
+            <h4 className="ecosystem-card__title">{clubDirection.short}</h4>
+            <p className="ecosystem-card__text">{clubDirection.text}</p>
           </div>
-          <p>{clubCard.description}</p>
-          <div className="home-club-offer">
-            <span>{homeHubContent.tariff.title}</span>
-            <p>{homeHubContent.tariff.text}</p>
-          </div>
-          {isClubActive ? (
-            <button
-              className="button button--primary u-mt-4"
-              type="button"
-              onClick={(event) => {
-                event.stopPropagation();
-                onNavigate(clubCard.target as ScreenId);
-              }}
-            >
-              {homeHubContent.tariff.activeCta}
-            </button>
-          ) : (
-            <div className="home-ecosystem-card__actions">
-              {homeHubContent.tariff.actions.map((action) => (
-                <button
-                  className={`button ${action.variant === "primary" ? "button--primary" : "button--secondary"}`}
-                  key={action.id}
-                  type="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    handleAction(action.target as ScreenId, action.access as AccessState | undefined);
-                  }}
-                >
-                  {action.label}
-                </button>
-              ))}
-            </div>
-          )}
         </article>
       ) : null}
 
-      <section className="home-ecosystem">
-        <SectionHead kicker={ecosystemContent.kicker} title={ecosystemContent.title} />
-        <div className="home-ecosystem__mission">
-          <p className="home-ecosystem__lead">{ecosystemContent.lead}</p>
-          {ecosystemContent.paragraphs.map((text) => (
-            <p key={text}>{text}</p>
-          ))}
+      <div className="ecosystem-cards">
+        {otherDirections.map((direction) => (
+          <article className="ecosystem-card" key={direction.id}>
+            <span className="ecosystem-card__media" aria-hidden="true" />
+            <h4 className="ecosystem-card__title">{direction.short}</h4>
+            <p className="ecosystem-card__text">{direction.text}</p>
+          </article>
+        ))}
+      </div>
+
+      <section className="premium-plate">
+        <div className="premium-plate__head">
+          <span className="premium-plate__crown" aria-hidden="true">
+            <CrownIcon size={22} />
+          </span>
+          <div className="premium-plate__heading">
+            <span className="premium-plate__label">{homeHubContent.premium.label}</span>
+            <span className="premium-plate__price">{homeHubContent.tariff.title}</span>
+          </div>
         </div>
-        <div className="ecosystem-cards">
-          {ecosystemContent.directions
-            .filter((direction) => direction.id !== "longevita")
-            .map((direction) => (
-              <article className="ecosystem-card" key={direction.id}>
-                <span className="ecosystem-card__media" aria-hidden="true" />
-                <h4 className="ecosystem-card__title">{direction.short}</h4>
-                <p className="ecosystem-card__text">{direction.text}</p>
-              </article>
+        <p className="premium-plate__text">{homeHubContent.premium.text}</p>
+        {isClubActive ? (
+          <button className="button button--primary u-full" type="button" onClick={() => onNavigate("club")}>
+            {homeHubContent.tariff.activeCta}
+          </button>
+        ) : (
+          <div className="premium-plate__actions">
+            {homeHubContent.tariff.actions.map((action) => (
+              <button
+                className={`button ${action.variant === "primary" ? "button--primary" : "button--secondary"}`}
+                key={action.id}
+                type="button"
+                onClick={() => handleAction(action.target as ScreenId, action.access as AccessState | undefined)}
+              >
+                {action.label}
+              </button>
             ))}
-        </div>
+          </div>
+        )}
       </section>
 
       <section className="home-about-section">

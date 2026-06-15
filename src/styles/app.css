@@ -547,35 +547,83 @@
   margin-top: var(--space-4);
 }
 
-/* ---- Home: ecosystem positioning block ---- */
-.home-ecosystem {
-  display: grid;
-  gap: var(--space-5);
-  margin-top: var(--space-6);
-}
-
-.home-ecosystem__mission {
+/* ---- Home: hero carousel (3 mission slides) ---- */
+.hero-carousel {
   display: grid;
   gap: var(--space-3);
+  margin-bottom: var(--space-5);
 }
 
-.home-ecosystem__lead {
+.hero-carousel__track {
+  display: flex;
+  overflow: auto hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+}
+
+.hero-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.hero-slide {
+  position: relative;
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  min-height: 188px;
+  display: grid;
+  align-items: center;
+  padding: var(--space-7) var(--space-6);
+  overflow: hidden;
+  background: var(--gradient-longevita);
+}
+
+.hero-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(90% 70% at 12% -10%, rgba(216, 189, 130, 0.26), transparent 56%),
+    radial-gradient(80% 80% at 100% 110%, rgba(180, 135, 197, 0.34), transparent 60%);
+  pointer-events: none;
+}
+
+.hero-slide__text {
+  position: relative;
   margin: 0;
   font-family: var(--font-display);
-  font-size: var(--text-xl);
+  font-size: var(--text-2xl);
+  font-weight: 400;
   line-height: var(--line-heading);
   letter-spacing: var(--letter-display);
-  color: var(--color-text-heading);
+  color: var(--color-text-on-dark);
 }
 
-.home-ecosystem__mission p:not(.home-ecosystem__lead) {
-  margin: 0;
-  color: var(--color-text-muted);
-  font-size: var(--text-sm);
-  line-height: var(--line-body);
+.hero-carousel__dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
 }
 
-/* Three-in-a-row ecosystem cards (photos added later) */
+.hero-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-purple-16);
+  cursor: pointer;
+  transition: width var(--transition-base), background var(--transition-base);
+}
+
+.hero-dot.is-active {
+  width: 20px;
+  background: var(--vd-gold-500);
+}
+
+/* ---- Home: ecosystem cards (big club + three in a row) ---- */
 .ecosystem-cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -614,6 +662,122 @@
   color: var(--color-text-muted);
   font-size: 11px;
   line-height: 1.35;
+}
+
+/* Club — wider card above the three (photo added later) */
+.ecosystem-card--wide {
+  flex-direction: row;
+  align-items: stretch;
+  margin-bottom: var(--space-3);
+}
+
+.ecosystem-card--wide .ecosystem-card__media {
+  flex: 0 0 38%;
+  aspect-ratio: auto;
+  min-height: 104px;
+}
+
+.ecosystem-card--wide .ecosystem-card__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+  padding: var(--space-4);
+}
+
+.ecosystem-card--wide .ecosystem-card__title {
+  margin: 0;
+  font-size: var(--text-lg);
+}
+
+.ecosystem-card--wide .ecosystem-card__text {
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+/* ---- Home: premium payment plate (separate, below the four cards) ---- */
+.premium-plate {
+  position: relative;
+  margin-top: var(--space-5);
+  padding: var(--space-5);
+  display: grid;
+  gap: var(--space-3);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--gradient-longevita);
+  box-shadow: var(--card-shadow);
+}
+
+.premium-plate::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(80% 60% at 90% -10%, rgba(216, 189, 130, 0.28), transparent 58%);
+  pointer-events: none;
+}
+
+.premium-plate > * {
+  position: relative;
+}
+
+.premium-plate__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.premium-plate__crown {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--vd-gold-400);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--color-border-gold);
+}
+
+.premium-plate__heading {
+  display: grid;
+  gap: 1px;
+}
+
+.premium-plate__label {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--vd-gold-400);
+}
+
+.premium-plate__price {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  color: var(--vd-white);
+}
+
+.premium-plate__text {
+  margin: 0;
+  color: var(--color-text-on-dark-muted);
+  font-size: var(--text-sm);
+  line-height: var(--line-body);
+}
+
+.premium-plate__actions {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.premium-plate .button--primary {
+  background: var(--gradient-gold);
+  color: var(--vd-purple-950);
+  box-shadow: var(--shadow-button-gold);
+}
+
+.premium-plate .button--secondary {
+  background: rgba(255, 255, 255, 0.10);
+  color: var(--vd-white);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 .home-about-section {
