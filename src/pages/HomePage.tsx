@@ -2,6 +2,7 @@ import { BrandHeader } from "../components/BrandHeader";
 import { HeroCarousel } from "../components/HeroCarousel";
 import { SectionHead } from "../components/SectionHead";
 import { CrownIcon } from "../components/icons/NavIcons";
+import { assets } from "../data/assets";
 import {
   ecosystemContent,
   homeAboutContent,
@@ -10,6 +11,13 @@ import {
 } from "../data/content";
 import type { AccessState, ScreenId } from "../data/types";
 import type { KeyboardEvent } from "react";
+
+const ecosystemPhotos: Record<string, string> = {
+  longevita: assets.photos.ecosystemClub,
+  university: assets.photos.ecosystemUniversity,
+  clinic: assets.photos.ecosystemClinic,
+  recovery: assets.photos.ecosystemRecovery,
+};
 
 interface HomePageProps {
   access: AccessState;
@@ -58,7 +66,9 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
           role="link"
           tabIndex={0}
         >
-          <span className="ecosystem-card__media" aria-hidden="true" />
+          <span className="ecosystem-card__media" aria-hidden="true">
+            <img src={ecosystemPhotos[clubDirection.id]} alt="" loading="lazy" />
+          </span>
           <div className="ecosystem-card__body">
             <h4 className="ecosystem-card__title">{clubDirection.short}</h4>
             <p className="ecosystem-card__text">{clubDirection.text}</p>
@@ -69,7 +79,9 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
       <div className="ecosystem-cards">
         {otherDirections.map((direction) => (
           <article className="ecosystem-card" key={direction.id}>
-            <span className="ecosystem-card__media" aria-hidden="true" />
+            <span className="ecosystem-card__media" aria-hidden="true">
+              <img src={ecosystemPhotos[direction.id]} alt="" loading="lazy" />
+            </span>
             <h4 className="ecosystem-card__title">{direction.short}</h4>
             <p className="ecosystem-card__text">{direction.text}</p>
           </article>

@@ -6,6 +6,10 @@ import bodyPeople from "../assets/photos/body-people.png";
 import nutritionBowl from "../assets/photos/nutrition-bowl.png";
 import wellnessClub from "../assets/photos/wellness-club.png";
 import clubHero from "../assets/photos/club-hero.png";
+import ecosystemClub from "../assets/photos/ecosystem-club.jpg";
+import ecosystemUniversity from "../assets/photos/ecosystem-university.jpg";
+import ecosystemClinic from "../assets/photos/ecosystem-clinic.jpg";
+import ecosystemRecovery from "../assets/photos/ecosystem-recovery.jpg";
 
 export const assets = {
   logoFull: vedaraLogoFull,
@@ -17,6 +21,10 @@ export const assets = {
     nutritionBowl,
     wellnessClub,
     clubHero,
+    ecosystemClub,
+    ecosystemUniversity,
+    ecosystemClinic,
+    ecosystemRecovery,
   },
 } as const;
 

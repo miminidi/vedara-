@@ -641,11 +641,20 @@
 }
 
 .ecosystem-card__media {
+  position: relative;
   display: block;
   aspect-ratio: 1 / 1;
+  overflow: hidden;
   background:
     radial-gradient(120% 120% at 80% 110%, rgba(198, 167, 94, 0.20), transparent 58%),
     linear-gradient(150deg, var(--vd-lavender-50, #F2ECFA), var(--color-surface-lilac, #E9E1F5));
+}
+
+.ecosystem-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .ecosystem-card__title {
