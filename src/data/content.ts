@@ -177,6 +177,38 @@ export const homeEcosystemCards = [
   }>;
 }>;
 
+export const ecosystemContent = {
+  kicker: "экосистема",
+  title: "Экосистема Vedara",
+  lead: "VEDARA — экосистема здоровья, восстановления и долголетия.",
+  paragraphs: [
+    "Медицина нового тысячелетия — система глубинного восстановления организма, психики и раскрытия потенциала.",
+    "Миссия — мы создаём новую цивилизацию здоровья, долголетия и высокого качества жизни.",
+  ],
+  directions: [
+    {
+      id: "longevita",
+      name: "VEDARA Longevita",
+      text: "Клуб женщин нового времени: энергия, молодость, осознанное долголетие.",
+    },
+    {
+      id: "university",
+      name: "VEDARA University",
+      text: "Университет новой цивилизации здоровья и подготовки специалистов будущего.",
+    },
+    {
+      id: "clinic",
+      name: "VEDARA Clinic",
+      text: "Клиника системного восстановления женщины.",
+    },
+    {
+      id: "recovery",
+      name: "VEDARA Recovery",
+      text: "Персональные программы системного восстановления с Марией Святой.",
+    },
+  ],
+};
+
 export const homeAboutContent = {
   kicker: "team",
   title: "О нас",

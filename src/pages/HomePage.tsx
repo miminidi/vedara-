@@ -1,6 +1,7 @@
 import { BrandHeader } from "../components/BrandHeader";
 import { SectionHead } from "../components/SectionHead";
 import {
+  ecosystemContent,
   homeAboutContent,
   homeEcosystemCards,
   homeHubContent,
@@ -22,7 +23,6 @@ function hasClubAccess(access: AccessState) {
 export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
   const isClubActive = hasClubAccess(access);
   const clubCard = homeEcosystemCards.find((card) => card.id === "longevita");
-  const otherCards = homeEcosystemCards.filter((card) => card.id !== "longevita");
 
   const handleAction = (target: ScreenId, access?: AccessState) => {
     if (access) {
@@ -93,41 +93,23 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
         </article>
       ) : null}
 
-      <div className="grid grid--two">
-        {otherCards.map((card) => {
-          const isClickable = Boolean(card.target);
-
-          return (
-          <article
-            aria-label={isClickable ? `${card.title}: ${card.cta ?? "Открыть"}` : undefined}
-            className={`program-card home-ecosystem-card ${isClickable ? "home-ecosystem-card--clickable" : ""}`}
-            key={card.id}
-            onClick={isClickable ? () => onNavigate(card.target as ScreenId) : undefined}
-            onKeyDown={(event) => handleCardKeyDown(event, card.target)}
-            role={isClickable ? "link" : undefined}
-            tabIndex={isClickable ? 0 : undefined}
-          >
-            <div className="program-card__top">
-              <h3>{card.title}</h3>
-              <span className="badge">{card.meta}</span>
-            </div>
-            <p>{card.description}</p>
-            {card.cta && card.target ? (
-              <button
-                className="button button--ghost u-mt-4"
-                type="button"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  onNavigate(card.target as ScreenId);
-                }}
-              >
-                {card.cta}
-              </button>
-            ) : null}
-          </article>
-          );
-        })}
-      </div>
+      <section className="home-ecosystem">
+        <SectionHead kicker={ecosystemContent.kicker} title={ecosystemContent.title} />
+        <div className="home-ecosystem__mission">
+          <p className="home-ecosystem__lead">{ecosystemContent.lead}</p>
+          {ecosystemContent.paragraphs.map((text) => (
+            <p key={text}>{text}</p>
+          ))}
+        </div>
+        <div className="home-ecosystem__directions">
+          {ecosystemContent.directions.map((direction) => (
+            <article className="home-ecosystem-direction" key={direction.id}>
+              <h4>{direction.name}</h4>
+              <p>{direction.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section className="home-about-section">
         <SectionHead kicker={homeAboutContent.kicker} title={homeAboutContent.title} />
