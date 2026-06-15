@@ -631,23 +631,24 @@
 }
 
 .ecosystem-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: var(--card-border);
-  border-radius: var(--card-radius-sm);
-  background: var(--surface-card);
-  box-shadow: var(--card-shadow);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, var(--vd-lavender-50, #F8F4FF), var(--vd-lavender-100, #EFE6FA));
+  box-shadow: 0 16px 34px -22px rgba(36, 19, 54, 0.26);
 }
 
+/* Photo dissolves into the card — no hard frame, soft fade to the pale fill */
 .ecosystem-card__media {
   position: relative;
   display: block;
   aspect-ratio: 1 / 1;
-  overflow: hidden;
-  background:
-    radial-gradient(120% 120% at 80% 110%, rgba(198, 167, 94, 0.20), transparent 58%),
-    linear-gradient(150deg, var(--vd-lavender-50, #F2ECFA), var(--color-surface-lilac, #E9E1F5));
+  background: var(--vd-lavender-100, #EFE6FA);
+  -webkit-mask-image: linear-gradient(to bottom, #000 56%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 56%, transparent 100%);
 }
 
 .ecosystem-card__media img {
@@ -658,22 +659,34 @@
 }
 
 .ecosystem-card__title {
-  margin: var(--space-3) var(--space-3) 2px;
+  position: relative;
+  margin: calc(var(--space-5) * -1) var(--space-4) 0;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: var(--text-md);
+  font-size: var(--text-lg);
   letter-spacing: var(--letter-display);
   color: var(--color-text-heading);
 }
 
-.ecosystem-card__text {
-  margin: 0 var(--space-3) var(--space-3);
-  color: var(--color-text-muted);
-  font-size: 11px;
-  line-height: 1.35;
+.ecosystem-card__title::after {
+  content: "";
+  display: block;
+  width: 22px;
+  height: 2px;
+  margin-top: 5px;
+  border-radius: 2px;
+  background: var(--gradient-gold);
 }
 
-/* Club — wider card above the three (photo added later) */
+.ecosystem-card__text {
+  position: relative;
+  margin: var(--space-2) var(--space-4) var(--space-4);
+  color: var(--color-text-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* Club — wider card above the three */
 .ecosystem-card--wide {
   flex-direction: row;
   align-items: stretch;
@@ -681,23 +694,30 @@
 }
 
 .ecosystem-card--wide .ecosystem-card__media {
-  flex: 0 0 38%;
+  flex: 0 0 44%;
   aspect-ratio: auto;
-  min-height: 104px;
+  min-height: 128px;
+  -webkit-mask-image: linear-gradient(to right, #000 58%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 58%, transparent 100%);
 }
 
 .ecosystem-card--wide .ecosystem-card__body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 3px;
+  gap: 4px;
   min-width: 0;
-  padding: var(--space-4);
+  margin-left: calc(var(--space-6) * -1);
+  padding: var(--space-4) var(--space-5) var(--space-4) 0;
 }
 
 .ecosystem-card--wide .ecosystem-card__title {
   margin: 0;
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
+}
+
+.ecosystem-card--wide .ecosystem-card__title::after {
+  display: none;
 }
 
 .ecosystem-card--wide .ecosystem-card__text {
