@@ -96,6 +96,7 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
             </span>
             <div className="ecosystem-card__body">
               <h4 className="ecosystem-card__title">{direction.short}</h4>
+              <p className="ecosystem-card__text">{direction.text}</p>
               <span className="ecosystem-card__cta ecosystem-card__cta--ghost">
                 {ecosystemContent.directionCta}
                 <ArrowRightIcon size={14} />
