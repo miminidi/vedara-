@@ -82,8 +82,10 @@ export function HomePage({ access, onNavigate, onSetAccess }: HomePageProps) {
             <span className="ecosystem-card__media" aria-hidden="true">
               <img src={ecosystemPhotos[direction.id]} alt="" loading="lazy" />
             </span>
-            <h4 className="ecosystem-card__title">{direction.short}</h4>
-            <p className="ecosystem-card__text">{direction.text}</p>
+            <div className="ecosystem-card__body">
+              <h4 className="ecosystem-card__title">{direction.short}</h4>
+              <p className="ecosystem-card__text">{direction.text}</p>
+            </div>
           </article>
         ))}
       </div>
